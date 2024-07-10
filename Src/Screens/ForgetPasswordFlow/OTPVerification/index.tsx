@@ -1,0 +1,45 @@
+import React, {useState} from 'react';
+import {Text, View} from 'react-native';
+import AppBar from '../../../Components/AppBar';
+import {BackIcon} from '../../../Assets/Svgs';
+import styles from './styles';
+import CustomButton from '../../../Components/CustomButton';
+import {PRIMARY, WHITE} from '../../../Theme/Colors';
+import EnterOTP from '../../../Components/OTP';
+import {useNavigation} from '@react-navigation/native';
+
+const OTPVerification = () => {
+  const navigation = useNavigation<any>();
+  const [otp, setOTP] = useState<string>('');
+
+  const handleContinueButton = () => {
+    navigation.navigate('CreatePassword');
+  };
+  return (
+    <View style={styles.body}>
+      <AppBar
+        text="Verification Code"
+        ></AppBar>
+      <View style={styles.content}>
+        <Text style={styles.enterEmail}>
+          Enter verification code sent on your entered email address.
+        </Text>
+
+        <EnterOTP otp={otp} setOTP={setOTP}></EnterOTP>
+        <Text style={styles.resendButton}>Resend in <Text style={styles.resendButtonSpan}>0:29s</Text></Text>
+
+        <CustomButton
+          text="Continue"
+          onPress={handleContinueButton}
+          TextStyle={{color: WHITE}}
+          extraStyle={{
+            marginTop: 200,
+            backgroundColor: PRIMARY,
+          }}
+        />
+      </View>
+    </View>
+  );
+};
+
+export default OTPVerification;
