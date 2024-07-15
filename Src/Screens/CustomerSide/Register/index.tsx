@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Alert,
+  Image,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import styles from './styles';
 import InputLabel from '../../../Components/InputLabel';
 import InputText from '../../../Components/InputText';
@@ -7,10 +14,12 @@ import CustomButton from '../../../Components/CustomButton';
 import {PRIMARY, WHITE} from '../../../Theme/Colors';
 import {useNavigation} from '@react-navigation/native';
 import {EyeHide, EyeShow} from '../../../Assets/Svgs';
+import {signUpApi} from '../../../Services/apis/authAPIs';
+import LoadingModal from '../../../Components/LoadingModal';
 
-const CustomerRegister = () => {
+const CustomerRegister = props => {
   const navigation = useNavigation<any>();
-
+  const {selectedRole} = props?.route?.params;
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -19,8 +28,68 @@ const CustomerRegister = () => {
   const [isPasswordHidden, setIsPasswordHidden] = useState(true);
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isConfirmPassHidden, setIsConfirmPasswordHidden] = useState(true);
-  const handleContinueButton = () => {
-    navigation.navigate('CustomerOTP');
+  const [visible, setVisible] = useState(false);
+  const isValidEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+  const handleValidation = () => {
+    if (fullName === '') {
+      Alert.alert('Register error', 'Please enter your full name');
+      return;
+    } else if (email === '') {
+      Alert.alert('Register error', 'Please enter your email');
+      return;
+    } else if (!isValidEmail(email)) {
+      Alert.alert('Register error', 'Please enter a valid email');
+      return;
+    } else if (phoneNumber === '') {
+      Alert.alert('Register error', 'Please enter your phone number');
+      return;
+    } else if (addrss === '') {
+      Alert.alert('Register error', 'Please enter your address');
+      return;
+    } else if (password === '') {
+      Alert.alert('Register error', 'Please enter your password');
+      return;
+    } else if (confirmPassword === '') {
+      Alert.alert('Register error', 'Please confirm your password');
+      return;
+    } else if (password !== confirmPassword) {
+      Alert.alert('Register error', 'Passwords do not match');
+      return;
+    } else {
+      const body = {
+        userName: fullName,
+        email: email,
+        phoneNumber: phoneNumber,
+        password: password,
+        confirmPass: confirmPassword,
+        location: {
+          type: 'Point',
+          coordinates: [40.7128, -74.006],
+        },
+        userType: selectedRole,
+      };
+      handleSignUp(body);
+    }
+  };
+
+  const handleSignUp = async payload => {
+    setVisible(true);
+    // Call API to register user
+    await signUpApi(payload)
+      .then(result => {
+        setVisible(false);
+        console.log('🚀 ~ handleSignUp ~ result:', result?.data);
+        // Navigation to OTP screen
+        navigation.navigate('CustomerOTP', {data: result?.data});
+      })
+      .catch(error => {
+        setVisible(false);
+        Alert.alert('Register error', `${error?.response?.data?.message}`);
+        console.log('Error:', error?.response?.data);
+      });
   };
   const handleAlreadyHavAccount = () => {
     navigation.navigate('CustomerLogin');
@@ -62,15 +131,32 @@ const CustomerRegister = () => {
             Welcome to{' '}
             <Text style={styles.welcomeSpanText}>On Time Couriers</Text>
           </Text>
-          <InputLabel label="Full Name"  />
-          <InputText placeholder="Full Name" onChange={handleFullName} value={fullName}/>
+          <InputLabel label="Full Name" />
+          <InputText
+            placeholder="Full Name"
+            onChange={handleFullName}
+            value={fullName}
+          />
           <InputLabel label="E-mail" />
-          <InputText placeholder="E-mail" onChange={handleEmail} value={email}/>
+          <InputText
+            placeholder="E-mail"
+            onChange={handleEmail}
+            value={email}
+          />
 
           <InputLabel label="Phone #" />
-          <InputText placeholder="Phone #" type={'numeric'} onChange={handlePhonNumber} value={phoneNumber}/>
+          <InputText
+            placeholder="Phone #"
+            type={'numeric'}
+            onChange={handlePhonNumber}
+            value={phoneNumber}
+          />
           <InputLabel label="Address" />
-          <InputText placeholder="Address" onChange={handleAddrss} value={addrss}/>
+          <InputText
+            placeholder="Address"
+            onChange={handleAddrss}
+            value={addrss}
+          />
           <InputLabel label="Password" />
           <InputText
             placeholder="Password"
@@ -96,7 +182,7 @@ const CustomerRegister = () => {
 
           <CustomButton
             text="Register"
-            onPress={handleContinueButton}
+            onPress={handleValidation}
             TextStyle={{color: WHITE}}
             extraStyle={{
               marginTop: 34,
@@ -111,6 +197,7 @@ const CustomerRegister = () => {
           </TouchableOpacity>
         </View>
       </ScrollView>
+      <LoadingModal visible={visible} message={'Please wait...'} />
     </View>
   );
 };

@@ -17,10 +17,10 @@ import {
   WHITE,
 } from '../../Theme/Colors';
 import CustomButton from '../../Components/CustomButton';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
 const SelectRole = () => {
-    const navigation = useNavigation<any>();
+  const navigation = useNavigation<any>();
   const [selectedRole, setSelectedRole] = useState();
 
   const handleSelectRole = (index: any) => {
@@ -28,10 +28,11 @@ const SelectRole = () => {
   };
 
   const handleContinueButton = () => {
-    
     if (selectedRole != null) {
-      if (selectedRole == 0) {
-        navigation.navigate('CustomerRegister')
+      if (selectedRole === 0) {
+        navigation.navigate('CustomerRegister', {
+          selectedRole: selectedRole === 0 ? 'customer' : 'driver',
+        });
       } else {
         Alert.alert('Driver Side', 'Driver Side Under Development', [
           {text: 'OK'},
@@ -50,8 +51,8 @@ const SelectRole = () => {
       <View style={styles.content}>
         <Text style={styles.choseYourRoleText}>Choose Your Role</Text>
         <Text style={styles.welcomeText}>
-          Welcome to {' '}
-           <Text style={styles.welcomeSpanText}>On Time Couriers</Text>
+          Welcome to{' '}
+          <Text style={styles.welcomeSpanText}>On Time Couriers</Text>
         </Text>
         <FlatList
           data={roleList}

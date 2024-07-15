@@ -1,21 +1,27 @@
 import React, {useState} from 'react';
-import {Image, StyleSheet, TextInput, TouchableOpacity, View} from 'react-native';
-import { BORDERCOLOR, PLACEHOLDERCOLOR, TEXTCOLOR, WHITE } from '../Theme/Colors';
+import {
+  Image,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import {BORDERCOLOR, PLACEHOLDERCOLOR, TEXTCOLOR, WHITE} from '../Theme/Colors';
 
 type MyComponentProps = {
   placeholder?: string;
-  placeholderTextColor?:any,
-  TextStyle?:any,
+  placeholderTextColor?: any;
+  TextStyle?: any;
   value?: string;
   onChange?: any;
   secureTextEntry?: boolean;
   addLeft?: React.ReactNode;
   addRight?: React.ReactNode;
   onRightPress?: any;
-  onLeftPress?:any;
+  onLeftPress?: any;
   ref?: any;
   borderWidth?: any;
-  readonly?:any;
+  readonly?: any;
   extraStyle?: any;
   rightIconStyle?: any;
   type?: any;
@@ -38,12 +44,12 @@ const InputText: React.FC<MyComponentProps> = props => {
         props.extraStyle,
       ]}>
       {props.addLeft != null ? (
-        <TouchableOpacity onPress={props.onLeftPress} style={[styles.imageLeftContainer, {width: props.addLeft ? 20 : 0}]}>
+        <TouchableOpacity
+          onPress={props.onLeftPress}
+          style={[styles.imageLeftContainer, {width: props.addLeft ? 20 : 0}]}>
           {props.addLeft}
         </TouchableOpacity>
-      ) : (
-        <View></View>
-      )}
+      ) : null}
       <TextInput
         placeholderTextColor={props.placeholderTextColor ?? PLACEHOLDERCOLOR}
         ref={props.ref}
@@ -61,7 +67,7 @@ const InputText: React.FC<MyComponentProps> = props => {
       />
       {props.addRight != null ? (
         <TouchableOpacity
-        onPress={props.onRightPress}
+          onPress={props.onRightPress}
           style={[
             styles.imageContainer,
             props.rightIconStyle,
@@ -87,28 +93,30 @@ const styles = StyleSheet.create({
     marginTop: '2%',
     height: 55,
     borderColor: BORDERCOLOR,
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
   },
   text: {
     fontSize: 16,
     fontWeight: '400',
     padding: 5,
     width: 280,
-    paddingLeft: '5%',
+    // paddingLeft: '5%',
     color: TEXTCOLOR,
     // borderWidth:1
   },
   imageLeftContainer: {
     height: 24,
-    width:24,
-    justifyContent:'center',
-    alignSelf:'center',
-    marginLeft:"2%"
+    width: 24,
+    justifyContent: 'center',
+    alignSelf: 'center',
+    marginLeft: '2%',
   },
   imageContainer: {
     height: 24,
-    width:24,
-    justifyContent:'center',
-    alignSelf:'center',
-    marginVertical:"4%"
+    width: 24,
+    justifyContent: 'center',
+    alignSelf: 'center',
+    marginVertical: '4%',
   },
 });
