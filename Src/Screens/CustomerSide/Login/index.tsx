@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Alert,
+  Image,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import styles from './styles';
 import InputLabel from '../../../Components/InputLabel';
 import InputText from '../../../Components/InputText';
@@ -8,15 +15,41 @@ import {PRIMARY, WHITE} from '../../../Theme/Colors';
 import {useNavigation} from '@react-navigation/native';
 import {EyeHide, EyeShow} from '../../../Assets/Svgs';
 import CheckBox from 'react-native-check-box';
+import LoadingModal from '../../../Components/LoadingModal';
+import {logInUserApi} from '../../../Services/apis/authAPIs';
 
 const CustomerLogin = () => {
   const navigation = useNavigation<any>();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [visible, setVisible] = useState(false);
 
   const [isPasswordHidden, setIsPasswordHidden] = useState(true);
   const [isRememberMe, setIsRememberMe] = useState(true);
 
+  const isValidEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const handleValidation = () => {
+    if (email === '') {
+      Alert.alert('Login error', 'Please enter your email');
+      return;
+    } else if (!isValidEmail(email)) {
+      Alert.alert('Login error', 'Please enter a valid email');
+      return;
+    } else if (password === '') {
+      Alert.alert('Login error', 'Please enter your password');
+      return;
+    } else {
+      const body = {
+        email: email,
+        password: password,
+      };
+      handleContinueButton(body);
+    }
+  };
   const handleEmail = txt => {
     setEmail(txt);
   };
@@ -26,8 +59,26 @@ const CustomerLogin = () => {
   const handlePasswordVisible = () => {
     setIsPasswordHidden(!isPasswordHidden);
   };
-  const handleContinueButton = () => {
-    navigation.navigate('BottomTab');
+  const handleContinueButton = async payload => {
+    setVisible(true);
+    // API call to login API
+    try {
+      const result = await logInUserApi(payload);
+      console.log(
+        '🚀 ~ handleContinueButton ~ result:',
+        result?.response,
+        result?.data,
+      );
+      setVisible(false);
+      navigation.navigate('BottomTab');
+    } catch (error) {
+      setVisible(false);
+      Alert.alert('Register error', `${error?.response?.data?.message}`);
+      console.log(
+        '🚀 ~ handleContinueButton ~ error:',
+        error?.response?.data?.message,
+      );
+    }
   };
 
   return (
@@ -71,7 +122,7 @@ const CustomerLogin = () => {
           </View>
           <CustomButton
             text="Log in"
-            onPress={handleContinueButton}
+            onPress={handleValidation}
             TextStyle={{color: WHITE}}
             extraStyle={{
               marginTop: 50,
@@ -83,7 +134,11 @@ const CustomerLogin = () => {
             <Text style={styles.forgetPassword}>Forgot Password?</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => navigation.navigate('CustomerRegister')}>
+            onPress={() =>
+              navigation.navigate('CustomerRegister', {
+                selectedRole: 'customer',
+              })
+            }>
             <Text style={styles.alreadyHaveAnAccount}>
               Don’t have an account?{' '}
               <Text style={styles.alreadyHaveAnAccountSpan}>Register</Text>
@@ -91,6 +146,7 @@ const CustomerLogin = () => {
           </TouchableOpacity>
         </View>
       </ScrollView>
+      <LoadingModal message={'Please wait...'} visible={visible} />
     </View>
   );
 };

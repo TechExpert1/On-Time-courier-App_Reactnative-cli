@@ -6,6 +6,7 @@ const styles = StyleSheet.create({
   body: {
     flex: 1,
     backgroundColor: BG_COLOR,
+    paddingTop: 50,
   },
   content: {
     width: '100%',

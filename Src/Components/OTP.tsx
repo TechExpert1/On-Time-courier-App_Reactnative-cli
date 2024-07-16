@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     // fontWeight: 'bold',
     borderWidth: 1,
-    fontFamily:fonts.MontserratMedium,
+    fontFamily: fonts.MontserratMedium,
     borderColor: 'rgba(234, 234, 234, 1)',
     backgroundColor: WHITE,
     borderRadius: 8,
@@ -87,7 +87,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     marginHorizontal: 12,
     marginTop: 40,
-    },
+    lineHeight: 50,
+  },
   focusCell: {
     borderColor: PRIMARY,
   },

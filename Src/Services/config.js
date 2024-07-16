@@ -35,7 +35,7 @@ client.interceptors.request.use(
       }
     }
     console.log(
-      'Spotify API Request Config:',
+      'API request data and the URL ========>',
       `${config?.baseURL}${config.url}`,
       config?.params ? config?.params : config?.data,
     );
