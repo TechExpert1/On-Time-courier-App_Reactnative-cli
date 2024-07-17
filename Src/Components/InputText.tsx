@@ -14,6 +14,7 @@ type MyComponentProps = {
   TextStyle?: any;
   value?: string;
   onChange?: any;
+  onChangeText?: any;
   secureTextEntry?: boolean;
   addLeft?: React.ReactNode;
   addRight?: React.ReactNode;
@@ -59,7 +60,7 @@ const InputText: React.FC<MyComponentProps> = props => {
         value={props.value}
         multiline={props.multiline ?? false}
         readOnly={props.readonly ?? false}
-        onChangeText={props.onChange}
+        onChangeText={props.onChangeText}
         onFocus={handleFocus} // Handle focus event
         onBlur={handleBlur} // Handle blur event
         secureTextEntry={props.secureTextEntry}

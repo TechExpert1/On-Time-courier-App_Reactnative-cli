@@ -73,7 +73,7 @@ const CustomerLogin = () => {
       navigation.navigate('BottomTab');
     } catch (error) {
       setVisible(false);
-      Alert.alert('Register error', `${error?.response?.data?.message}`);
+      Alert.alert('Login error', `${error?.response?.data?.message}`);
       console.log(
         '🚀 ~ handleContinueButton ~ error:',
         error?.response?.data?.message,

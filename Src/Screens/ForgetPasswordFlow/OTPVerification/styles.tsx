@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import {BG_COLOR, DARKGREYCOLOR, PRIMARY, TEXTCOLOR, WHITE} from '../../../Theme/Colors';
 import { fonts } from '../../../Theme/AppFonts';
 
@@ -6,6 +6,7 @@ const styles = StyleSheet.create({
   body: {
     flex: 1,
     backgroundColor: BG_COLOR,
+    paddingTop: Platform.OS === 'ios' ? 50 : 0,
   },
   content: {
     width: '100%',
