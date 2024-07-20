@@ -134,13 +134,13 @@ const CustomerRegister = props => {
           <InputLabel label="Full Name" />
           <InputText
             placeholder="Full Name"
-            onChange={handleFullName}
+            onChangeText={handleFullName}
             value={fullName}
           />
           <InputLabel label="E-mail" />
           <InputText
             placeholder="E-mail"
-            onChange={handleEmail}
+            onChangeText={handleEmail}
             value={email}
           />
 
@@ -148,20 +148,20 @@ const CustomerRegister = props => {
           <InputText
             placeholder="Phone #"
             type={'numeric'}
-            onChange={handlePhonNumber}
+            onChangeText={handlePhonNumber}
             value={phoneNumber}
           />
           <InputLabel label="Address" />
           <InputText
             placeholder="Address"
-            onChange={handleAddrss}
+            onChangeText={handleAddrss}
             value={addrss}
           />
           <InputLabel label="Password" />
           <InputText
             placeholder="Password"
             value={password}
-            onChange={handlePassword}
+            onChangeText={handlePassword}
             onRightPress={handlePasswordVisible}
             secureTextEntry={isPasswordHidden}
             addRight={
@@ -173,7 +173,7 @@ const CustomerRegister = props => {
             placeholder="Confirm Password"
             onRightPress={handleConfirmPasswordVisible}
             value={confirmPassword}
-            onChange={handleConfirmPassword}
+            onChangeText={handleConfirmPassword}
             secureTextEntry={isConfirmPassHidden}
             addRight={
               isConfirmPassHidden ? <EyeHide></EyeHide> : <EyeShow></EyeShow>

@@ -10,8 +10,9 @@ import {useNavigation} from '@react-navigation/native';
 import {verifyForgotPasswordOTPAPI} from '../../../Services/apis/authAPIs';
 import LoadingModal from '../../../Components/LoadingModal';
 
-const OTPVerification = () => {
+const OTPVerification = props => {
   const navigation = useNavigation<any>();
+  const {data} = props?.route?.params;
   const [otp, setOTP] = useState<string>('');
   console.log('🚀 ~ OTPVerification ~ otp:', otp, otp?.length);
   const [visible, setVisible] = useState<boolean>(false);
@@ -29,16 +30,17 @@ const OTPVerification = () => {
         otp: otp,
       };
       try {
-        // const results = await verifyForgotPasswordOTPAPI(payload, id);
+        const results = await verifyForgotPasswordOTPAPI(payload, data?.userId);
         setVisible(false);
-        // if (results?.status == 200) {
-        //   Alert.alert('OTP success', `${results?.data?.message}`);
-        navigation.navigate('CreatePassword');
-        // }
+        if (results?.status == 200) {
+          Alert.alert('OTP success', `${results?.data?.message}`);
+          navigation.navigate('CreatePassword', {data: data});
+          // }
+        }
       } catch (error) {
-        // setVisible(false);
-        // Alert.alert('OTP error', `${error?.response?.data?.message}`);
-        // console.log('Error:', error?.response?.data);
+        setVisible(false);
+        Alert.alert('OTP error', `${error?.response?.data?.message}`);
+        console.log('Error:', error?.response?.data);
       }
     }
   };

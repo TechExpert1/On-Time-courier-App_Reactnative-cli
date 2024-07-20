@@ -38,7 +38,7 @@ const ForgetPassword = () => {
         console.log('🚀 ~ handleContinueButton ~ result:', result?.data);
         Alert.alert('Forgot Password', `${result?.data?.message}`);
         setVisible(false);
-        navigation.navigate('OTPVerification');
+        navigation.navigate('OTPVerification', {data: result?.data});
       } catch (error) {
         setVisible(false);
         console.log(

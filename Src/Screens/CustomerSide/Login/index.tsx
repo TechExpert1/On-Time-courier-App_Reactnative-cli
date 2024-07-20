@@ -97,7 +97,7 @@ const CustomerLogin = () => {
           <InputText
             placeholder="E-mail"
             value={email}
-            onChange={handleEmail}
+            onChangeText={handleEmail}
           />
 
           <InputLabel label="Password" />
@@ -106,7 +106,7 @@ const CustomerLogin = () => {
             value={password}
             secureTextEntry={isPasswordHidden}
             onRightPress={handlePasswordVisible}
-            onChange={handlePassword}
+            onChangeText={handlePassword}
             addRight={
               isPasswordHidden ? <EyeHide></EyeHide> : <EyeShow></EyeShow>
             }
