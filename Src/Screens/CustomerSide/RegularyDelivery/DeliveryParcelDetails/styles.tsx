@@ -122,6 +122,42 @@ const styles = StyleSheet.create({
     color: TEXTCOLOR,
     lineHeight: 21.94,
   },
+
+  modalContainer: {
+    flex: 1,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+     paddingHorizontal:16,
+  },
+  modalContent: {
+    // height:212,
+    width: '100%',
+    backgroundColor: WHITE,
+    borderRadius: 8,
+   paddingHorizontal:12,
+   paddingVertical:12,
+    
+  },
+
+  parcelTypeText:
+  {
+   fontSize:14,
+   fontFamily:fonts.MontserratRegular,
+   lineHeight:17.6,
+    color:TEXTCOLOR,
+    marginBottom:10,
+    marginTop:5,
+  },
+  parcelTypeTextSpan:
+  {
+   fontSize:14,
+   fontFamily:fonts.MontserratRegular,
+   lineHeight:17.6,
+    color:DARKGREYCOLOR,
+    marginBottom:10,
+  }
  
 });
 

@@ -1,14 +1,19 @@
 import React, {useState} from 'react';
-import {ScrollView, Text, View} from 'react-native';
+import {Modal, ScrollView, Text, TextInput, View} from 'react-native';
 import styles from './styles';
 import AppBar from '../../../../Components/AppBar';
-import {AMPM, BackIcon, Calendar, PickupAddress} from '../../../../Assets/Svgs';
+import {
+  AMPM,
+  BackIcon,
+  CalendarSVG,
+  PickupAddress,
+} from '../../../../Assets/Svgs';
 import {useNavigation} from '@react-navigation/native';
 import InputLabel from '../../../../Components/InputLabel';
 import InputText from '../../../../Components/InputText';
 import CustomButton from '../../../../Components/CustomButton';
-import { PRIMARY, WHITE } from '../../../../Theme/Colors';
-import { matrixTransform } from 'react-native-svg/lib/typescript/elements/Shape';
+import {BLACK, BLACK_DARK, PLACEHOLDERCOLOR, PRIMARY, WHITE} from '../../../../Theme/Colors';
+import {Calendar} from 'react-native-calendars';
 
 const RegularDeliverySenderDetail = () => {
   const navigation = useNavigation<any>();
@@ -21,6 +26,8 @@ const RegularDeliverySenderDetail = () => {
   const [ReceiverFullName, setReceiverFullName] = useState('');
   const [ReciverPhoneNumber, setReceiverPhoneNumber] = useState('');
   const [ReciverAddress, setReceiverAddress] = useState('');
+  const [showCalendar, setShowCalendar] = useState(false);
+  const [selected, setSelected] = useState('');
 
   const handleFullName = txt => {
     setFullName(txt);
@@ -88,20 +95,27 @@ const RegularDeliverySenderDetail = () => {
         <InputText
           placeholder="Date"
           onChange={handlePickUpDate}
-          addRight={<Calendar></Calendar>}
+          addRight={<CalendarSVG></CalendarSVG>}
+          readonly={true}
+          onRightPress={() => setShowCalendar(true)}
           value={pickupDate}
         />
         <InputLabel label="Pickup Time" />
-        <InputText
-          placeholder="-- : --"
-          onChange={handlePickUpTime}
-          addRight={
+        <View style={styles.InputTextBox}>
+          <TextInput
+            placeholder="-- : --"
+            placeholderTextColor={PLACEHOLDERCOLOR}
+            onChange={handlePickUpTime}
+            value={pickupTime}
+          />
+
           <AMPM></AMPM>
-          }
-          value={pickupTime}
-        />
-         <Text style={[styles.headingStyle, {marginTop:20}]}>Receiver Details</Text>
-         <InputLabel label="Name" />
+        </View>
+
+        <Text style={[styles.headingStyle, {marginTop: 20}]}>
+          Receiver Details
+        </Text>
+        <InputLabel label="Name" />
         <InputText
           placeholder="Full Name"
           onChange={handleReceiverFullName}
@@ -114,7 +128,7 @@ const RegularDeliverySenderDetail = () => {
           onChange={handleReceiverPhoneNumber}
           value={ReciverPhoneNumber}
         />
-        
+
         <InputLabel label="Drop off Address" />
         <InputText
           placeholder="Address"
@@ -122,17 +136,44 @@ const RegularDeliverySenderDetail = () => {
           addRight={<PickupAddress></PickupAddress>}
           value={ReciverAddress}
         />
-         <CustomButton
+        <CustomButton
           text="Next"
           onPress={handleNextButton}
           TextStyle={{color: WHITE}}
           extraStyle={{
             marginTop: 24,
-            marginBottom:70,
+            marginBottom: 70,
             backgroundColor: PRIMARY,
           }}
         />
       </ScrollView>
+      <Modal
+        transparent={true}
+        visible={showCalendar}
+        animationType="slide"
+        onRequestClose={() => setShowCalendar(false)}>
+        <View style={styles.modalContainer}>
+          <Calendar
+            onDayPress={day => {
+              // setBillingDate(day.dateString)
+              setSelected(day.dateString);
+              // console.log(selected)
+            }}
+            // dayComponent={({ date, state }) => {
+            //   return <CustomDayComponent date={date} state={state} />;
+            // }}
+            style={{borderTopLeftRadius: 20, borderTopRightRadius: 20}}
+            markedDates={{
+              [selected]: {
+                selected: true,
+                disableTouchEvent: true,
+                selectedTextColor: PRIMARY,
+              },
+            }}
+          />
+          <View style={styles.dashboardView1}></View>
+        </View>
+      </Modal>
     </View>
   );
 };

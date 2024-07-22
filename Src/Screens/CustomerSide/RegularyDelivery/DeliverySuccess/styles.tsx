@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   content: {
     width: '100%',
     paddingHorizontal: 20,
-    paddingTop: 50,
+    paddingTop: 40,
   },
   PasswordRecover:{
     fontSize:20,

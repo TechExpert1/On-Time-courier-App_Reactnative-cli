@@ -22,6 +22,9 @@ const CustomerHome = () => {
   const handleRegularDelivery = () => {
     navigation.navigate('RegularDeliverySenderDetail');
   };
+  const handleNotifictionNavigation = () => {
+    navigation.navigate('NotificationScreen');
+  };
   return (
     <View style={styles.body}>
       <View style={styles.appBarStyle}>
@@ -33,7 +36,7 @@ const CustomerHome = () => {
             <Text style={styles.name}>Robert Smith</Text>
           </View>
         </View>
-        <NotificationIcon></NotificationIcon>
+       <TouchableOpacity onPress={handleNotifictionNavigation}><NotificationIcon></NotificationIcon></TouchableOpacity>
       </View>
       <View style={{marginHorizontal: 20}}>
         <InputText
@@ -63,7 +66,13 @@ const CustomerHome = () => {
           renderItem={({item, index}) => {
             return (
               <DeliveryBox
-                onTap={() => navigation.navigate('ParcelDetail')}></DeliveryBox>
+              pickup_date={item.pickup_date}
+              pickup_city={item.pickup_city}
+              delivery_city={item.delivery_city}
+              delivery_date={item.delivery_date}
+              driver_name={item.driver_name}
+              status={item.status}
+                onTap={() => navigation.navigate('ParcelDetail', {status: item.status})}></DeliveryBox>
             );
           }}
         />

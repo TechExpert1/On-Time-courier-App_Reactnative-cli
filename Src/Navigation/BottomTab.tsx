@@ -3,9 +3,13 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {StyleSheet} from 'react-native';
 
 import {
+  ChatActive,
   ChatInActive,
   HomeActive,
+  HomeInActive,
+  MyOrderActive,
   MyOrderInActive,
+  ProfileActive,
   ProfileInActive,
 } from '../Assets/Svgs';
 import HomeScreen from '../Screens/Home';
@@ -22,9 +26,11 @@ const BottomTab = () => {
     <Tab.Navigator
       screenOptions={{
         tabBarStyle: {
-          width: '96%',
+          width: '100%',
           height: 65,
           alignSelf: 'center',
+          borderTopLeftRadius:10,
+          borderTopRightRadius:10
         },
         tabBarLabelStyle: {marginBottom: 5},
         tabBarIconStyle: {
@@ -37,7 +43,7 @@ const BottomTab = () => {
           tabBarActiveTintColor: PRIMARY,
           tabBarInactiveTintColor: LIGHT_GREEN,
           tabBarIcon: ({focused}) =>
-            focused ? <HomeActive></HomeActive> : <HomeActive></HomeActive>,
+            focused ? <HomeActive></HomeActive> : <HomeInActive></HomeInActive>,
         }}
         name="Home"
         component={CustomerHome}></Tab.Screen>
@@ -49,7 +55,7 @@ const BottomTab = () => {
           tabBarInactiveTintColor: LIGHT_GREEN,
           tabBarIcon: ({focused}) =>
             focused ? (
-              <MyOrderInActive></MyOrderInActive>
+              <MyOrderActive></MyOrderActive>
             ) : (
               <MyOrderInActive></MyOrderInActive>
             ),
@@ -64,7 +70,7 @@ const BottomTab = () => {
           tabBarInactiveTintColor: LIGHT_GREEN,
           tabBarIcon: ({focused}) =>
             focused ? (
-              <ChatInActive></ChatInActive>
+              <ChatActive></ChatActive>
             ) : (
               <ChatInActive></ChatInActive>
             ),
@@ -79,12 +85,12 @@ const BottomTab = () => {
           tabBarInactiveTintColor: LIGHT_GREEN,
           tabBarIcon: ({focused}) =>
             focused ? (
-              <ProfileInActive></ProfileInActive>
+              <ProfileActive></ProfileActive>
             ) : (
               <ProfileInActive></ProfileInActive>
             ),
         }}
-        name="Profile"
+        name="ME"
         component={ProfileScreen}></Tab.Screen>
     </Tab.Navigator>
   );

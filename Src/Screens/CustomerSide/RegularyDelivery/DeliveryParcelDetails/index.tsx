@@ -1,5 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import {FlatList, Image, ScrollView, Text, TextInput, View} from 'react-native';
+import {
+  FlatList,
+  Image,
+  Modal,
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import styles from './styles';
 import AppBar from '../../../../Components/AppBar';
 import {ArrowDown, BackIcon, InfoIcon} from '../../../../Assets/Svgs';
@@ -11,12 +20,13 @@ import {
   BORDERCOLOR,
   DARKGREYCOLOR,
   LIGHT_GREEN_I,
+  PLACEHOLDERCOLOR,
   PRIMARY,
   WHITE,
 } from '../../../../Theme/Colors';
 import {RadioButton} from 'react-native-paper';
-import {VehiclesList} from '../../../../utils/constant';
-import InfoLine from '../../../../Components/InfoLineBar';
+import {ParcelType, VehiclesList} from '../../../../utils/constant';
+
 
 const RegularDeliveryParcelDetail = () => {
   const navigation = useNavigation<any>();
@@ -27,12 +37,13 @@ const RegularDeliveryParcelDetail = () => {
   const [other, setOther] = useState('');
   const [checked, setChecked] = React.useState('first');
   const [isDriver, setIsDriver] = useState(true);
+  const [ParcelModel, setParcelModel] = useState(false);
+
 
   useEffect(() => {
     console.log(isDriver);
     const timer = setTimeout(() => {
       setIsDriver(false);
-      console.log(isDriver);
     }, 7000);
     return () => clearTimeout(timer);
   }, []);
@@ -74,6 +85,8 @@ const RegularDeliveryParcelDetail = () => {
           placeholder="Parcel Type"
           onChange={handleParcelType}
           addRight={<ArrowDown></ArrowDown>}
+          readonly={true}
+          onRightPress={() => setParcelModel(true)}
           value={parcelType}
         />
 
@@ -91,6 +104,7 @@ const RegularDeliveryParcelDetail = () => {
           <View style={styles.InputTextBox}>
             <TextInput
               placeholder="Height"
+              placeholderTextColor={PLACEHOLDERCOLOR}
               onChange={handleBoxHeight}
               value={boxHeight}
             />
@@ -100,6 +114,7 @@ const RegularDeliveryParcelDetail = () => {
           <View style={styles.InputTextBox}>
             <TextInput
               placeholder="Width"
+              placeholderTextColor={PLACEHOLDERCOLOR}
               onChange={handleBoxWidth}
               value={boxWidth}
             />
@@ -235,6 +250,39 @@ const RegularDeliveryParcelDetail = () => {
           }}
         />
       </ScrollView>
+
+      <Modal
+        transparent={true}
+        visible={ParcelModel}
+        animationType="slide"
+        onRequestClose={() => setParcelModel(false)}>
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <FlatList
+              data={ParcelType}
+              renderItem={({item, index}) => {
+                return (
+                  <TouchableOpacity
+                    onPress={() => {
+                      setParcelModel(false);
+                      setParcelType(item.title + item.spantitle);
+                    }}>
+                    <Text style={styles.parcelTypeText}>
+                      {item.title}{' '}
+                      <Text style={styles.parcelTypeTextSpan}>
+                        {item.spantitle}
+                      </Text>
+                    </Text>
+                    {index < ParcelType.length - 1 && <View style={styles.divider}></View>}
+                  </TouchableOpacity>
+                );
+              }}
+            />
+          </View>
+        </View>
+      </Modal>
+
+     
     </View>
   );
 };

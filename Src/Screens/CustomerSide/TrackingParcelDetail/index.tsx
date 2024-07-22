@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Image, Text, View} from 'react-native';
+import {Image, Text, TouchableOpacity, View} from 'react-native';
 import styles from './styles';
 import AppBar from '../../../Components/AppBar';
 import {
@@ -10,11 +10,13 @@ import {
   OneStar,
 } from '../../../Assets/Svgs';
 import MapView, {Polyline} from 'react-native-maps';
+import { useNavigation } from '@react-navigation/native';
 
 const TrackingParcelDetail = () => {
+  const navigation = useNavigation<any>();
   return (
     <View style={styles.body}>
-      <AppBar text="Tracking Parcel" leftIcon={<BackIcon></BackIcon>}></AppBar>
+      <AppBar text="Tracking Parcel" leftIcon={<BackIcon></BackIcon>} OnLeftPress={()=> navigation.goBack() }></AppBar>
       <MapView
         style={{width: '100%', height: '100%', marginTop: 20}}
         initialRegion={{
@@ -79,7 +81,7 @@ const TrackingParcelDetail = () => {
               alignItems: 'center',
               // width: 90,
             }}>
-           <View style={{marginRight:12}}><MessageBox></MessageBox></View>
+           <TouchableOpacity onPress={()=> navigation.navigate('InBoxScreen')} style={{marginRight:12}}><MessageBox></MessageBox></TouchableOpacity>
             <CallBox></CallBox>
           </View>
         </View>

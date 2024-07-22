@@ -59,6 +59,7 @@ const styles = StyleSheet.create({
     lineHeight: 17.07,
     paddingTop: 30,
     alignSelf: 'center',
+    textDecorationLine:'underline',
     paddingBottom: 40,
   },
   rememberMe: {

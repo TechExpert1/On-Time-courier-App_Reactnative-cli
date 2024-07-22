@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '600',
     fontFamily: fonts.MontserratBold,
+    textDecorationLine:'underline',
     color: PRIMARY,
     lineHeight: 17.07,
     paddingTop: 30,
