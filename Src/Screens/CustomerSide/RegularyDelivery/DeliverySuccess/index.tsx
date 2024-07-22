@@ -30,7 +30,7 @@ const DeliverySuccess = () => {
           onPress={handleContinueButton}
           TextStyle={{color: WHITE}}
           extraStyle={{
-            marginTop: 80,
+            marginTop: 50,
 
             backgroundColor: PRIMARY,
           }}

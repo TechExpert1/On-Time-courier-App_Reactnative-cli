@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     backgroundColor: BG_COLOR,
     borderRadius: 12,
+    marginTop:14,
   },
   dateTextStyle: {
     fontSize: 12,

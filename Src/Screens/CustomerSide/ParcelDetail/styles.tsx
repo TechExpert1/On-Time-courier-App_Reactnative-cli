@@ -9,8 +9,11 @@ const styles = StyleSheet.create({
   },
   content: {
     width: '100%',
-    paddingHorizontal: 20,
+   
     paddingTop: 24,
+  },
+  content1:{
+    paddingHorizontal: 20,
   },
   trackingId: {
     fontSize: 14,
@@ -159,6 +162,29 @@ const styles = StyleSheet.create({
     fontSize:12,
     fontFamily:fonts.MontserratSemiBold,
     color:PRIMARY
+  },
+  filterBottomSheetContainer: {
+    flexDirection: 'column',
+    // margin: '5%',
+    marginHorizontal:10,
+  },
+  StarIcon:{
+    alignSelf:'flex-end',
+    marginTop:7,
+  },
+  AddReview:{
+    fontSize:18,
+    // width:'50%',
+    fontFamily:fonts.MontserratExtraBold,
+    lineHeight:21.05,
+    color: PRIMARY,
+    alignSelf:'center',
+    textAlign:'center',
+    marginTop:16,
+  },
+  StarStyle:{
+    alignSelf:'center',
+    marginTop:16,
   }
 });
 export default styles;

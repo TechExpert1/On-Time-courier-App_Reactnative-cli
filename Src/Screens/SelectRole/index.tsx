@@ -33,9 +33,7 @@ const SelectRole = () => {
       if (selectedRole == 0) {
         navigation.navigate('CustomerRegister')
       } else {
-        Alert.alert('Driver Side', 'Driver Side Under Development', [
-          {text: 'OK'},
-        ]);
+        navigation.navigate('DriverRegister')
       }
     } else {
       Alert.alert('Select Role', 'Please Select Role', [{text: 'OK'}]);

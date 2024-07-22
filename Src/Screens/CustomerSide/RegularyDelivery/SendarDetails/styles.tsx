@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {BG_COLOR, PRIMARY, TEXTCOLOR} from '../../../../Theme/Colors';
+import {BG_COLOR, BORDERCOLOR, PRIMARY, TEXTCOLOR, WHITE} from '../../../../Theme/Colors';
 import { fonts } from '../../../../Theme/AppFonts';
 
 const styles = StyleSheet.create({
@@ -26,7 +26,37 @@ const styles = StyleSheet.create({
     alignItems:'center',
     justifyContent:'center',
     backgroundColor:PRIMARY
-  }
+  },
+  modalContainer: {
+    flex: 1,
+    width: '100%',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    paddingHorizontal:16,
+    // borderRadius:20,
+  },
+  dashboardView1: {
+    height: 20,
+    backgroundColor: WHITE,
+  
+   
+    alignItems:'center',
+    marginBottom: 10,
+    borderBottomLeftRadius:20,
+    borderBottomRightRadius:20,
+  },
+  InputTextBox:{
+    flexDirection: 'row',
+    width: '100%',
+    alignItems: 'center',
+    justifyContent:'space-between',
+    borderRadius: 10,
+    backgroundColor: WHITE,
+    marginTop: '2%',
+    height: 55,
+    paddingHorizontal:20,
+    borderColor: BORDERCOLOR,
+  },
 });
 
 export default styles;

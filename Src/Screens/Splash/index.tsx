@@ -13,7 +13,7 @@ const Splash = () => {
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       navigation.navigate('OnBoardingScreen');
-    }, 3000);
+    }, 5000);
 
     return () => clearTimeout(timeoutId);
   }, []);
