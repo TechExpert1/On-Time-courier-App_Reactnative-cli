@@ -54,8 +54,13 @@ import CrossIcon from './icons/CrossIcon.svg'
 import VerifyTick from './icons/verify_tick.svg'
 import HalfStar from './icons/HalfStar.svg'
 import StarRating from './icons/Rating.svg'
-
+import PayrollTab from './icons/PayrollDetailTab.svg'
+import Reviews from './icons/ReviewsTab.svg'
+import CIINFO from './icons/CI_INFO.svg'
 export {
+  CIINFO,
+  PayrollTab,
+  Reviews,
   StarRating,
   HalfStar,
   VerifyTick,

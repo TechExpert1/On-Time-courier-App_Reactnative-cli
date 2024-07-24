@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     fontFamily: fonts.MontserratBold,
     lineHeight: 19.07,
     color: PRIMARY,
-    paddingTop: 50,
+    // marginTop: 50,
     alignSelf: 'center',
   },
   rowStyle: {

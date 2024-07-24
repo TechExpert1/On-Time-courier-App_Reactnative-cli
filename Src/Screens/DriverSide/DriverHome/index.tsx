@@ -4,9 +4,11 @@ import styles from './styles'
 import { Flag, NotificationIcon } from '../../../Assets/Svgs'
 import { DriverTabStatus,  listOfDriverDeliverDeliveries, listOfDriverDeliveries } from '../../../utils/constant'
 import DriverDeliveryBox from '../../../Components/DriverDeliveryBox'
+import { useNavigation } from '@react-navigation/native'
 
 const DriverHome = () => {
     const [selectedIndex, setSelectedIndex] = useState(0);
+    const navigation = useNavigation<any>();
   return (
     <View style={styles.body}>
       <View style={styles.appBarStyle}>
@@ -74,9 +76,10 @@ const DriverHome = () => {
                 driver_name={item.driver_name}
                 status={item.status}
                 isNew={selectedIndex ===0 ? 'New' : ''}
-                // onTap={() =>
-                //   navigation.navigate('ParcelDetail', {status: item.status})
-                // }
+                onTap={() =>
+                  navigation.navigate('ParcelDetailDriver', {status: selectedIndex === 0 ? 'New' : selectedIndex === 1 ? 'Pending' : item.status})
+                }
+                onMapPress={()=> navigation.navigate('GoForPickUp')}
                 // OnTapDriver={() =>
                 //   navigation.navigate('DriverProfileCustomerSide')
                 // }

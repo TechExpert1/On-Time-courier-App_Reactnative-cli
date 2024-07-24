@@ -1,5 +1,5 @@
 import {Platform, StyleSheet} from 'react-native';
-import {BG_COLOR, BORDERCOLOR, GREYCOLOR_II, LIGHT_GREEN, LIGHT_GREEN_I, PRIMARY, TEXTCOLOR, WHITE, YELLOW} from '../../../Theme/Colors';
+import {BG_COLOR, BLACK_GREY, BORDERCOLOR, GREYCOLOR_II, LIGHT_GREEN, LIGHT_GREEN_I, PRIMARY, TEXTCOLOR, WHITE, YELLOW} from '../../../Theme/Colors';
 import { fonts } from '../../../Theme/AppFonts';
 
 const styles = StyleSheet.create({
@@ -30,14 +30,25 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignContent: 'center',
     justifyContent: 'center',
-    backgroundColor: LIGHT_GREEN_I,
+    backgroundColor: BLACK_GREY,
+    flexDirection:'row',
+    paddingHorizontal:10,
+  },
+  DeliverBox: {
+    // width: 109,
+    height: 29,
+    borderRadius: 4,
+    alignItems: 'center',
+    alignContent: 'center',
+    justifyContent: 'center',
+    backgroundColor: PRIMARY,
     flexDirection:'row',
     paddingHorizontal:10,
   },
   PickupStatusColor:{
     fontSize:14,
     fontFamily:fonts.PoppinsRegular,
-    color:PRIMARY,
+    color:WHITE,
     lineHeight:17.07,
     marginLeft:5
   },

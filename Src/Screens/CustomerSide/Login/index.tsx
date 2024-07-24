@@ -126,6 +126,7 @@ const CustomerLogin = () => {
             TextStyle={{color: WHITE}}
             extraStyle={{
               marginTop: 50,
+              marginBottom:50,
               backgroundColor: PRIMARY,
             }}
           />

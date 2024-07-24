@@ -1,5 +1,5 @@
 import {Platform, StyleSheet} from 'react-native';
-import {BG_COLOR, PRIMARY, TEXTCOLOR} from '../../../../Theme/Colors';
+import {BG_COLOR, BORDERCOLOR, PRIMARY, TEXTCOLOR, WHITE} from '../../../../Theme/Colors';
 import { fonts } from '../../../../Theme/AppFonts';
 
 const styles = StyleSheet.create({

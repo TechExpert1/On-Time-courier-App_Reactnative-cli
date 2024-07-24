@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     borderColor:BORDERCOLOR,
     borderWidth:1,
     paddingHorizontal:8,
-    paddingVertical:8,
+    // paddingVertical:8,
     marginTop:16,
 
   },
@@ -153,6 +153,20 @@ const styles = StyleSheet.create({
     color: BLACK_LIGHT_I,
     marginTop:6,
     
+  },
+  totalRating:{
+    fontSize: 14,
+    fontFamily: fonts.MontserratBold,
+    lineHeight: 17.6,
+    color: BLACK_DARK_I,
+  
+  },
+  ratingText:{
+    fontSize: 14,
+    fontFamily: fonts.MontserratRegular,
+    lineHeight: 17.6,
+    color: BLACK_DARK_I,
+  
   }
 });
 

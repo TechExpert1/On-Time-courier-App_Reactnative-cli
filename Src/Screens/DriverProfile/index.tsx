@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {FlatList, Image, Text, TouchableOpacity, View} from 'react-native';
+import {FlatList, Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import styles from './styles';
 import {BackIcon, HalfStar, StarRating, VerifyTick} from '../../Assets/Svgs';
 import {useNavigation} from '@react-navigation/native';
@@ -86,15 +86,17 @@ const DriverProfileCustomerSide = () => {
               style={{flexDirection: 'row', justifyContent: 'space-between'}}>
               <View style={{flexDirection: 'row'}}>
                 <HalfStar></HalfStar>
-                <Text>4.9</Text>
+                <Text style={styles.totalRating
+                }>4.9</Text>
               </View>
-              <Text>(702 reviews)</Text>
+              <Text style={styles.ratingText}>(702 reviews)</Text>
             </View>
+           
             <FlatList
               data={DriverReivews}
-              style={{marginBottom: 200}}
+              contentContainerStyle={{marginBottom: 200}}
               renderItem={({item, index}) => {
-                const isLastItem = index === DriverReivews.length - 1;
+               
                 return (
                   <View
                     style={[
@@ -122,6 +124,7 @@ const DriverProfileCustomerSide = () => {
                 );
               }}
             />
+           
             
           </View>
         )}

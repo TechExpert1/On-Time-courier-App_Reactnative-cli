@@ -38,7 +38,7 @@ import {StarRatingDisplay} from 'react-native-star-rating-widget';
 import InputText from '../../../Components/InputText';
 import InputLabel from '../../../Components/InputLabel';
 
-const ParcelDetail = props => {
+const ParcelDetailDriver = props => {
   const {status} = props.route.params;
   const RateBottomRef = useRef<any>();
 
@@ -65,32 +65,24 @@ const ParcelDetail = props => {
           }}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Text style={styles.trackingId}>#4589632579</Text>
-            <ClipIcon></ClipIcon>
+            {/* <ClipIcon></ClipIcon> */}
           </View>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('TrackingParcelDetail')}
-            style={styles.PickUpBox}>
-            <View style={styles.locationIconStyle}>
-              <LocationSearching></LocationSearching>
-            </View>
-            <Text style={styles.PickupStatusColor}>Track Parcel</Text>
-          </TouchableOpacity>
+         {
+          status === 'Pending' ?  <TouchableOpacity
+          style={styles.PickUpBox}>
+          
+          <Text style={styles.PickupStatusColor}>Pending</Text>
+        </TouchableOpacity> :<View></View>
+         }
+          {
+          status === 'Delivered' ?  <TouchableOpacity
+          style={styles.DeliverBox}>
+          
+          <Text style={styles.PickupStatusColor}>Delivered</Text>
+        </TouchableOpacity> :<View></View>
+         }
         </View>
 
-        {status === 'Delivered' ? (
-          <Image
-            style={{
-              height: 60,
-              width: '95%',
-              alignSelf: 'center',
-              marginHorizontal: 40,
-            }}
-            source={require('../../../Assets/Images/deliver_status.png')}></Image>
-        ) : (
-          <Image
-            style={{width: '93%', alignSelf: 'center', paddingHorizontal: 30}}
-            source={require('../../../Assets/Images/status1.png')}></Image>
-        )}
         <View style={styles.content1}>
           <Text style={styles.titleText}>Driver</Text>
 
@@ -183,58 +175,40 @@ const ParcelDetail = props => {
             isDivider={true}></InfoLine>
           <InfoLine title="EST. Delivery" value="June 5, 2024"></InfoLine>
 
-          <View style={styles.InfoBox}>
-            <Text style={styles.totalCharges}>Total Charges</Text>
-            <View>
-              <Text style={styles.paymentPrice}>CAD 72.2/-</Text>
-              <Text style={styles.status}>Paid</Text>
-            </View>
-          </View>
-          {status === 'Delivered' ? (
+         
+          {status === 'New' ? (
             <CustomButton
-              text="Rate Driver"
-              onPress={() => RateBottomRef.current.open()}
+              text="Go For Pickup"
+              // onPress={() => RateBottomRef.current.open()}
               TextStyle={{
-                color: TEXTCOLOR,
+                color: WHITE,
                 fontSize: 16,
                 fontFamily: fonts.MontserratBold,
               }}
-              leftIcon={<StarIcon></StarIcon>}
+              
               extraStyle={{
                 marginTop: 24,
                 marginBottom: 65,
-                backgroundColor: 'rgba(168, 230, 207, 1)',
+                backgroundColor: PRIMARY,
               }}
             />
-          ) : (
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
+          ) : status === 'Pending' ? (
+            <CustomButton
+              text="Confirm Pickup"
+              // onPress={() => RateBottomRef.current.open()}
+              TextStyle={{
+                color: WHITE,
+                fontSize: 16,
+                fontFamily: fonts.MontserratBold,
+              }}
+              
+              extraStyle={{
+                marginTop: 30,
                 marginBottom: 65,
-                marginTop: 24,
-              }}>
-              <TouchableOpacity onPress={() => setCancelPopup(true)}>
-                <Text style={styles.CancelOrder}>Cancel Order</Text>
-              </TouchableOpacity>
-              <CustomButton
-                text="Download Receipt"
-                // onPress={handleContinueButton}
-                TextStyle={{
-                  color: TEXTCOLOR,
-                  fontSize: 16,
-                  fontFamily: fonts.MontserratBold,
-                }}
-                leftIcon={<Download></Download>}
-                extraStyle={{
-                  width: '65%',
-
-                  backgroundColor: 'rgba(168, 230, 207, 1)',
-                }}
-              />
-            </View>
-          )}
+                backgroundColor: PRIMARY,
+              }}
+            />
+          ) : <View></View>}
         </View>
 
         <Modal
@@ -349,4 +323,4 @@ const ParcelDetail = props => {
   );
 };
 
-export default ParcelDetail;
+export default ParcelDetailDriver;

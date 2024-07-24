@@ -46,6 +46,10 @@ import DriverProfileCustomerSide from '../Screens/DriverProfile';
 import DriverBottomTab from './DriverBottomTab';
 import DriverHome from '../Screens/DriverSide/DriverHome';
 import DriverProfile from '../Screens/DriverProfile';
+import ParcelDetailDriver from '../Screens/DriverSide/ParcelDetailDriver';
+import GoForPickUp from '../Screens/DriverSide/Parcel';
+import DriverEditProfile from '../Screens/DriverSide/DriverEditProfile';
+import DriverReviews from '../Screens/DriverSide/DriverReviews';
 
 
 
@@ -106,6 +110,10 @@ const Stack = () => {
       <stack.Screen name="ProjectRejected" component={ProjectRejected} />
       <stack.Screen name="DriverHome" component={DriverHome} />
       <stack.Screen name="DriverProfile" component={DriverProfile} />
+      <stack.Screen name="ParcelDetailDriver" component={ParcelDetailDriver} />
+      <stack.Screen name="GoForPickUp" component={GoForPickUp} />
+      <stack.Screen name="DriverEditProfile" component={DriverEditProfile} />
+      <stack.Screen name="DriverReviews" component={DriverReviews} />
       <stack.Screen name="BottomTab" component={BottomTab} />
 
       <stack.Screen name="DriverBottomTab" component={DriverBottomTab} />
