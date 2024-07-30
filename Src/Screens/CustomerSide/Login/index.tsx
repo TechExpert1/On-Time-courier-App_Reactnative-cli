@@ -131,10 +131,12 @@ const CustomerLogin = () => {
             }}
           />
           <TouchableOpacity
+          style={styles.forgetPassword}
             onPress={() => navigation.navigate('ForgetPassword')}>
             <Text style={styles.forgetPassword}>Forgot Password?</Text>
           </TouchableOpacity>
           <TouchableOpacity
+          style={{width:240,alignItems:'center', justifyContent:'center',alignSelf:'center'}}
             onPress={() =>
               navigation.navigate('CustomerRegister', {
                 selectedRole: 'customer',

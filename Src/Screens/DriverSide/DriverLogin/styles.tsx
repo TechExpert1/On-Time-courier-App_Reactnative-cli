@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
     lineHeight: 17.26,
   },
   alreadyHaveAnAccount: {
+    width:240,
     fontSize: 14,
     fontFamily: fonts.MontserratRegular,
     lineHeight: 17.07,
@@ -70,10 +71,12 @@ const styles = StyleSheet.create({
     marginLeft:6,
   },
   forgetPassword: {
+    width:160,
     fontSize: 16,
     fontFamily: fonts.MontserratBold,
     lineHeight: 19.07,
     color: PRIMARY,
+   
     // marginTop: 50,
     alignSelf: 'center',
   },

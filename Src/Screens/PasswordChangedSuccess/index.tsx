@@ -5,10 +5,15 @@ import CustomButton from '../../Components/CustomButton'
 import { PRIMARY, WHITE } from '../../Theme/Colors'
 import { useNavigation } from '@react-navigation/native'
 
-const PasswordChangedSuccess = () => {
+const PasswordChangedSuccess = props => {
+  const {isRole} = props.route.params;
     const navigation = useNavigation<any>();
     const handleContinueButton = () => {
-        navigation.navigate('BottomTab');
+        if(isRole === 'driver'){
+          navigation.navigate('DriverBottomTab');
+        }else {
+          navigation.navigate('BottomTab');
+        }
       };
     return (
         <SafeAreaView style={{flex:1}}>

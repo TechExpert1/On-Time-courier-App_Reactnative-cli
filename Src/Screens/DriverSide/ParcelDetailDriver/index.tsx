@@ -40,6 +40,7 @@ import InputLabel from '../../../Components/InputLabel';
 
 const ParcelDetailDriver = props => {
   const {status} = props.route.params;
+  console.log(status)
   const RateBottomRef = useRef<any>();
 
   const navigation = useNavigation<any>();
@@ -62,25 +63,26 @@ const ParcelDetailDriver = props => {
             flexDirection: 'row',
             justifyContent: 'space-between',
             paddingHorizontal: 20,
+
           }}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <View style={{flexDirection: 'row', alignItems: 'center', justifyContent:'space-between'}}>
             <Text style={styles.trackingId}>#4589632579</Text>
             {/* <ClipIcon></ClipIcon> */}
           </View>
-         {
-          status === 'Pending' ?  <TouchableOpacity
-          style={styles.PickUpBox}>
-          
-          <Text style={styles.PickupStatusColor}>Pending</Text>
-        </TouchableOpacity> :<View></View>
-         }
-          {
-          status === 'Delivered' ?  <TouchableOpacity
-          style={styles.DeliverBox}>
-          
-          <Text style={styles.PickupStatusColor}>Delivered</Text>
-        </TouchableOpacity> :<View></View>
-         }
+          {status === 'Pending' || status === 'Delivered' || status === 'Picked Up' ? (
+            <TouchableOpacity style={[status === 'Pending' ? styles.PickUpBox : status === 'Picked Up' ? styles.PickedUpBox  : styles.DeliverBox]}>
+              <Text style={styles.PickupStatusColor}>{status}</Text>
+            </TouchableOpacity>
+          ) : (
+            <View></View>
+          )}
+          {/* {status === 'Delivered' ? (
+            <TouchableOpacity style={styles.DeliverBox}>
+              <Text style={styles.PickupStatusColor}>Delivered</Text>
+            </TouchableOpacity>
+          ) : (
+            <View style={{ paddingHorizontal:10,}}></View>
+          )} */}
         </View>
 
         <View style={styles.content1}>
@@ -175,7 +177,6 @@ const ParcelDetailDriver = props => {
             isDivider={true}></InfoLine>
           <InfoLine title="EST. Delivery" value="June 5, 2024"></InfoLine>
 
-         
           {status === 'New' ? (
             <CustomButton
               text="Go For Pickup"
@@ -185,7 +186,6 @@ const ParcelDetailDriver = props => {
                 fontSize: 16,
                 fontFamily: fonts.MontserratBold,
               }}
-              
               extraStyle={{
                 marginTop: 24,
                 marginBottom: 65,
@@ -201,14 +201,28 @@ const ParcelDetailDriver = props => {
                 fontSize: 16,
                 fontFamily: fonts.MontserratBold,
               }}
-              
               extraStyle={{
                 marginTop: 30,
                 marginBottom: 65,
                 backgroundColor: PRIMARY,
               }}
             />
-          ) : <View></View>}
+          ) : status === 'Picked Up' ? <CustomButton
+          text="Deliver"
+          // onPress={() => RateBottomRef.current.open()}
+          TextStyle={{
+            color: WHITE,
+            fontSize: 16,
+            fontFamily: fonts.MontserratBold,
+          }}
+          extraStyle={{
+            marginTop: 30,
+            marginBottom: 65,
+            backgroundColor: PRIMARY,
+          }}
+        /> : (
+            <View></View>
+          )}
         </View>
 
         <Modal
@@ -283,15 +297,19 @@ const ParcelDetailDriver = props => {
           }}>
           <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.filterBottomSheetContainer}>
-              <TouchableOpacity onPress={()=>RateBottomRef.current.close()} style={styles.StarIcon}><CrossIcon></CrossIcon></TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => RateBottomRef.current.close()}
+                style={styles.StarIcon}>
+                <CrossIcon></CrossIcon>
+              </TouchableOpacity>
               <Text style={styles.AddReview}>Add Review</Text>
               <StarRatingDisplay
-              style={styles.StarStyle}
+                style={styles.StarStyle}
                 starSize={40}
                 rating={4}
                 emptyColor={LIGHTGREY}
               />
-              <InputLabel label="Add Reviews"  />
+              <InputLabel label="Add Reviews" />
               <InputText
                 placeholder="Type here..."
                 extraStyle={{
@@ -301,20 +319,20 @@ const ParcelDetailDriver = props => {
                 onChange={handleComment}
                 value={comment}
               />
-                <CustomButton
-              text="Submit"
-              onPress={() => RateBottomRef.current.close()}
-              TextStyle={{
-                color: WHITE,
-                fontSize: 16,
-                fontFamily: fonts.MontserratBold,
-              }}
-              extraStyle={{
-                marginTop: 24,
-                marginBottom: 40,
-                backgroundColor: PRIMARY,
-              }}
-            />
+              <CustomButton
+                text="Submit"
+                onPress={() => RateBottomRef.current.close()}
+                TextStyle={{
+                  color: WHITE,
+                  fontSize: 16,
+                  fontFamily: fonts.MontserratBold,
+                }}
+                extraStyle={{
+                  marginTop: 24,
+                  marginBottom: 40,
+                  backgroundColor: PRIMARY,
+                }}
+              />
             </View>
           </ScrollView>
         </RBSheet>

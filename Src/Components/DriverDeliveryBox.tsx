@@ -39,6 +39,7 @@ type MyComponentProps = {
   onTap?: () => void;
   OnTapDriver?: () => void;
   onMapPress?: () => void;
+  onGoForPickupPress?:()=>void;
 };
 
 const DriverDeliveryBox: React.FC<MyComponentProps> = props => {
@@ -121,7 +122,7 @@ const DriverDeliveryBox: React.FC<MyComponentProps> = props => {
             />
             <CustomButton
               text="Go For Pickup"
-              // onPress={handleContinueButton}
+              onPress={props.onGoForPickupPress}
 
               extraStyle={{
                 //   marginTop: 100,

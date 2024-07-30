@@ -65,7 +65,7 @@ const ProfileScreen = () => {
           Title="Edit Profile"
           leftIcon={<EditProfileTab></EditProfileTab>}></ProfileTab>
         <ProfileTab
-          OnTap={() => navigation.navigate('ChangePasswordScreen')}
+          OnTap={() => navigation.navigate('ChangePasswordScreen',{isRole:'customer'})}
           Title="Change Password"
           leftIcon={<ChangePassword></ChangePassword>}></ProfileTab>
         <ProfileTab

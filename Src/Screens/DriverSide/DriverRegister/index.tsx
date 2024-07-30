@@ -64,19 +64,19 @@ const DriverRegister = () => {
           <Text style={styles.welcomeSpanText}>On Time Couriers</Text>
         </Text>
         <InputLabel label="Full Name"  />
-        <InputText placeholder="Full Name" onChange={handleFullName} value={fullName}/>
+        <InputText placeholder="Full Name" onChangeText={handleFullName} value={fullName}/>
         <InputLabel label="E-mail" />
-        <InputText placeholder="E-mail" onChange={handleEmail} value={email}/>
+        <InputText placeholder="E-mail" onChangeText={handleEmail} value={email}/>
 
         <InputLabel label="Phone #" />
-        <InputText placeholder="Phone #" type={'numeric'} onChange={handlePhonNumber} value={phoneNumber}/>
+        <InputText placeholder="Phone #" type={'numeric'} onChangeText={handlePhonNumber} value={phoneNumber}/>
         <InputLabel label="Address" />
-        <InputText placeholder="Address" onChange={handleAddrss} value={addrss}/>
+        <InputText placeholder="Address" onChangeText={handleAddrss} value={addrss}/>
         <InputLabel label="Password" />
         <InputText
           placeholder="Password"
           value={password}
-          onChange={handlePassword}
+          onChangeText={handlePassword}
           onRightPress={handlePasswordVisible}
           secureTextEntry={isPasswordHidden}
           addRight={
@@ -88,7 +88,7 @@ const DriverRegister = () => {
           placeholder="Confirm Password"
           onRightPress={handleConfirmPasswordVisible}
           value={confirmPassword}
-          onChange={handleConfirmPassword}
+          onChangeText={handleConfirmPassword}
           secureTextEntry={isConfirmPassHidden}
           addRight={
             isConfirmPassHidden ? <EyeHide></EyeHide> : <EyeShow></EyeShow>

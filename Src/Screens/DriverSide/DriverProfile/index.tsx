@@ -52,7 +52,7 @@ const DriverProfile = () => {
           Title="Payroll details"
           leftIcon={<PayrollTab></PayrollTab>}></ProfileTab>
         <ProfileTab
-          OnTap={() => navigation.navigate('ChangePasswordScreen')}
+          OnTap={() => navigation.navigate('ChangePasswordScreen',{isRole:'driver'})}
           Title="Change Password"
           leftIcon={<ChangePassword></ChangePassword>}></ProfileTab>
         <ProfileTab
