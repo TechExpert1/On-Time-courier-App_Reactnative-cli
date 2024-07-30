@@ -12,7 +12,7 @@ import LoadingModal from '../../../Components/LoadingModal';
 import {resetPasswordApi} from '../../../Services/apis/authAPIs';
 
 const CreatePassword = props => {
-  const {data} = props?.route?.params;
+  // const {data} = props?.route?.params;
   const navigation = useNavigation<any>();
   const [password, setPassword] = useState('');
   const [isPasswordHidden, setIsPasswordHidden] = useState(true);
@@ -35,6 +35,8 @@ const CreatePassword = props => {
   };
 
   const handleContinueButton = async () => {
+    navigation.navigate('CreatePassword');
+    return; // have to reset it
     if (password === '' || confirmPassword === '') {
       Alert.alert('Please fill both password fields');
       return;

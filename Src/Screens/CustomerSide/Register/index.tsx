@@ -34,6 +34,8 @@ const CustomerRegister = props => {
     return emailRegex.test(email);
   };
   const handleValidation = () => {
+    navigation.navigate('CustomerOTP');
+    return; // have to reset it
     if (fullName === '') {
       Alert.alert('Register error', 'Please enter your full name');
       return;
