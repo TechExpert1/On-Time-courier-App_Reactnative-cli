@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react'
-import { Text, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import AppBar from '../../../Components/AppBar';
 import styles from './styles';
 import { UploadPictureSVG } from '../../../Assets/Svgs';
@@ -22,7 +22,7 @@ const DriverProfilePicture = () => {
          <UploadPictureSVG></UploadPictureSVG>
          
          </View>
-         <Text style={styles.uploadPicture}>Upload picture</Text>
+         <TouchableOpacity><Text style={styles.uploadPicture}>Upload picture</Text></TouchableOpacity>
           <CustomButton
             text="Continue"
             onPress={handleContinueButton}

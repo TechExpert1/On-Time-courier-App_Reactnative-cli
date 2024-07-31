@@ -9,7 +9,7 @@ const DriverEnableLocation = () => {
     const [otp, setOTP] = useState<string>('');
   
     const handleContinueButton = () => {
-      navigation.navigate('DriverProfileSetup');
+      navigation.navigate('DriverProfileSetup',{status: '0'});
     };
     return (
       <View style={styles.body}>

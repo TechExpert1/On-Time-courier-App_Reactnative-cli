@@ -71,6 +71,7 @@ const styles = StyleSheet.create({
     marginLeft:6,
   },
   forgetPassword: {
+    width:160,
     fontSize: 16,
     fontFamily: fonts.MontserratBold,
     lineHeight: 19.07,

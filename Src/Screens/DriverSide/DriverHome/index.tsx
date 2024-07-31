@@ -9,6 +9,9 @@ import { useNavigation } from '@react-navigation/native'
 const DriverHome = () => {
     const [selectedIndex, setSelectedIndex] = useState(0);
     const navigation = useNavigation<any>();
+    const handleNotifictionNavigation = () => {
+      navigation.navigate('NotificationScreen');
+    };
   return (
     <View style={styles.body}>
       <View style={styles.appBarStyle}>
@@ -26,7 +29,7 @@ const DriverHome = () => {
           </View>
         </View>
         <TouchableOpacity
-        //    onPress={handleNotifictionNavigation}
+           onPress={handleNotifictionNavigation}
         >
           <NotificationIcon></NotificationIcon>
         </TouchableOpacity>
@@ -77,9 +80,9 @@ const DriverHome = () => {
                 status={item.status}
                 isNew={selectedIndex ===0 ? 'New' : ''}
                 onTap={() =>
-                  navigation.navigate('ParcelDetailDriver', {status: selectedIndex === 0 ? 'New' : selectedIndex === 1 ? 'Pending' : item.status})
+                  navigation.navigate('ParcelDetailDriver', {status: selectedIndex === 0 ? 'New' : selectedIndex === 1 && item.status === 'Pending' ? 'Pending' : item.status})
                 }
-                onMapPress={()=> navigation.navigate('GoForPickUp')}
+                onGoForPickupPress={()=> setSelectedIndex(1)}
                 // OnTapDriver={() =>
                 //   navigation.navigate('DriverProfileCustomerSide')
                 // }

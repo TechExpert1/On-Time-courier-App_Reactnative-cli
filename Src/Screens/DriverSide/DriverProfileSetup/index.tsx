@@ -17,14 +17,22 @@ import CustomButton from '../../../Components/CustomButton';
 import {PRIMARY, WHITE} from '../../../Theme/Colors';
 import {useNavigation} from '@react-navigation/native';
 
-const DriverProfileSetup = () => {
+const DriverProfileSetup = props => {
+  const {status} = props.route.params;
   const navigation = useNavigation<any>();
   const [selectVehicle, setSelectVehicle] = useState('');
   const [plateNumber, setPlateNumber] = useState('');
   const [SelectVehicleModel, setVehicleModel] = useState(false);
+
+
   const handleContinueButton = () => {
-    navigation.navigate('RequestSubmit',{status: '0'});
-  };
+     if(status === '1'){
+      navigation.navigate('DriverBottomTab');
+     }else {
+      navigation.navigate('RequestSubmit',{status: '0'});
+     }
+    };
+  
   const hanldeSelectVehicle = txt => {
     setSelectVehicle(txt);
   };
@@ -42,7 +50,7 @@ const DriverProfileSetup = () => {
           placeholder="Select Vehicle"
           addRight={<ArrowDown></ArrowDown>}
           readonly={true}
-          onChange={hanldeSelectVehicle}
+          onChangeText={hanldeSelectVehicle}
           onRightPress={() => setVehicleModel(true)}
           value={selectVehicle}
         />
@@ -50,7 +58,7 @@ const DriverProfileSetup = () => {
         <InputLabel label="License Plate Number" />
         <InputText
           placeholder="Plate Number"
-          onChange={hanldePlateNumber}
+          onChangeText={hanldePlateNumber}
           value={plateNumber}
         />
         <InputLabel label="License" />

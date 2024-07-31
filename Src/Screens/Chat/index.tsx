@@ -10,6 +10,9 @@ import { useNavigation } from '@react-navigation/native';
 
 const ChatScreen = () => {
   const navigation = useNavigation<any>();
+  const handleNotifictionNavigation = () => {
+    navigation.navigate('NotificationScreen');
+  };
   return (
     <View style={styles.body}>
       <View style={styles.appBarStyle}>
@@ -18,7 +21,8 @@ const ChatScreen = () => {
             <Text style={styles.ScreeName}>Messages</Text>
           </View>
         </View>
-        <NotificationIcon></NotificationIcon>
+        <TouchableOpacity onPress={handleNotifictionNavigation}><NotificationIcon></NotificationIcon></TouchableOpacity>
+        
       </View>
 
       <View style={{marginHorizontal: 20, marginTop:25}}>

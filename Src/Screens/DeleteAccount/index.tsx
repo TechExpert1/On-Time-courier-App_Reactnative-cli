@@ -23,7 +23,7 @@ const DeleteAccountScreen = () => {
   };
 
   const handleContinueButton = () => {
-    navigation.navigate('Splash');
+    navigation.navigate('CustomerLogin');
   };
 
   return (
@@ -44,7 +44,7 @@ const DeleteAccountScreen = () => {
           Order Details, Chats & Personal Information.
         </Text>
         <Text style={styles.passwordToContinue}>
-          Enter you password to continue.
+          Enter your password to continue.
         </Text>
         <InputLabel label="Password" />
         <InputText

@@ -9,7 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 const ProjectRejected = () => {
     const navigation = useNavigation<any>();
     const handleContinueButton = () => {
-        navigation.navigate('RequestSubmit',{status:'1'});
+        navigation.navigate('DriverProfileSetup',{status:'1'});
       };
     return (
         <View style={styles.body}>

@@ -27,7 +27,7 @@ const DriverLogin = () => {
     setIsPasswordHidden(!isPasswordHidden);
   };
   const handleContinueButton = () => {
-    navigation.navigate('BottomTab');
+    navigation.navigate('DriverBottomTab');
   };
   return (
     <View style={styles.body}>
@@ -79,10 +79,12 @@ const DriverLogin = () => {
             }}
           />
           <TouchableOpacity
+          style={styles.forgetPassword}
             onPress={() => navigation.navigate('ForgetPassword')}>
             <Text style={styles.forgetPassword}>Forgot Password?</Text>
           </TouchableOpacity>
           <TouchableOpacity
+          style={{width:240,alignItems:'center', justifyContent:'center',alignSelf:'center'}}
             onPress={() => navigation.navigate('DriverRegister')}>
             <Text style={styles.alreadyHaveAnAccount}>
               Don’t have an account?{' '}

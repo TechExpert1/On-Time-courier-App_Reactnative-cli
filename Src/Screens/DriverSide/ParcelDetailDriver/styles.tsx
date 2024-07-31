@@ -34,6 +34,17 @@ const styles = StyleSheet.create({
     flexDirection:'row',
     paddingHorizontal:10,
   },
+  PickedUpBox: {
+    // width: 109,
+    height: 29,
+    borderRadius: 4,
+    alignItems: 'center',
+    alignContent: 'center',
+    justifyContent: 'center',
+    backgroundColor: YELLOW,
+    flexDirection:'row',
+    paddingHorizontal:10,
+  },
   DeliverBox: {
     // width: 109,
     height: 29,
@@ -44,6 +55,8 @@ const styles = StyleSheet.create({
     backgroundColor: PRIMARY,
     flexDirection:'row',
     paddingHorizontal:10,
+    
+    
   },
   PickupStatusColor:{
     fontSize:14,

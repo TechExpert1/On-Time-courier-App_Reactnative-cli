@@ -8,7 +8,8 @@ import InputText from '../../Components/InputText';
 import CustomButton from '../../Components/CustomButton';
 import {PRIMARY, WHITE} from '../../Theme/Colors';
 
-const ChangePasswordScreen = () => {
+const ChangePasswordScreen = props => {
+  const {isRole} = props.route.params;
   const navigation = useNavigation<any>();
   const [oldPassword, setOldPassword] = useState('');
   const [isOldPasswordHidden, setIsOldPasswordHidden] = useState(true);
@@ -36,7 +37,7 @@ const ChangePasswordScreen = () => {
     setIsConfirmPasswordHidden(!isConfirmPassHidden);
   };
   const handleContinueButton = () => {
-    navigation.navigate('PasswordChangedSuccess');
+    navigation.navigate('PasswordChangedSuccess',{isRole:isRole});
   };
 
 
@@ -58,7 +59,7 @@ const ChangePasswordScreen = () => {
         <InputText
           placeholder="Password"
           value={oldPassword}
-          onChange={handleOldPassword}
+          onChangeText={handleOldPassword}
           onRightPress={handleOldPasswordVisible}
           secureTextEntry={isOldPasswordHidden}
           addRight={
@@ -74,7 +75,7 @@ const ChangePasswordScreen = () => {
         <InputText
           placeholder="Password"
           value={password}
-          onChange={handlePassword}
+          onChangeText={handlePassword}
           onRightPress={handlePasswordVisible}
           secureTextEntry={isPasswordHidden}
           addRight={
@@ -87,7 +88,7 @@ const ChangePasswordScreen = () => {
           placeholder="Confirm Password"
           onRightPress={handleConfirmPasswordVisible}
           value={confirmPassword}
-          onChange={handleConfirmPassword}
+          onChangeText={handleConfirmPassword}
           secureTextEntry={isConfirmPassHidden}
           addRight={
             isConfirmPassHidden ? <EyeHide></EyeHide> : <EyeShow></EyeShow>

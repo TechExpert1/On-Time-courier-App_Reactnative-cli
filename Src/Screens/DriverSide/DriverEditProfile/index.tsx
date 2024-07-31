@@ -23,13 +23,13 @@ import CustomButton from '../../../Components/CustomButton';
 import {PRIMARY, TEXTCOLOR, WHITE} from '../../../Theme/Colors';
 import styles from './styles';
 import {AllVehiclesList} from '../../../utils/constant';
-import { fonts } from '../../../Theme/AppFonts';
+import {fonts} from '../../../Theme/AppFonts';
 
 const DriverEditProfile = () => {
   const navigation = useNavigation<any>();
   const [fullName, setFullName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [plateNumber, setPlateNumber] = useState('');
+  const [plateFormNumber, setPlateFormNumber] = useState('');
   const [addrss, setAddress] = useState('');
   const [SelectVehicleModel, setVehicleModel] = useState(false);
   const [selectVehicle, setSelectVehicle] = useState('');
@@ -49,7 +49,7 @@ const DriverEditProfile = () => {
   };
 
   const hanldePlateNumber = txt => {
-    setPlateNumber(txt);
+    setPlateFormNumber(txt);
   };
 
   const hanldeSelectVehicle = txt => {
@@ -86,20 +86,20 @@ const DriverEditProfile = () => {
         <InputLabel label="Full Name" />
         <InputText
           placeholder="Full Name"
-          onChange={handleFullName}
+          onChangeText={handleFullName}
           value={fullName}
         />
         <InputLabel label="Phone #" />
         <InputText
           placeholder="Phone #"
           type={'numeric'}
-          onChange={handlePhonNumber}
+          onChangeText={handlePhonNumber}
           value={phoneNumber}
         />
         <InputLabel label="Address" />
         <InputText
           placeholder="Address"
-          onChange={handleAddrss}
+          onChangeText={handleAddrss}
           value={addrss}
         />
         <InputLabel label="Vehicle" />
@@ -107,7 +107,7 @@ const DriverEditProfile = () => {
           placeholder="Select Vehicle"
           addRight={<ArrowDown></ArrowDown>}
           readonly={true}
-          onChange={hanldeSelectVehicle}
+          onChangeText={hanldeSelectVehicle}
           onRightPress={() => setVehicleModel(true)}
           value={selectVehicle}
         />
@@ -115,8 +115,8 @@ const DriverEditProfile = () => {
         <InputLabel label="License Plate Number" />
         <InputText
           placeholder="Plate Number"
-          onChange={hanldePlateNumber}
-          value={plateNumber}
+          onChangeText={hanldePlateNumber}
+          value={plateFormNumber}
         />
         <InputLabel label="License" />
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -157,8 +157,15 @@ const DriverEditProfile = () => {
           </View>
         </View>
         <View style={styles.InfoBox}>
-            <CIINFO></CIINFO>
-          <Text style={{width:292, fontFamily:fonts.MontserratRegular, color:TEXTCOLOR, fontSize:14, marginLeft:2}}>
+          <CIINFO></CIINFO>
+          <Text
+            style={{
+              width: 292,
+              fontFamily: fonts.MontserratRegular,
+              color: TEXTCOLOR,
+              fontSize: 14,
+              marginLeft: 2,
+            }}>
             If you change your vehicle information then your profile will send
             to the admin for verification and till then you will not be able to
             get orders request
