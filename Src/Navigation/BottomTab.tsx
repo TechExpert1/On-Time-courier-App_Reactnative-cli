@@ -1,6 +1,6 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 
 import {
   ChatActive,
@@ -27,10 +27,10 @@ const BottomTab = () => {
       screenOptions={{
         tabBarStyle: {
           width: '100%',
-          height: 65,
+          height: Platform.OS === 'ios' ? 85 : 65,
           alignSelf: 'center',
-          borderTopLeftRadius:10,
-          borderTopRightRadius:10
+          borderTopLeftRadius: 10,
+          borderTopRightRadius: 10,
         },
         tabBarLabelStyle: {marginBottom: 5},
         tabBarIconStyle: {
@@ -69,11 +69,7 @@ const BottomTab = () => {
           tabBarActiveTintColor: PRIMARY,
           tabBarInactiveTintColor: LIGHT_GREEN,
           tabBarIcon: ({focused}) =>
-            focused ? (
-              <ChatActive></ChatActive>
-            ) : (
-              <ChatInActive></ChatInActive>
-            ),
+            focused ? <ChatActive></ChatActive> : <ChatInActive></ChatInActive>,
         }}
         name="Messages"
         component={ChatScreen}></Tab.Screen>

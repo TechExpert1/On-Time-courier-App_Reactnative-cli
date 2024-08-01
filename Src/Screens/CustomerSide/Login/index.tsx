@@ -33,8 +33,6 @@ const CustomerLogin = () => {
   };
 
   const handleValidation = () => {
-    navigation.navigate('BottomTab');
-    return; // have to reset it
     if (email === '') {
       Alert.alert('Login error', 'Please enter your email');
       return;
@@ -80,6 +78,7 @@ const CustomerLogin = () => {
         '🚀 ~ handleContinueButton ~ error:',
         error?.response?.data?.message,
       );
+      navigation.navigate('BottomTab');
     }
   };
 
