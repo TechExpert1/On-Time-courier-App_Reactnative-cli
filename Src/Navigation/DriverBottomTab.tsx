@@ -1,6 +1,6 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 
 import {
   ChatActive,
@@ -30,7 +30,7 @@ const DriverBottomTab = () => {
       screenOptions={{
         tabBarStyle: {
           width: '100%',
-          height: 65,
+          height: Platform.OS === 'ios' ? 85 : 65,
           alignSelf: 'center',
           borderTopLeftRadius:10,
           borderTopRightRadius:10

@@ -23,8 +23,6 @@ const ForgetPassword = () => {
     setEmail(text);
   };
   const handleContinueButton = async () => {
-    navigation.navigate('OTPVerification');
-    return; // have to reset it
     if (email === '') {
       Alert.alert('Register error', 'Please enter your email');
       return;

@@ -18,9 +18,6 @@ const OTPVerification = props => {
   const [visible, setVisible] = useState<boolean>(false);
 
   const handleContinueButton = async () => {
-    navigation.navigate('CreatePassword');
-    return; // have to reset it
-
     if (otp === '') {
       Alert.alert('OTP error', 'Please enter OTP');
       return;
@@ -37,7 +34,10 @@ const OTPVerification = props => {
         setVisible(false);
         if (results?.status == 200) {
           Alert.alert('OTP success', `${results?.data?.message}`);
-          navigation.navigate('CreatePassword', {data: data});
+          navigation.navigate('CreatePassword', {
+            data: data,
+            from: 'ForgotPassword',
+          });
           // }
         }
       } catch (error) {

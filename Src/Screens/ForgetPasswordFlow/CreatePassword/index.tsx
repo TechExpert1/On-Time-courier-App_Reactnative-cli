@@ -12,7 +12,7 @@ import LoadingModal from '../../../Components/LoadingModal';
 import {resetPasswordApi} from '../../../Services/apis/authAPIs';
 
 const CreatePassword = props => {
-  // const {data} = props?.route?.params;
+  const {data, from} = props?.route?.params;
   const navigation = useNavigation<any>();
   const [password, setPassword] = useState('');
   const [isPasswordHidden, setIsPasswordHidden] = useState(true);
@@ -35,8 +35,6 @@ const CreatePassword = props => {
   };
 
   const handleContinueButton = async () => {
-    navigation.navigate('CreatePassword');
-    return; // have to reset it
     if (password === '' || confirmPassword === '') {
       Alert.alert('Please fill both password fields');
       return;
@@ -54,15 +52,13 @@ const CreatePassword = props => {
         setVisible(false);
         if (results?.status == 200) {
           Alert.alert('OTP success', `${results?.data?.message}`);
-          navigation.navigate('CreatePassword', {data: data});
-          // }
+          navigation.navigate('PasswordRecover', {from: from});
         }
       } catch (error) {
         setVisible(false);
-        Alert.alert('OTP error', `${error?.response?.data?.message}`);
-        console.log('Error:', error?.response?.data);
+        // Alert.alert('OTP error', `${error?.response?.data?.message}`);
+        console.log('Error:', error);
       }
-      navigation.navigate('PasswordRecover');
     }
   };
   return (

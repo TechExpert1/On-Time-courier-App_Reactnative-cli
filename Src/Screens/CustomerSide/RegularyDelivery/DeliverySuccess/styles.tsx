@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
   body: {
     flex: 1,
     backgroundColor: BG_COLOR,
-    paddingTop: Platform.OS === 'ios' ? 50 : 0,
+     
   },
   imageStyle:{
     flex:1,

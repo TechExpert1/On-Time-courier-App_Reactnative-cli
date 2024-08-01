@@ -34,7 +34,9 @@ const SelectRole = () => {
           selectedRole: selectedRole === 0 ? 'customer' : 'driver',
         });
       } else {
-        navigation.navigate('DriverRegister')
+        navigation.navigate('DriverRegister', {
+          selectedRole: selectedRole === 0 ? 'customer' : 'driver',
+        });
       }
     } else {
       Alert.alert('Select Role', 'Please Select Role', [{text: 'OK'}]);
