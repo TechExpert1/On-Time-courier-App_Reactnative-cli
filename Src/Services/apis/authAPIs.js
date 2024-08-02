@@ -10,5 +10,6 @@ export const verifyOTPAPI = payload => patchRequest(`auth/verifyUser`, payload);
 export const verifyForgotPasswordOTPAPI = (payload, id) =>
   postRequest(`auth/verifyForgotOtp/${id}`, payload);
 // export const EditProfileAPI = payload => patchRequest(`users/edit/`, payload);
+export const ChangePasswordAPI = payload => putRequest(`user/changePassword`, payload);
 // export const UserDataAPI = payload => getRequestWithParams(`users`, payload);
 // export const googleLogIn = payload => postRequest(`users/google-login`, payload);

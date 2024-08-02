@@ -8,21 +8,21 @@ const ROOT_URL = __DEV__
 
 const BASE_URL = `${ROOT_URL}/api/`;
 
-const client = axios.create({
+const client1 = axios.create({
   baseURL: BASE_URL,
   timeout: 30000,
   headers: {
     Accept: 'application/json',
-    'Content-Type': 'application/json',
+    'Content-Type': 'multipart/form-data',
   },
 });
 const getUserToken = async () => {
   const token = await AsyncStorage.getItem('userToken');
   const userToken = JSON.parse(token);
-  return token;
+  return userToken;
 };
 
-client.interceptors.request.use(
+client1.interceptors.request.use(
   async config => {
     const requestConfig = config;
     let authToken = getUserToken();
@@ -54,4 +54,4 @@ client.interceptors.request.use(
   },
 );
 
-export {ROOT_URL, BASE_URL, client};
+export {ROOT_URL, BASE_URL, client1};

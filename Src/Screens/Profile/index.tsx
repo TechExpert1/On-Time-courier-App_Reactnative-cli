@@ -40,7 +40,10 @@ const ProfileScreen = () => {
       <View style={styles.appBarStyle}>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <Text style={styles.TitleName}>Me</Text>
-          <TouchableOpacity onPress={()=> navigation.navigate('NotificationScreen')}><NotificationIcon></NotificationIcon></TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('NotificationScreen')}>
+            <NotificationIcon></NotificationIcon>
+          </TouchableOpacity>
         </View>
       </View>
 
@@ -65,7 +68,9 @@ const ProfileScreen = () => {
           Title="Edit Profile"
           leftIcon={<EditProfileTab></EditProfileTab>}></ProfileTab>
         <ProfileTab
-          OnTap={() => navigation.navigate('ChangePasswordScreen',{isRole:'customer'})}
+          OnTap={() =>
+            navigation.navigate('ChangePasswordScreen', {isRole: 'customer'})
+          }
           Title="Change Password"
           leftIcon={<ChangePassword></ChangePassword>}></ProfileTab>
         <ProfileTab
@@ -80,14 +85,17 @@ const ProfileScreen = () => {
           OnTap={() => navigation.navigate('DeleteAccountScreen')}
           Title="Delete Account"
           leftIcon={<DeleteAccount></DeleteAccount>}></ProfileTab>
-        <ProfileTab OnTap={()=> setLogoutPopup(true)} Title="Log Out" leftIcon={<Logout></Logout>}></ProfileTab>
-        <View style={{marginBottom:30}}></View>
+        <ProfileTab
+          OnTap={() => setLogoutPopup(true)}
+          Title="Log Out"
+          leftIcon={<Logout></Logout>}></ProfileTab>
+        <View style={{marginBottom: 30}}></View>
       </ScrollView>
 
       <Modal
         transparent={true}
         visible={logoutPopup}
-        animationType="slide"
+        animationType="fade"
         onRequestClose={() => setLogoutPopup(false)}>
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>

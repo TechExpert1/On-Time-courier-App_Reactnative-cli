@@ -7,6 +7,9 @@ import InputLabel from '../../Components/InputLabel';
 import InputText from '../../Components/InputText';
 import CustomButton from '../../Components/CustomButton';
 import {PRIMARY, WHITE} from '../../Theme/Colors';
+import Toast from 'react-native-toast-message';
+import LoadingModal from '../../Components/LoadingModal';
+import {ChangePasswordAPI} from '../../Services/apis/authAPIs';
 
 const ChangePasswordScreen = props => {
   const {isRole} = props.route.params;
@@ -17,6 +20,7 @@ const ChangePasswordScreen = props => {
   const [isPasswordHidden, setIsPasswordHidden] = useState(true);
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isConfirmPassHidden, setIsConfirmPasswordHidden] = useState(true);
+  const [visible, setVisible] = useState(false);
 
   const handleOldPassword = txt => {
     setOldPassword(txt);
@@ -37,10 +41,71 @@ const ChangePasswordScreen = props => {
     setIsConfirmPasswordHidden(!isConfirmPassHidden);
   };
   const handleContinueButton = () => {
-    navigation.navigate('PasswordChangedSuccess',{isRole:isRole});
+    if (oldPassword === '') {
+      Toast.show({
+        type: 'error',
+        text1: 'Change password failed',
+        text2: 'Please enter old password.',
+        visibilityTime: 3000,
+      });
+      return;
+    } else if (password === '') {
+      Toast.show({
+        type: 'error',
+        text1: 'Change password failed',
+        text2: 'Please enter new password.',
+        visibilityTime: 3000,
+      });
+      return;
+    } else if (confirmPassword !== password) {
+      Toast.show({
+        type: 'error',
+        text1: 'Change password failed',
+        text2: 'Passwords do not match.',
+        visibilityTime: 3000,
+      });
+      return;
+    } else {
+      handleChangePassword();
+    }
   };
-
-
+  const handleChangePassword = async () => {
+    const body = {
+      oldPassword: oldPassword,
+      newPassword: password,
+      confirmPassword: confirmPassword,
+    };
+    setVisible(true);
+    try {
+      const result = await ChangePasswordAPI(body);
+      setVisible(false);
+      console.log('🚀 ~ handleChangePassword ~ result:', result);
+      if (result) {
+        navigation.navigate('PasswordChangedSuccess', {isRole: isRole});
+      }
+    } catch (error) {
+      setVisible(false);
+      if (error?.response?.data?.JWTErr) {
+        Toast.show({
+          type: 'error',
+          text1: 'Change password failed',
+          text2: `${error?.response?.data?.JWTErr?.message}`,
+          visibilityTime: 3000,
+        });
+        console.log(
+          '🚀 ~ handleChangePassword ~ error:',
+          error?.response?.data?.JWTErr?.message,
+        );
+      } else {
+        Toast.show({
+          type: 'error',
+          text1: 'Change password failed',
+          text2: `${error?.response?.data?.message}`,
+          visibilityTime: 3000,
+        });
+      }
+    }
+  };
   return (
     <View style={styles.body}>
       <View style={styles.appBarStyle}>
@@ -105,6 +170,7 @@ const ChangePasswordScreen = props => {
           }}
         />
       </View>
+      <LoadingModal visible={visible} message={'Please wait...'} />
     </View>
   );
 };

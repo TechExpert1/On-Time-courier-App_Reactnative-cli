@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {FlatList, Image, Text, TouchableOpacity, View} from 'react-native';
 import styles from './styles';
 import {
@@ -13,6 +13,7 @@ import InputText from '../../../Components/InputText';
 import {listOfDeliveries} from '../../../utils/constant';
 import DeliveryBox from '../../../Components/DeliveryBox';
 import {useNavigation} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const CustomerHome = () => {
   const navigation = useNavigation<any>();
@@ -36,7 +37,9 @@ const CustomerHome = () => {
             <Text style={styles.name}>Robert Smith</Text>
           </View>
         </View>
-       <TouchableOpacity onPress={handleNotifictionNavigation}><NotificationIcon></NotificationIcon></TouchableOpacity>
+        <TouchableOpacity onPress={handleNotifictionNavigation}>
+          <NotificationIcon></NotificationIcon>
+        </TouchableOpacity>
       </View>
       <View style={{marginHorizontal: 20}}>
         <InputText
@@ -66,13 +69,15 @@ const CustomerHome = () => {
           renderItem={({item, index}) => {
             return (
               <DeliveryBox
-              pickup_date={item.pickup_date}
-              pickup_city={item.pickup_city}
-              delivery_city={item.delivery_city}
-              delivery_date={item.delivery_date}
-              driver_name={item.driver_name}
-              status={item.status}
-                onTap={() => navigation.navigate('ParcelDetail', {status: item.status})}></DeliveryBox>
+                pickup_date={item.pickup_date}
+                pickup_city={item.pickup_city}
+                delivery_city={item.delivery_city}
+                delivery_date={item.delivery_date}
+                driver_name={item.driver_name}
+                status={item.status}
+                onTap={() =>
+                  navigation.navigate('ParcelDetail', {status: item.status})
+                }></DeliveryBox>
             );
           }}
         />
