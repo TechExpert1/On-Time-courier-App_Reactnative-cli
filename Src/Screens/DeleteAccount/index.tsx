@@ -8,12 +8,16 @@ import InputText from '../../Components/InputText';
 import CustomButton from '../../Components/CustomButton';
 import {PRIMARY, WHITE} from '../../Theme/Colors';
 import {fonts} from '../../Theme/AppFonts';
+import Toast from 'react-native-toast-message';
+import {deleteUserAPI} from '../../Services/apis/authAPIs';
+import LoadingModal from '../../Components/LoadingModal';
 
 const DeleteAccountScreen = () => {
   const navigation = useNavigation<any>();
   const [password, setPassword] = useState('');
   const [isPasswordHidden, setIsPasswordHidden] = useState(true);
   const [deleteAccount, setDeleteAccount] = useState(false);
+  const [visible, setVisible] = useState(false);
 
   const handlePassword = txt => {
     setPassword(txt);
@@ -23,7 +27,38 @@ const DeleteAccountScreen = () => {
   };
 
   const handleContinueButton = () => {
-    navigation.navigate('CustomerLogin');
+    setDeleteAccount(false);
+    setTimeout(async () => {
+      setVisible(true);
+      try {
+        const result = await deleteUserAPI();
+        console.log('🚀 ~ handleContinueButton ~ result:', result?.data);
+        setVisible(false);
+        if (result) {
+          Toast.show({
+            type: 'success',
+            text1: 'Delete Account',
+            text2: 'Account deleted successfully',
+            visibilityTime: 3000,
+          });
+          navigation.navigate('CustomerLogin');
+        }
+      } catch (error) {
+        setVisible(false);
+        if (error?.response?.data?.JWTErr?.message) {
+          Toast.show({
+            type: 'error',
+            text1: 'Token Error',
+            text2: error?.response?.data?.JWTErr?.message,
+            visibilityTime: 3000,
+          });
+        }
+        console.log(
+          '🚀 ~ handleContinueButton ~ error:',
+          error?.response?.data,
+        );
+      }
+    }, 300);
   };
 
   return (
@@ -50,7 +85,7 @@ const DeleteAccountScreen = () => {
         <InputText
           placeholder="Password"
           value={password}
-          onChange={handlePassword}
+          onChangeText={handlePassword}
           onRightPress={handlePasswordVisible}
           secureTextEntry={isPasswordHidden}
           addRight={
@@ -60,7 +95,27 @@ const DeleteAccountScreen = () => {
 
         <CustomButton
           text="Continue"
-          onPress={() => setDeleteAccount(true)}
+          onPress={() => {
+            if (password?.length === 0) {
+              Toast.show({
+                type: 'error',
+                text1: 'Delete Account Error',
+                text2: 'Password field is required.',
+                visibilityTime: 3000,
+              });
+              return;
+            } else if (password !== 'qwerty123@') {
+              Toast.show({
+                type: 'error',
+                text1: 'Delete Account Error',
+                text2: 'Incorrect password, please try again',
+                visibilityTime: 3000,
+              });
+              return;
+            } else {
+              setDeleteAccount(true);
+            }
+          }}
           TextStyle={{color: WHITE}}
           extraStyle={{
             marginTop: 180,
@@ -72,7 +127,7 @@ const DeleteAccountScreen = () => {
       <Modal
         transparent={true}
         visible={deleteAccount}
-        animationType="slide"
+        animationType="fade"
         onRequestClose={() => setDeleteAccount(false)}>
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
@@ -111,6 +166,7 @@ const DeleteAccountScreen = () => {
           </View>
         </View>
       </Modal>
+      <LoadingModal visible={visible} message={'Deleting account...'} />
     </View>
   );
 };

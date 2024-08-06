@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {
   Image,
   Modal,
@@ -10,7 +10,7 @@ import {
 import {MainStyle} from '../../Theme/MainStyle';
 import {COLORS} from '../../Theme/Index';
 import styles from './styles';
-import {useNavigation} from '@react-navigation/native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {
   ArrowForward,
   BackIcon,
@@ -28,13 +28,33 @@ import ProfileTab from '../../Components/ProfileTab';
 import CustomButton from '../../Components/CustomButton';
 import {PRIMARY, WHITE} from '../../Theme/Colors';
 import {fonts} from '../../Theme/AppFonts';
+import {getUserAPI} from '../../Services/apis/authAPIs';
+import {useDispatch, useSelector} from 'react-redux';
+import {updateUser} from '../../Store/UserSlice';
+import {store} from '../../Store/Store';
 
 const ProfileScreen = () => {
   const navigation = useNavigation<any>();
+  // const userDetails = store.getState().user.userDetails;
+  const {userDetails} = useSelector(state => state.user);
   const [logoutPopup, setLogoutPopup] = useState(false);
   const handleContinueButton = () => {
-    navigation.navigate('CustomerRegister');
+    navigation.navigate('CustomerRegister', {selectedRole: 'customer'});
   };
+  const dispatch = useDispatch();
+  const getUserData = async () => {
+    try {
+      const result = await getUserAPI('66b29711d46c4dc92a1e9fe9');
+      dispatch(updateUser(result?.data));
+    } catch (error) {
+      console.log('🚀 ~ getUserData ~ error:', error);
+    }
+  };
+  useFocusEffect(
+    useCallback(() => {
+      getUserData();
+    }, []),
+  );
   return (
     <View style={styles.body}>
       <View style={styles.appBarStyle}>
@@ -60,8 +80,8 @@ const ProfileScreen = () => {
           <EditProfile></EditProfile>
         </View>
       </View>
-      <Text style={styles.userName}>Robert Smith</Text>
-      <Text style={styles.email}>useremail@email.com</Text>
+      <Text style={styles.userName}>{userDetails?.userName}</Text>
+      <Text style={styles.email}>{userDetails?.email}</Text>
       <ScrollView style={styles.content}>
         <ProfileTab
           OnTap={() => navigation.navigate('EditProfileScreen')}
