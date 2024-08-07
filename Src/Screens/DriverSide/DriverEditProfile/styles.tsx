@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'center',
     marginTop: 26,
+    marginBottom:20,
   },
 
   userName: {

@@ -62,23 +62,24 @@ const CustomerLogin = () => {
   const handleContinueButton = async payload => {
     setVisible(true);
     // API call to login API
-    try {
-      const result = await logInUserApi(payload);
-      console.log(
-        '🚀 ~ handleContinueButton ~ result:',
-        result?.response,
-        result?.data,
-      );
-      setVisible(false);
-      navigation.navigate('BottomTab');
-    } catch (error) {
-      setVisible(false);
-      Alert.alert('Login error', `${error?.response?.data?.message}`);
-      console.log(
-        '🚀 ~ handleContinueButton ~ error:',
-        error?.response?.data?.message,
-      );
-    }
+    // try {
+    //   const result = await logInUserApi(payload);
+    //   console.log(
+    //     '🚀 ~ handleContinueButton ~ result:',
+    //     result?.response,
+    //     result?.data,
+    //   );
+    //   setVisible(false);
+      
+    // } catch (error) {
+    //   setVisible(false);
+    //   Alert.alert('Login error', `${error?.response?.data?.message}`);
+    //   console.log(
+    //     '🚀 ~ handleContinueButton ~ error:',
+    //     error?.response?.data?.message,
+    //   );
+    // }
+    navigation.navigate('BottomTab');
   };
 
   return (

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Modal, ScrollView, Text, TextInput, View} from 'react-native';
+import {Modal, ScrollView, Text, TextInput, TouchableWithoutFeedback, View} from 'react-native';
 import styles from './styles';
 import AppBar from '../../../../Components/AppBar';
 import {
@@ -147,9 +147,11 @@ const RegularDeliverySenderDetail = () => {
           }}
         />
       </ScrollView>
+      <TouchableWithoutFeedback onPress={()=> setShowCalendar(false)}>
       <Modal
         transparent={true}
         visible={showCalendar}
+        
         animationType="slide"
         onRequestClose={() => setShowCalendar(false)}>
         <View style={styles.modalContainer}>
@@ -174,6 +176,8 @@ const RegularDeliverySenderDetail = () => {
           <View style={styles.dashboardView1}></View>
         </View>
       </Modal>
+      </TouchableWithoutFeedback>
+      
     </View>
   );
 };

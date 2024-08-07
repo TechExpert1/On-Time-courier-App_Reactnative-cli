@@ -68,6 +68,9 @@ const DriverEditProfile = () => {
         </View>
       </View>
 
+      
+
+      <ScrollView style={styles.content}>
       <View style={styles.ProfilePic}>
         <Image source={require('../../../Assets/Images/ProfilePic.png')} />
         <View
@@ -81,8 +84,6 @@ const DriverEditProfile = () => {
           <EditProfile></EditProfile>
         </View>
       </View>
-
-      <ScrollView style={styles.content}>
         <InputLabel label="Full Name" />
         <InputText
           placeholder="Full Name"
