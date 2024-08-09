@@ -44,7 +44,8 @@ const EditProfileScreen = () => {
 
       <View style={styles.ProfilePic}>
         <Image source={require('../../Assets/Images/ProfilePic.png')} />
-        <View
+        <TouchableOpacity
+        activeOpacity={0.5}
           style={{
             alignSelf: 'flex-end',
             position: 'absolute',
@@ -53,7 +54,7 @@ const EditProfileScreen = () => {
             right: -10,
           }}>
           <EditProfile></EditProfile>
-        </View>
+        </TouchableOpacity>
       </View>
 
       <View style={styles.content}>

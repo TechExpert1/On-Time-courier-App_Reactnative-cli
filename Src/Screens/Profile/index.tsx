@@ -32,19 +32,21 @@ import {getUserAPI} from '../../Services/apis/authAPIs';
 import {useDispatch, useSelector} from 'react-redux';
 import {updateUser} from '../../Store/UserSlice';
 import {store} from '../../Store/Store';
+import LoadingModal from '../../Components/LoadingModal';
 
 const ProfileScreen = () => {
   const navigation = useNavigation<any>();
   // const userDetails = store.getState().user.userDetails;
   const {userDetails} = useSelector(state => state.user);
   const [logoutPopup, setLogoutPopup] = useState(false);
+  const [visible, setVisible] = useState(false);
   const handleContinueButton = () => {
     navigation.navigate('CustomerRegister', {selectedRole: 'customer'});
   };
   const dispatch = useDispatch();
   const getUserData = async () => {
     try {
-      const result = await getUserAPI('66b29711d46c4dc92a1e9fe9');
+      const result = await getUserAPI('66b29711d46c4dc92a1e9fe9'); // Need to change this user ID to the dynamic
       dispatch(updateUser(result?.data));
     } catch (error) {
       console.log('🚀 ~ getUserData ~ error:', error);
@@ -154,6 +156,7 @@ const ProfileScreen = () => {
           </View>
         </View>
       </Modal>
+      <LoadingModal visible={visible} message={'Please wait...'} />
     </View>
   );
 };
