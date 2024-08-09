@@ -11,11 +11,12 @@ import styles from './styles';
 import InputLabel from '../../../Components/InputLabel';
 import InputText from '../../../Components/InputText';
 import CustomButton from '../../../Components/CustomButton';
-import {PRIMARY, WHITE} from '../../../Theme/Colors';
+import {BG_COLOR, PRIMARY, WHITE} from '../../../Theme/Colors';
 import {useNavigation} from '@react-navigation/native';
 import {EyeHide, EyeShow} from '../../../Assets/Svgs';
 import {signUpApi} from '../../../Services/apis/authAPIs';
 import LoadingModal from '../../../Components/LoadingModal';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const CustomerRegister = props => {
   const navigation = useNavigation<any>();
@@ -124,7 +125,9 @@ const CustomerRegister = props => {
       <Image
         style={styles.headerLogo}
         source={require('../../../Assets/Images/HeaderLogo.png')}></Image>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <KeyboardAwareScrollView
+        style={{flexGrow: 1, backgroundColor: BG_COLOR}}
+        showsVerticalScrollIndicator={false}>
         <View style={styles.content}>
           <Text style={styles.choseYourRoleText}>Register</Text>
           <Text style={styles.welcomeText}>
@@ -196,7 +199,7 @@ const CustomerRegister = props => {
             </Text>
           </TouchableOpacity>
         </View>
-      </ScrollView>
+      </KeyboardAwareScrollView>
       <LoadingModal visible={visible} message={'Please wait...'} />
     </View>
   );

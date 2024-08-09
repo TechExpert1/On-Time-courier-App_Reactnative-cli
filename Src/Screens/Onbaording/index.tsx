@@ -12,18 +12,21 @@ import AppIntroSlider from 'react-native-app-intro-slider';
 import {slides} from '../../utils/constant';
 import CustomButton from '../../Components/CustomButton';
 import {useNavigation} from '@react-navigation/native';
+import {useDispatch} from 'react-redux';
+import {updateOnBoardingState} from '../../Store/UserSlice';
 
 const OnBoardingScreen = () => {
   const navigation = useNavigation<any>();
   const sliderRef = useRef<any>(null);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const dispatch = useDispatch();
 
   const renderItem = ({item, index}: {item: any; index: number}) => {
     const isLastSlide = index === slides.length - 1;
-
     const handleNextSlide = () => {
       setCurrentIndex(index + 1);
       if (isLastSlide) {
+        dispatch(updateOnBoardingState(false));
         navigation.navigate('SelectRole');
       } else {
         sliderRef.current?.goToSlide(index + 1);
@@ -31,6 +34,7 @@ const OnBoardingScreen = () => {
     };
 
     const handleSkipButton = () => {
+      dispatch(updateOnBoardingState(false));
       navigation.navigate('SelectRole');
     };
 

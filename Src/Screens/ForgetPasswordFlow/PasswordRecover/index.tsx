@@ -5,14 +5,15 @@ import CustomButton from '../../../Components/CustomButton';
 import {PRIMARY, WHITE} from '../../../Theme/Colors';
 import {useNavigation} from '@react-navigation/native';
 
-const PasswordRecover = () => {
+const PasswordRecover = props => {
   const navigation = useNavigation<any>();
-
+  const {from} = props?.route?.params;
+  console.log('🚀 ~ PasswordRecover ~ from:', from);
   const handleContinueButton = () => {
     navigation.navigate('CustomerLogin');
   };
   return (
-    <SafeAreaView style={{flex:1}}>
+    <SafeAreaView style={{flex: 1}}>
       <ImageBackground
         style={styles.imageStyle}
         source={require('../../../Assets/Images/SplashScreen.png')}>

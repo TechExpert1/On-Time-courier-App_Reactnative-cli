@@ -34,7 +34,10 @@ const OTPVerification = props => {
         setVisible(false);
         if (results?.status == 200) {
           Alert.alert('OTP success', `${results?.data?.message}`);
-          navigation.navigate('CreatePassword', {data: data});
+          navigation.navigate('CreatePassword', {
+            data: data,
+            from: 'ForgotPassword',
+          });
           // }
         }
       } catch (error) {

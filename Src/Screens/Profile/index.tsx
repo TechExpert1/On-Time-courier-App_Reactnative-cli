@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {
   Image,
   Modal,
@@ -10,7 +10,7 @@ import {
 import {MainStyle} from '../../Theme/MainStyle';
 import {COLORS} from '../../Theme/Index';
 import styles from './styles';
-import {useNavigation} from '@react-navigation/native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {
   ArrowForward,
   BackIcon,
@@ -28,19 +28,44 @@ import ProfileTab from '../../Components/ProfileTab';
 import CustomButton from '../../Components/CustomButton';
 import {PRIMARY, WHITE} from '../../Theme/Colors';
 import {fonts} from '../../Theme/AppFonts';
+import {getUserAPI} from '../../Services/apis/authAPIs';
+import {useDispatch, useSelector} from 'react-redux';
+import {updateUser} from '../../Store/UserSlice';
+import {store} from '../../Store/Store';
+import LoadingModal from '../../Components/LoadingModal';
 
 const ProfileScreen = () => {
   const navigation = useNavigation<any>();
+  // const userDetails = store.getState().user.userDetails;
+  const {userDetails} = useSelector(state => state.user);
   const [logoutPopup, setLogoutPopup] = useState(false);
+  const [visible, setVisible] = useState(false);
   const handleContinueButton = () => {
-    navigation.navigate('CustomerRegister');
+    navigation.navigate('CustomerRegister', {selectedRole: 'customer'});
   };
+  const dispatch = useDispatch();
+  const getUserData = async () => {
+    try {
+      const result = await getUserAPI('66b29711d46c4dc92a1e9fe9'); // Need to change this user ID to the dynamic
+      dispatch(updateUser(result?.data));
+    } catch (error) {
+      console.log('🚀 ~ getUserData ~ error:', error);
+    }
+  };
+  useFocusEffect(
+    useCallback(() => {
+      getUserData();
+    }, []),
+  );
   return (
     <View style={styles.body}>
       <View style={styles.appBarStyle}>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <Text style={styles.TitleName}>Me</Text>
-          <TouchableOpacity onPress={()=> navigation.navigate('NotificationScreen')}><NotificationIcon></NotificationIcon></TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('NotificationScreen')}>
+            <NotificationIcon></NotificationIcon>
+          </TouchableOpacity>
         </View>
       </View>
 
@@ -57,15 +82,17 @@ const ProfileScreen = () => {
           <EditProfile></EditProfile>
         </View>
       </View>
-      <Text style={styles.userName}>Robert Smith</Text>
-      <Text style={styles.email}>useremail@email.com</Text>
+      <Text style={styles.userName}>{userDetails?.userName}</Text>
+      <Text style={styles.email}>{userDetails?.email}</Text>
       <ScrollView style={styles.content}>
         <ProfileTab
           OnTap={() => navigation.navigate('EditProfileScreen')}
           Title="Edit Profile"
           leftIcon={<EditProfileTab></EditProfileTab>}></ProfileTab>
         <ProfileTab
-          OnTap={() => navigation.navigate('ChangePasswordScreen',{isRole:'customer'})}
+          OnTap={() =>
+            navigation.navigate('ChangePasswordScreen', {isRole: 'customer'})
+          }
           Title="Change Password"
           leftIcon={<ChangePassword></ChangePassword>}></ProfileTab>
         <ProfileTab
@@ -80,14 +107,17 @@ const ProfileScreen = () => {
           OnTap={() => navigation.navigate('DeleteAccountScreen')}
           Title="Delete Account"
           leftIcon={<DeleteAccount></DeleteAccount>}></ProfileTab>
-        <ProfileTab OnTap={()=> setLogoutPopup(true)} Title="Log Out" leftIcon={<Logout></Logout>}></ProfileTab>
-        <View style={{marginBottom:30}}></View>
+        <ProfileTab
+          OnTap={() => setLogoutPopup(true)}
+          Title="Log Out"
+          leftIcon={<Logout></Logout>}></ProfileTab>
+        <View style={{marginBottom: 30}}></View>
       </ScrollView>
 
       <Modal
         transparent={true}
         visible={logoutPopup}
-        animationType="slide"
+        animationType="fade"
         onRequestClose={() => setLogoutPopup(false)}>
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
@@ -126,6 +156,7 @@ const ProfileScreen = () => {
           </View>
         </View>
       </Modal>
+      <LoadingModal visible={visible} message={'Please wait...'} />
     </View>
   );
 };

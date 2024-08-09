@@ -14,9 +14,11 @@ const CustomerOTP = props => {
   const navigation = useNavigation<any>();
   const [otp, setOTP] = useState<string>('');
   const [visible, setVisible] = useState<boolean>(false);
-  const {data} = props?.route?.params;
-  console.log('🚀 ~ CustomerOTP ~ data:', data);
+  // const {data} = props?.route?.params;
+  // console.log('🚀 ~ CustomerOTP ~ data:', data);
   const handleContinueButton = async () => {
+    navigation.navigate('UploadPicture');
+    return; // have to reset it
     if (otp === '') {
       Alert.alert('OTP error', 'Please enter OTP');
       return;

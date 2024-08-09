@@ -17,6 +17,7 @@ import {EyeHide, EyeShow} from '../../../Assets/Svgs';
 import CheckBox from 'react-native-check-box';
 import LoadingModal from '../../../Components/LoadingModal';
 import {logInUserApi} from '../../../Services/apis/authAPIs';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const CustomerLogin = () => {
   const navigation = useNavigation<any>();
@@ -127,17 +128,22 @@ const CustomerLogin = () => {
             TextStyle={{color: WHITE}}
             extraStyle={{
               marginTop: 50,
-              marginBottom:50,
+              marginBottom: 50,
               backgroundColor: PRIMARY,
             }}
           />
           <TouchableOpacity
-          style={styles.forgetPassword}
+            style={styles.forgetPassword}
             onPress={() => navigation.navigate('ForgetPassword')}>
             <Text style={styles.forgetPassword}>Forgot Password?</Text>
           </TouchableOpacity>
           <TouchableOpacity
-          style={{width:240,alignItems:'center', justifyContent:'center',alignSelf:'center'}}
+            style={{
+              width: 240,
+              alignItems: 'center',
+              justifyContent: 'center',
+              alignSelf: 'center',
+            }}
             onPress={() =>
               navigation.navigate('CustomerRegister', {
                 selectedRole: 'customer',
