@@ -1,20 +1,15 @@
 import React, {useEffect} from 'react';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
-import styles from './styles';
+
 import {Flag, NotificationIcon} from '../../../Assets/Svgs';
 import {useNavigation} from '@react-navigation/native';
+import styles from './styles';
 
-const ProfileUnderReview = props => {
+const DriverProfileUnderReview = props => {
   const navigation = useNavigation<any>();
-  const {ScreenName} = props.route.params;
   useEffect(() => {
     const timer = setTimeout(() => {
-      if (ScreenName === 'edit-profile') {
         navigation.navigate('DriverBottomTab');
-      }
-      {
-        navigation.navigate('ProjectRejected');
-      }
     }, 7000);
     return () => clearTimeout(timer);
   }, []);
@@ -59,4 +54,4 @@ const ProfileUnderReview = props => {
   );
 };
 
-export default ProfileUnderReview;
+export default DriverProfileUnderReview;

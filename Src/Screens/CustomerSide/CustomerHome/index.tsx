@@ -21,7 +21,11 @@ const CustomerHome = () => {
     navigation.navigate('TrackingParcel');
   };
   const handleRegularDelivery = () => {
-    navigation.navigate('RegularDeliverySenderDetail');
+    navigation.navigate('RegularDeliverySenderDetail', {titleName: 'regular'});
+  };
+
+  const handlOnPriorityDelivery = () => {
+    navigation.navigate('RegularDeliverySenderDetail', {titleName: 'priority'});
   };
   const handleNotifictionNavigation = () => {
     navigation.navigate('NotificationScreen');
@@ -57,7 +61,7 @@ const CustomerHome = () => {
             <Text style={[styles.roleText]}>Regular</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={handleRegularDelivery}
+            onPress={handlOnPriorityDelivery}
             style={[styles.roleBox]}>
             <PriorityDelivery></PriorityDelivery>
             <Text style={[styles.roleText]}>On Priority</Text>
@@ -74,6 +78,9 @@ const CustomerHome = () => {
                 delivery_city={item.delivery_city}
                 delivery_date={item.delivery_date}
                 driver_name={item.driver_name}
+                OnTapDriver={() =>
+                  navigation.navigate('DriverProfileCustomerSide')
+                }
                 status={item.status}
                 onTap={() =>
                   navigation.navigate('ParcelDetail', {status: item.status})

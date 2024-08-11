@@ -34,7 +34,7 @@ const TrackingParcel = () => {
           // onLeftPress={handleTrackingId}
           extraStyle={{width: '80%', marginTop: '0%'}}
           addLeft={<LocationSearching></LocationSearching>}></InputText>
-        <TouchableOpacity onPress={handleGoNext}>
+        <TouchableOpacity style={{marginTop:2}} onPress={handleGoNext}>
           <GONextBox></GONextBox>
         </TouchableOpacity>
       </View>

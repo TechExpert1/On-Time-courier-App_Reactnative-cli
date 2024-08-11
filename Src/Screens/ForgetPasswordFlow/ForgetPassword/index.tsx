@@ -11,7 +11,8 @@ import {useNavigation} from '@react-navigation/native';
 import LoadingModal from '../../../Components/LoadingModal';
 import {forgetPasswordApi} from '../../../Services/apis/authAPIs';
 
-const ForgetPassword = () => {
+const ForgetPassword = props => {
+  const {role} = props.route.params;
   const navigation = useNavigation<any>();
   const [email, setEmail] = useState('');
   const [visible, setVisible] = useState(false);
@@ -23,34 +24,36 @@ const ForgetPassword = () => {
     setEmail(text);
   };
   const handleContinueButton = async () => {
-    if (email === '') {
-      Alert.alert('Register error', 'Please enter your email');
-      return;
-    } else if (!isValidEmail(email)) {
-      Alert.alert('Register error', 'Please enter a valid email');
-      return;
-    } else {
-      try {
-        setVisible(true);
-        const body = {email: email};
-        // API call to send OTP for forgot password
-        const result = await forgetPasswordApi(body);
-        console.log('🚀 ~ handleContinueButton ~ result:', result?.data);
-        Alert.alert('Forgot Password', `${result?.data?.message}`);
-        setVisible(false);
-        navigation.navigate('OTPVerification', {data: result?.data});
-      } catch (error) {
-        setVisible(false);
-        console.log(
-          '🚀 ~ handleContinueButton ~ error:',
-          error?.response?.data,
-        );
-        Alert.alert(
-          'Forgot Password error',
-          `${error?.response?.data?.message}`,
-        );
-      }
-    }
+    // if (email === '') {
+    //   Alert.alert('Register error', 'Please enter your email');
+    //   return;
+    // } else if (!isValidEmail(email)) {
+    //   Alert.alert('Register error', 'Please enter a valid email');
+    //   return;
+    // } else {
+    //   try {
+    //     setVisible(true);
+    //     const body = {email: email};
+    //     // API call to send OTP for forgot password
+    //     const result = await forgetPasswordApi(body);
+    //     console.log('🚀 ~ handleContinueButton ~ result:', result?.data);
+    //     Alert.alert('Forgot Password', `${result?.data?.message}`);
+    //     setVisible(false);
+       
+    //   } catch (error) {
+    //     setVisible(false);
+    //     console.log(
+    //       '🚀 ~ handleContinueButton ~ error:',
+    //       error?.response?.data,
+    //     );
+    //     Alert.alert(
+    //       'Forgot Password error',
+    //       `${error?.response?.data?.message}`,
+    //     );
+    //   }
+    // }
+
+    navigation.navigate('OTPVerification', {role: role});
   };
   return (
     <View style={styles.body}>

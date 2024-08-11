@@ -12,7 +12,7 @@ import LoadingModal from '../../../Components/LoadingModal';
 import {resetPasswordApi} from '../../../Services/apis/authAPIs';
 
 const CreatePassword = props => {
-  const {data, from} = props?.route?.params;
+  const {data} = props?.route?.params;
   const navigation = useNavigation<any>();
   const [password, setPassword] = useState('');
   const [isPasswordHidden, setIsPasswordHidden] = useState(true);

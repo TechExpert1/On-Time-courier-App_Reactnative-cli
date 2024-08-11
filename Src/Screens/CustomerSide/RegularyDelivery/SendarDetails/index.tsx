@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Modal, ScrollView, Text, TextInput, TouchableWithoutFeedback, View} from 'react-native';
+import {FlatList, Modal, ScrollView, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View} from 'react-native';
 import styles from './styles';
 import AppBar from '../../../../Components/AppBar';
 import {
@@ -12,10 +12,18 @@ import {useNavigation} from '@react-navigation/native';
 import InputLabel from '../../../../Components/InputLabel';
 import InputText from '../../../../Components/InputText';
 import CustomButton from '../../../../Components/CustomButton';
-import {BLACK, BLACK_DARK, PLACEHOLDERCOLOR, PRIMARY, WHITE} from '../../../../Theme/Colors';
+import {
+  BLACK,
+  BLACK_DARK,
+  PLACEHOLDERCOLOR,
+  PRIMARY,
+  WHITE,
+} from '../../../../Theme/Colors';
 import {Calendar} from 'react-native-calendars';
+import {fonts} from '../../../../Theme/AppFonts';
 
-const RegularDeliverySenderDetail = () => {
+const RegularDeliverySenderDetail = props => {
+  const {titleName} = props.route.params;
   const navigation = useNavigation<any>();
   const [fullName, setFullName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -28,6 +36,8 @@ const RegularDeliverySenderDetail = () => {
   const [ReciverAddress, setReceiverAddress] = useState('');
   const [showCalendar, setShowCalendar] = useState(false);
   const [selected, setSelected] = useState('');
+  const PickUpTime = ['AM', 'PM'];
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
   const handleFullName = txt => {
     setFullName(txt);
@@ -56,13 +66,15 @@ const RegularDeliverySenderDetail = () => {
   };
 
   const handleNextButton = () => {
-    navigation.navigate('RegularDeliveryParcelDetail');
+    navigation.navigate('RegularDeliveryParcelDetail', {titleName: titleName});
   };
 
   return (
     <View style={styles.body}>
       <AppBar
-        text="Regular Delivery"
+        text={
+          titleName === 'regular' ? 'Regular Delivery' : 'On Priority Delivery'
+        }
         leftIcon={<BackIcon></BackIcon>}
         OnLeftPress={() => navigation.goBack()}></AppBar>
 
@@ -108,8 +120,32 @@ const RegularDeliverySenderDetail = () => {
             onChange={handlePickUpTime}
             value={pickupTime}
           />
-
-          <AMPM></AMPM>
+          <FlatList
+            data={PickUpTime}
+            style={{position: 'absolute', right: 10}}
+            horizontal={true}
+            ItemSeparatorComponent={() => <View style={{width: 4}}></View>}
+            renderItem={({item, index}) => {
+              return (
+                <TouchableOpacity
+                  onPress={() => setSelectedIndex(index)}
+                  style={
+                    index === selectedIndex
+                      ? styles.SelectedTime
+                      : styles.UnSelectedTime
+                  }>
+                  <Text
+                    style={
+                      index === selectedIndex
+                        ? styles.SelectedTimeText
+                        : styles.UnSelectedTimeText
+                    }>
+                    {item}
+                  </Text>
+                </TouchableOpacity>
+              );
+            }}
+          />
         </View>
 
         <Text style={[styles.headingStyle, {marginTop: 20}]}>
@@ -153,12 +189,15 @@ const RegularDeliverySenderDetail = () => {
         visible={showCalendar}
         
         animationType="slide"
+        onTouchCancel={() => setShowCalendar(false)}
         onRequestClose={() => setShowCalendar(false)}>
         <View style={styles.modalContainer}>
           <Calendar
             onDayPress={day => {
               // setBillingDate(day.dateString)
               setSelected(day.dateString);
+              handlePickUpDate(day.dateString);
+              setShowCalendar(false);
               // console.log(selected)
             }}
             // dayComponent={({ date, state }) => {

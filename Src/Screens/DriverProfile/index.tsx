@@ -1,9 +1,25 @@
-import React, {useState} from 'react';
-import {FlatList, Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+  FlatList,
+  Image,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import styles from './styles';
 import {BackIcon, HalfStar, StarRating, VerifyTick} from '../../Assets/Svgs';
 import {useNavigation} from '@react-navigation/native';
 import {DriverProfileTab, DriverReivews} from '../../utils/constant';
+import {
+  requestGalleryPermission,
+  requestPermissionsForCamera,
+} from '../../utils/permission';
+import {
+  ImageLibraryOptions,
+  ImagePickerResponse,
+  launchImageLibrary,
+} from 'react-native-image-picker';
 
 const DriverProfileCustomerSide = () => {
   const navigation = useNavigation<any>();
@@ -36,7 +52,7 @@ const DriverProfileCustomerSide = () => {
       </View>
       <Text style={styles.email}>useremail@email.com</Text>
       <View style={styles.content}>
-        <View style={{alignItems: 'center', marginTop: 16}}>
+        <View style={{alignItems: 'center', marginTop: 16,}}>
           <FlatList
             data={DriverProfileTab}
             horizontal={true}
@@ -81,52 +97,48 @@ const DriverProfileCustomerSide = () => {
             </View>
           </View>
         ) : (
-          <View style={styles.RatingView}>
+          <ScrollView style={styles.RatingView}>
             <View
               style={{flexDirection: 'row', justifyContent: 'space-between'}}>
               <View style={{flexDirection: 'row'}}>
                 <HalfStar></HalfStar>
-                <Text style={styles.totalRating
-                }>4.9</Text>
+                <Text style={styles.totalRating}>4.9</Text>
               </View>
               <Text style={styles.ratingText}>(702 reviews)</Text>
             </View>
-           
-            <FlatList
-              data={DriverReivews}
-              contentContainerStyle={{marginBottom: 200}}
-              renderItem={({item, index}) => {
-               
-                return (
-                  <View
-                    style={[
-                      styles.RatingBox,
-           
-                    ]}>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                      }}>
+
+            <View style={{flex: 1, paddingTop: 10,marginBottom:400}}>
+              <FlatList
+                data={DriverReivews}
+                ItemSeparatorComponent={() => (
+                  <View style={{height: 10}}></View>
+                )}
+                renderItem={({item}) => {
+                  return (
+                    <View style={[styles.RatingBox]}>
                       <View
-                        style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <Image
-                          style={styles.imageStyle}
-                          source={require('../../Assets/Images/user2.png')}></Image>
-                        <Text style={styles.NameStyle}>{item.title}</Text>
+                        style={{
+                          flexDirection: 'row',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                        }}>
+                        <View
+                          style={{flexDirection: 'row', alignItems: 'center'}}>
+                          <Image
+                            style={styles.imageStyle}
+                            source={require('../../Assets/Images/user2.png')}></Image>
+                          <Text style={styles.NameStyle}>{item.title}</Text>
+                        </View>
+                        <StarRating></StarRating>
                       </View>
-                      <StarRating></StarRating>
+                      <Text style={styles.ReviewText}>{item.description}</Text>
+                      <Text style={styles.ReviewTime}>{item.time}</Text>
                     </View>
-                    <Text style={styles.ReviewText}>{item.description}</Text>
-                    <Text style={styles.ReviewTime}>{item.time}</Text>
-                  </View>
-                );
-              }}
-            />
-           
-            
-          </View>
+                  );
+                }}
+              />
+            </View>
+          </ScrollView>
         )}
       </View>
     </View>

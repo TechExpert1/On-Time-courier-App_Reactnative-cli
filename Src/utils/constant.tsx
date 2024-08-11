@@ -289,42 +289,49 @@ export const AllVehiclesList = [
     key: 0,
     title: 'Car',
     image: require('../Assets/Images/car_seq.png'),
+    imagePath:'../Assets/Images/car_seq.png',
     available: '10 available',
   },
   {
     key: 1,
     title: `SUV`,
     image: require('../Assets/Images/suv_seq.png'),
+    imagePath:'../Assets/Images/suv_seq.png',
     available: '12 available',
   },
   {
     key: 2,
     title: 'Van',
     image: require('../Assets/Images/ven_seq.png'),
+    imagePath:'../Assets/Images/ven_seq.png',
     available: '7 available',
   },
   {
     key: 3,
     title: 'Pickup Truck',
     image: require('../Assets/Images/pickup_truck_seq.png'),
+    imagePath:'../Assets/Images/pickup_truck_seq.png',
     available: '5 available',
   },
   {
     key: 4,
     title: 'Cube Truck',
     image: require('../Assets/Images/cube_truck.png'),
+    imagePath:'../Assets/Images/cube_truck.png',
     available: '5 available',
   },
   {
     key: 5,
     title: 'Reefer Cube Truck',
     image: require('../Assets/Images/reefree_truck.png'),
+    imagePath:'../Assets/Images/reefree_truck.png',
     available: '5 available',
   },
   {
     key: 5,
     title: 'Freight Truck',
     image: require('../Assets/Images/fighter_truck.png'),
+    imagePath:'../Assets/Images/fighter_truck.png',
     available: '5 available',
   },
 ];
@@ -378,6 +385,18 @@ export const DriverReivews = [
   ,
   {
     key: 3,
+    title: 'Robert Smith',
+    description: 'Lorem ipsum dolor sit amet consectetur. Ultrices rhoncus id commodo porta. Arcu sed sit sodales diam magna eget.',
+    time: '3 Weeks ago'
+  },
+  {
+    key: 4,
+    title: 'Robert Smith',
+    description: 'Lorem ipsum dolor sit amet consectetur. Ultrices rhoncus id commodo porta. Arcu sed sit sodales diam magna eget.',
+    time: '3 Weeks ago'
+  },
+  {
+    key: 5,
     title: 'Robert Smith',
     description: 'Lorem ipsum dolor sit amet consectetur. Ultrices rhoncus id commodo porta. Arcu sed sit sodales diam magna eget.',
     time: '3 Weeks ago'

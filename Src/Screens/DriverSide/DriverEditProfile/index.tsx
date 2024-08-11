@@ -1,5 +1,5 @@
 import {useNavigation} from '@react-navigation/native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   FlatList,
   Image,
@@ -24,6 +24,15 @@ import {PRIMARY, TEXTCOLOR, WHITE} from '../../../Theme/Colors';
 import styles from './styles';
 import {AllVehiclesList} from '../../../utils/constant';
 import {fonts} from '../../../Theme/AppFonts';
+import {
+  requestGalleryPermission,
+  requestPermissionsForCamera,
+} from '../../../utils/permission';
+import {
+  ImageLibraryOptions,
+  ImagePickerResponse,
+  launchImageLibrary,
+} from 'react-native-image-picker';
 
 const DriverEditProfile = () => {
   const navigation = useNavigation<any>();
@@ -33,6 +42,8 @@ const DriverEditProfile = () => {
   const [addrss, setAddress] = useState('');
   const [SelectVehicleModel, setVehicleModel] = useState(false);
   const [selectVehicle, setSelectVehicle] = useState('');
+  const [selectedVehicleType, setSelectedVehicleType] = useState(null);
+  const [selectedVehicleName, setSelectedVehiceName] = useState('');
 
   const handleFullName = txt => {
     setFullName(txt);
@@ -45,7 +56,7 @@ const DriverEditProfile = () => {
     setAddress(txt);
   };
   const handleContinueButton = () => {
-    navigation.navigate('DriverBottomTab');
+    navigation.navigate('DriverProfileUnderReview');
   };
 
   const hanldePlateNumber = txt => {
@@ -54,6 +65,36 @@ const DriverEditProfile = () => {
 
   const hanldeSelectVehicle = txt => {
     setSelectVehicle(txt);
+  };
+
+  useEffect(() => {
+    requestGalleryPermission();
+    requestPermissionsForCamera();
+  }, []);
+
+  const openImagePicker = () => {
+    const options: ImageLibraryOptions = {
+      mediaType: 'photo',
+      includeBase64: false,
+      maxHeight: 2000,
+      maxWidth: 2000,
+    };
+
+    launchImageLibrary(options, (response: ImagePickerResponse) => {
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.errorMessage) {
+        console.log('Image picker error');
+      } else {
+        let imageUri = response.assets?.[0]?.uri;
+        if (imageUri) {
+          // setSelectedImage(imageUri);
+          // setModalVisible(!modalVisible)
+        } else {
+          console.log('image uri is undefined');
+        }
+      }
+    });
   };
 
   return (
@@ -81,7 +122,9 @@ const DriverEditProfile = () => {
             bottom: -10,
             right: -10,
           }}>
-          <EditProfile></EditProfile>
+          <TouchableOpacity onPress={openImagePicker}>
+            <EditProfile></EditProfile>
+          </TouchableOpacity>
         </View>
       </View>
         <InputLabel label="Full Name" />
@@ -104,14 +147,30 @@ const DriverEditProfile = () => {
           value={addrss}
         />
         <InputLabel label="Vehicle" />
-        <InputText
-          placeholder="Select Vehicle"
-          addRight={<ArrowDown></ArrowDown>}
-          readonly={true}
-          onChangeText={hanldeSelectVehicle}
-          onRightPress={() => setVehicleModel(true)}
-          value={selectVehicle}
-        />
+        {selectedVehicleType === null ? (
+          <InputText
+            placeholder="Select Vehicle"
+            addRight={<ArrowDown></ArrowDown>}
+            readonly={true}
+            onChangeText={hanldeSelectVehicle}
+            onRightPress={() => setVehicleModel(true)}
+            value={selectVehicle}
+          />
+        ) : (
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <View style={styles.container}>
+              <Image
+                style={styles.imageStyles}
+                source={selectedVehicleType}></Image>
+              <Text style={styles.parcelTypeText}>{selectedVehicleName}</Text>
+            </View>
+            <TouchableOpacity
+              onPress={() => setVehicleModel(true)}
+              style={{marginTop: 20, marginLeft: -25}}>
+              <ArrowDown></ArrowDown>
+            </TouchableOpacity>
+          </View>
+        )}
 
         <InputLabel label="License Plate Number" />
         <InputText
@@ -197,6 +256,8 @@ const DriverEditProfile = () => {
                 return (
                   <TouchableOpacity
                     onPress={() => {
+                      setSelectedVehicleType(item.image);
+                      setSelectedVehiceName(item.title);
                       setVehicleModel(false);
                     }}>
                     <View style={{flexDirection: 'row', alignItems: 'center'}}>

@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useState} from 'react';
 import {
   Image,
   Modal,
@@ -28,11 +28,6 @@ import ProfileTab from '../../Components/ProfileTab';
 import CustomButton from '../../Components/CustomButton';
 import {PRIMARY, WHITE} from '../../Theme/Colors';
 import {fonts} from '../../Theme/AppFonts';
-import {getUserAPI} from '../../Services/apis/authAPIs';
-import {useDispatch, useSelector} from 'react-redux';
-import {updateUser} from '../../Store/UserSlice';
-import {store} from '../../Store/Store';
-import LoadingModal from '../../Components/LoadingModal';
 
 const ProfileScreen = () => {
   const navigation = useNavigation<any>();
@@ -41,22 +36,8 @@ const ProfileScreen = () => {
   const [logoutPopup, setLogoutPopup] = useState(false);
   const [visible, setVisible] = useState(false);
   const handleContinueButton = () => {
-    navigation.navigate('CustomerRegister', {selectedRole: 'customer'});
+    navigation.navigate('CustomerRegister');
   };
-  const dispatch = useDispatch();
-  const getUserData = async () => {
-    try {
-      const result = await getUserAPI('66b29711d46c4dc92a1e9fe9'); // Need to change this user ID to the dynamic
-      dispatch(updateUser(result?.data));
-    } catch (error) {
-      console.log('🚀 ~ getUserData ~ error:', error);
-    }
-  };
-  useFocusEffect(
-    useCallback(() => {
-      getUserData();
-    }, []),
-  );
   return (
     <View style={styles.body}>
       <View style={styles.appBarStyle}>
@@ -79,7 +60,7 @@ const ProfileScreen = () => {
             bottom: -10,
             right: -10,
           }}>
-          <EditProfile></EditProfile>
+          <TouchableOpacity onPress={openImagePicker}><EditProfile></EditProfile></TouchableOpacity>
         </View>
       </View>
       <Text style={styles.userName}>{userDetails?.userName}</Text>

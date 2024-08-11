@@ -1,5 +1,5 @@
 import {useNavigation} from '@react-navigation/native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Alert, Text, View} from 'react-native';
 import styles from './styles';
 import AppBar from '../../../Components/AppBar';
@@ -14,16 +14,12 @@ const CustomerOTP = props => {
   const navigation = useNavigation<any>();
   const [otp, setOTP] = useState<string>('');
   const [visible, setVisible] = useState<boolean>(false);
-  // const {data} = props?.route?.params;
-  // console.log('🚀 ~ CustomerOTP ~ data:', data);
+  const {data} = props?.route?.params;
+  console.log('🚀 ~ CustomerOTP ~ data:', data);
+  const [seconds, setSeconds] = useState(30);
   const handleContinueButton = async () => {
-    navigation.navigate('UploadPicture');
-    return; // have to reset it
     if (otp === '') {
       Alert.alert('OTP error', 'Please enter OTP');
-      return;
-    } else if (data?.Otp != otp) {
-      Alert.alert('OTP error', 'Please enter a valid OTP');
       return;
     } else {
       setVisible(true);
@@ -43,8 +39,31 @@ const CustomerOTP = props => {
         Alert.alert('OTP error', `${error?.response?.data?.message}`);
         console.log('Error:', error?.response?.data);
       }
+      navigation.navigate('UploadPicture');
     }
   };
+
+
+  
+    useEffect(() => {
+      const interval = setInterval(() => {
+        if (seconds > 0) {
+          setSeconds(seconds - 1);
+        }
+    
+        if (seconds === 0) {
+          if (seconds === 0) {
+            clearInterval(interval);
+          } else {
+            setSeconds(30);
+          }
+        }
+      }, 1000);
+    
+      return () => {
+        clearInterval(interval);
+      };
+    }, [seconds]);
 
   return (
     <View style={styles.body}>
@@ -56,7 +75,7 @@ const CustomerOTP = props => {
 
         <EnterOTP otp={otp} setOTP={setOTP}></EnterOTP>
         <Text style={styles.resendButton}>
-          Resend in <Text style={styles.resendButtonSpan}>0:29s</Text>
+          Resend in <Text style={styles.resendButtonSpan}>{"0:"+seconds+"s"}</Text>
         </Text>
         <CustomButton
           text="Continue"

@@ -138,8 +138,8 @@ const DriverLogin = () => {
             }}
           />
           <TouchableOpacity
-            style={styles.forgetPassword}
-            onPress={() => navigation.navigate('ForgetPassword')}>
+          style={styles.forgetPassword}
+            onPress={() => navigation.navigate('ForgetPassword',{role:'driver'})}>
             <Text style={styles.forgetPassword}>Forgot Password?</Text>
           </TouchableOpacity>
           <TouchableOpacity

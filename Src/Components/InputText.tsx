@@ -117,6 +117,10 @@ const styles = StyleSheet.create({
     height: 24,
     width: 24,
     justifyContent: 'center',
+
+    right: '1%',
+    position: 'absolute',
+    marginRight: '2%',
     alignSelf: 'center',
     marginVertical: '4%',
   },

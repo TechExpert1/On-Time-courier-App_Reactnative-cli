@@ -114,9 +114,10 @@ const styles = StyleSheet.create({
   },
   RatingView:{
     marginTop:20,
-    // paddingBottom:300,
+    // marginBottom:300,
   },
   RatingBox:{
+    flex:1,
     // height:131,
     // width: 335,
     backgroundColor:WHITE,
@@ -125,7 +126,7 @@ const styles = StyleSheet.create({
     borderWidth:1,
     paddingHorizontal:8,
     // paddingVertical:8,
-    marginTop:16,
+    // marginTop:16,
 
   },
   imageStyle:{
@@ -163,9 +164,9 @@ const styles = StyleSheet.create({
   },
   ratingText:{
     fontSize: 14,
-    fontFamily: fonts.MontserratRegular,
+    fontFamily: fonts.MontserratMedium,
     lineHeight: 17.6,
-    color: BLACK_DARK_I,
+    color: TEXTCOLOR,
   
   }
 });

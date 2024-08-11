@@ -28,7 +28,8 @@ import {RadioButton} from 'react-native-paper';
 import {ParcelType, VehiclesList} from '../../../../utils/constant';
 
 
-const RegularDeliveryParcelDetail = () => {
+const RegularDeliveryParcelDetail = props => {
+  const {titleName} = props.route.params;
   const navigation = useNavigation<any>();
   const [parcelType, setParcelType] = useState('');
   const [parcelWeight, setParcelWeight] = useState('');
@@ -73,7 +74,7 @@ const RegularDeliveryParcelDetail = () => {
   return (
     <View style={styles.body}>
       <AppBar
-        text="Regular Delivery"
+        text={titleName === 'regular' ? 'Regular Delivery' : 'On Priority Delivery'}
         leftIcon={<BackIcon></BackIcon>}
         OnLeftPress={() => navigation.goBack()}></AppBar>
 

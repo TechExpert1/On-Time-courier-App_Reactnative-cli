@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Alert, Text, View} from 'react-native';
 import AppBar from '../../../Components/AppBar';
 import {BackIcon} from '../../../Assets/Svgs';
@@ -12,10 +12,33 @@ import LoadingModal from '../../../Components/LoadingModal';
 
 const OTPVerification = props => {
   const navigation = useNavigation<any>();
-  const {data} = props?.route?.params;
+  const {role} = props?.route?.params;
   const [otp, setOTP] = useState<string>('');
-  console.log('🚀 ~ OTPVerification ~ otp:', otp, otp?.length);
+  // console.log('🚀 ~ OTPVerification ~ otp:', otp, otp?.length);
   const [visible, setVisible] = useState<boolean>(false);
+
+  const [seconds, setSeconds] = useState(30);
+    const [isActive, setIsActive] = useState(false);
+  
+    useEffect(() => {
+      const interval = setInterval(() => {
+        if (seconds > 0) {
+          setSeconds(seconds - 1);
+        }
+    
+        if (seconds === 0) {
+          if (seconds === 0) {
+            clearInterval(interval);
+          } else {
+            setSeconds(30);
+          }
+        }
+      }, 1000);
+    
+      return () => {
+        clearInterval(interval);
+      };
+    }, [seconds]);
 
   const handleContinueButton = async () => {
     if (otp === '') {
@@ -34,10 +57,7 @@ const OTPVerification = props => {
         setVisible(false);
         if (results?.status == 200) {
           Alert.alert('OTP success', `${results?.data?.message}`);
-          navigation.navigate('CreatePassword', {
-            data: data,
-            from: 'ForgotPassword',
-          });
+          navigation.navigate('CreatePassword', {data: data});
           // }
         }
       } catch (error) {
@@ -56,9 +76,7 @@ const OTPVerification = props => {
         </Text>
 
         <EnterOTP otp={otp} setOTP={setOTP}></EnterOTP>
-        <Text style={styles.resendButton}>
-          Resend in <Text style={styles.resendButtonSpan}>0:29s</Text>
-        </Text>
+        <Text style={styles.resendButton}>Resend in <Text style={styles.resendButtonSpan}>{"0:"+seconds+"s"}</Text></Text>
 
         <CustomButton
           text="Continue"

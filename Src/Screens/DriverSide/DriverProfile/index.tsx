@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Image, Modal, ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import styles from './styles';
 import { useNavigation } from '@react-navigation/native';
@@ -7,6 +7,8 @@ import ProfileTab from '../../../Components/ProfileTab';
 import CustomButton from '../../../Components/CustomButton';
 import { PRIMARY, WHITE } from '../../../Theme/Colors';
 import { fonts } from '../../../Theme/AppFonts';
+import { requestGalleryPermission, requestPermissionsForCamera } from '../../../utils/permission';
+import { ImageLibraryOptions, ImagePickerResponse, launchImageLibrary } from 'react-native-image-picker';
 
 const DriverProfile = () => {
   const navigation = useNavigation<any>();
@@ -14,8 +16,41 @@ const DriverProfile = () => {
   const handleContinueButton = () => {
     navigation.navigate('DriverRegister');
   };
+
+  useEffect(() => {
+    requestGalleryPermission();
+    requestPermissionsForCamera();
+}, []);
+
+
+
+  const openImagePicker = () => {
+    const options: ImageLibraryOptions = {
+        mediaType: 'photo',
+        includeBase64: false,
+        maxHeight: 2000,
+        maxWidth: 2000,
+    };
+
+    launchImageLibrary(options, (response: ImagePickerResponse) => {
+        if (response.didCancel) {
+            console.log('User cancelled image picker');
+        } else if (response.errorMessage) {
+            console.log('Image picker error');
+        } else {
+            let imageUri = response.assets?.[0]?.uri;
+            if(imageUri){
+            // setSelectedImage(imageUri);
+            // setModalVisible(!modalVisible)
+            }else{
+                console.log('image uri is undefined');
+            }
+        }
+    });
+};
+
   return (
-    <View style={styles.body}>
+    <ScrollView style={styles.body}>
       <View style={styles.appBarStyle}>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <Text style={styles.TitleName}>Me</Text>
@@ -33,12 +68,12 @@ const DriverProfile = () => {
             bottom: -10,
             right: -10,
           }}>
-          <EditProfile></EditProfile>
+         <TouchableOpacity onPress={openImagePicker}><EditProfile></EditProfile></TouchableOpacity>
         </View>
       </View>
       <Text style={styles.userName}>Robert Smith</Text>
       <Text style={styles.email}>useremail@email.com</Text>
-      <ScrollView style={styles.content}>
+      <View style={styles.content}>
         <ProfileTab
           OnTap={() => navigation.navigate('DriverEditProfile')}
           Title="Edit Profile"
@@ -69,7 +104,7 @@ const DriverProfile = () => {
           leftIcon={<DeleteAccount></DeleteAccount>}></ProfileTab>
         <ProfileTab OnTap={()=> setLogoutPopup(true)} Title="Log Out" leftIcon={<Logout></Logout>}></ProfileTab>
         <View style={{marginBottom:30}}></View>
-      </ScrollView>
+      </View>
 
       <Modal
         transparent={true}
@@ -113,7 +148,7 @@ const DriverProfile = () => {
           </View>
         </View>
       </Modal>
-    </View>
+    </ScrollView>
   )
 }
 

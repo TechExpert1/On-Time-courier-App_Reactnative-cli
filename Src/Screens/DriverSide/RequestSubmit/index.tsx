@@ -10,7 +10,7 @@ const RequestSubmit = props =>  {
     const navigation = useNavigation<any>();
     const handleContinueButton = () => {
        if(status === '0'){
-        navigation.navigate('ProfileUnderReview');
+        navigation.navigate('ProfileUnderReview',{ScreenName: 'request-submit'});
        }else {
         navigation.navigate('DriverBottomTab')
        }
