@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 10,
-    marginHorizontal: 10,
+    marginHorizontal: 20,
   },
   helloText: {
     fontSize: 10,

@@ -70,29 +70,28 @@ const DriverOTP = props => {
   // };
   return (
     <View style={styles.body}>
-      <AppBar text="Verification Code"></AppBar>
-      <View style={styles.content}>
-        <Text style={styles.enterEmail}>
-          Enter verification code sent on your entered email address.
-        </Text>
+    <AppBar
+      text="Verification Code"
+      ></AppBar>
+    <View style={styles.content}>
+      <Text style={styles.enterEmail}>
+        Enter verification code sent on your entered email address.
+      </Text>
 
-        <EnterOTP otp={otp} setOTP={setOTP}></EnterOTP>
-        <Text style={styles.resendButton}>
-          Resend in <Text style={styles.resendButtonSpan}>{seconds}</Text>
-        </Text>
-        <CustomButton
-          text="Continue"
-          onPress={handleContinueButton}
-          TextStyle={{color: WHITE}}
-          extraStyle={{
-            marginTop: 200,
-            backgroundColor: PRIMARY,
-          }}
-        />
-      </View>
-      <LoadingModal visible={visible} message={'Please wait...'} />
+      <EnterOTP otp={otp} setOTP={setOTP}></EnterOTP>
+      <Text style={styles.resendButton}>Resend in <Text style={styles.resendButtonSpan}>{"0:"+seconds+"s"}</Text></Text>
+      <CustomButton
+        text="Continue"
+        onPress={handleContinueButton}
+        TextStyle={{color: WHITE}}
+        extraStyle={{
+          marginTop: 200,
+          backgroundColor: PRIMARY,
+        }}
+      />
     </View>
-  );
+  </View>
+  )
 };
 
 export default DriverOTP;

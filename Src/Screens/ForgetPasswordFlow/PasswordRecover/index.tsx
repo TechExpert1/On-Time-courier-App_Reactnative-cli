@@ -5,12 +5,18 @@ import CustomButton from '../../../Components/CustomButton';
 import {PRIMARY, WHITE} from '../../../Theme/Colors';
 import {useNavigation} from '@react-navigation/native';
 
-const PasswordRecover = props => {
+const PasswordRecover = () => {
   const navigation = useNavigation<any>();
   const {from} = props?.route?.params;
   console.log('🚀 ~ PasswordRecover ~ from:', from);
   const handleContinueButton = () => {
+   if(role === 'customer')
+   {
+    navigation.navigate('DriverLogin');
+   }
+   else {
     navigation.navigate('CustomerLogin');
+   }
   };
   return (
     <SafeAreaView style={{flex: 1}}>

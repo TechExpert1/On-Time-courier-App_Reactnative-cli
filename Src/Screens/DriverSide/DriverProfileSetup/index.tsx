@@ -21,18 +21,19 @@ const DriverProfileSetup = props => {
   const {status} = props.route.params;
   const navigation = useNavigation<any>();
   const [selectVehicle, setSelectVehicle] = useState('');
+  const [selectedVehicleType, setSelectedVehicleType] = useState(null);
+  const [selectedVehicleName, setSelectedVehiceName] = useState('');
   const [plateNumber, setPlateNumber] = useState('');
   const [SelectVehicleModel, setVehicleModel] = useState(false);
 
-
   const handleContinueButton = () => {
-     if(status === '1'){
-      navigation.navigate('DriverBottomTab');
-     }else {
-      navigation.navigate('RequestSubmit',{status: '0'});
-     }
-    };
-  
+    if (status === '1') {
+      navigation.navigate('RequestSubmit',{ status:'1'});
+    } else {
+      navigation.navigate('RequestSubmit', {status: '0'});
+    }
+  };
+
   const hanldeSelectVehicle = txt => {
     setSelectVehicle(txt);
   };
@@ -44,16 +45,30 @@ const DriverProfileSetup = props => {
     <View style={styles.body}>
       <AppBar text="Profile Setup"></AppBar>
       <View style={styles.content}>
-        <Text>Enter you details please.</Text>
+        <Text>Enter your details please.</Text>
         <InputLabel label="Vehicle" />
-        <InputText
-          placeholder="Select Vehicle"
-          addRight={<ArrowDown></ArrowDown>}
-          readonly={true}
-          onChangeText={hanldeSelectVehicle}
-          onRightPress={() => setVehicleModel(true)}
-          value={selectVehicle}
-        />
+        {selectedVehicleType === null ? (
+          <InputText
+            placeholder="Select Vehicle"
+            addRight={<ArrowDown></ArrowDown>}
+            readonly={true}
+            onChangeText={hanldeSelectVehicle}
+            onRightPress={() => setVehicleModel(true)}
+            value={selectVehicle}
+          />
+        ) : (
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <View style={styles.container}>
+
+              <Image
+                style={styles.imageStyles}
+                source={selectedVehicleType}></Image>
+              <Text style={styles.parcelTypeText}>{selectedVehicleName}</Text>
+             
+            </View>
+            <TouchableOpacity onPress={()=>setVehicleModel(true)} style={{marginTop:20,marginLeft:-25}}><ArrowDown></ArrowDown></TouchableOpacity>
+          </View>
+        )}
 
         <InputLabel label="License Plate Number" />
         <InputText
@@ -123,6 +138,8 @@ const DriverProfileSetup = props => {
                 return (
                   <TouchableOpacity
                     onPress={() => {
+                      setSelectedVehicleType(item.image);
+                      setSelectedVehiceName(item.title);
                       setVehicleModel(false);
                     }}>
                     <View style={{flexDirection: 'row', alignItems: 'center'}}>

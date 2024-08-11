@@ -44,11 +44,12 @@ const CustomerLogin = () => {
       Alert.alert('Login error', 'Please enter your password');
       return;
     } else {
-      const body = {
-        email: email,
-        password: password,
-      };
-      handleContinueButton(body);
+      // const body = {
+      //   email: email,
+      //   password: password,
+      // };
+      // handleContinueButton(body);
+      navigation.navigate('BottomTab');
     }
   };
   const handleEmail = txt => {
@@ -63,24 +64,24 @@ const CustomerLogin = () => {
   const handleContinueButton = async payload => {
     setVisible(true);
     // API call to login API
-    try {
-      const result = await logInUserApi(payload);
-      console.log('🚀 ~ handleContinueButton ~ result:', result?.data);
-      await AsyncStorage.setItem(
-        'userToken',
-        JSON.stringify(result?.data?.token),
-      );
-      setVisible(false);
-      navigation.navigate('BottomTab');
-    } catch (error) {
-      setVisible(false);
-      Alert.alert('Login error', `${error?.response?.data?.message}`);
-      console.log(
-        '🚀 ~ handleContinueButton ~ error:',
-        error?.response?.data?.message,
-      );
-      navigation.navigate('BottomTab');
-    }
+    // try {
+    //   const result = await logInUserApi(payload);
+    //   console.log(
+    //     '🚀 ~ handleContinueButton ~ result:',
+    //     result?.response,
+    //     result?.data,
+    //   );
+    //   setVisible(false);
+      
+    // } catch (error) {
+    //   setVisible(false);
+    //   Alert.alert('Login error', `${error?.response?.data?.message}`);
+    //   console.log(
+    //     '🚀 ~ handleContinueButton ~ error:',
+    //     error?.response?.data?.message,
+    //   );
+    // }
+    navigation.navigate('BottomTab');
   };
 
   return (
@@ -133,8 +134,8 @@ const CustomerLogin = () => {
             }}
           />
           <TouchableOpacity
-            style={styles.forgetPassword}
-            onPress={() => navigation.navigate('ForgetPassword')}>
+          style={styles.forgetPassword}
+            onPress={() => navigation.navigate('ForgetPassword',{role:'Customer'})}>
             <Text style={styles.forgetPassword}>Forgot Password?</Text>
           </TouchableOpacity>
           <TouchableOpacity

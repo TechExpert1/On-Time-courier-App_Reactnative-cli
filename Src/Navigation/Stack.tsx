@@ -50,6 +50,7 @@ import ParcelDetailDriver from '../Screens/DriverSide/ParcelDetailDriver';
 import GoForPickUp from '../Screens/DriverSide/Parcel';
 import DriverEditProfile from '../Screens/DriverSide/DriverEditProfile';
 import DriverReviews from '../Screens/DriverSide/DriverReviews';
+import DriverProfileUnderReview from '../Screens/DriverSide/DriverProfileUnderReivew';
 
 
 
@@ -114,6 +115,7 @@ const Stack = () => {
       <stack.Screen name="GoForPickUp" component={GoForPickUp} />
       <stack.Screen name="DriverEditProfile" component={DriverEditProfile} />
       <stack.Screen name="DriverReviews" component={DriverReviews} />
+      <stack.Screen name="DriverProfileUnderReview" component={DriverProfileUnderReview} />
       <stack.Screen name="BottomTab" component={BottomTab} />
 
       <stack.Screen name="DriverBottomTab" component={DriverBottomTab} />

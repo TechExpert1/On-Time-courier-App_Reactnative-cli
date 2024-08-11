@@ -14,12 +14,8 @@ const Splash = () => {
   const {onBoardingState} = useSelector(state => state.user);
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      if (onBoardingState) {
-        navigation.navigate('SelectRole');
-      } else {
-        navigation.navigate('OnBoardingScreen');
-      }
-    }, 5000);
+      navigation.navigate('OnBoardingScreen');
+    }, 2500);
 
     return () => clearTimeout(timeoutId);
   }, []);

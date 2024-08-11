@@ -100,6 +100,18 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     // marginRight:30,
   },
+  container: {
+    flexDirection: 'row',
+    width: '100%',
+    alignItems: 'center',
+    borderRadius: 10,
+    backgroundColor: WHITE,
+    marginTop: '2%',
+    height: 55,
+    borderColor: BORDERCOLOR,
+    // justifyContent: 'space-between',
+    paddingHorizontal: 10,
+  },
 });
 
 export default styles;

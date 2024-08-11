@@ -13,15 +13,17 @@ const styles = StyleSheet.create({
     appBarStyle: {
         // flexDirection: 'row',
         // justifyContent: 'space-between',
-        marginTop: 20,
+        paddingTop: 20,
         marginHorizontal: 10,
+      
       },
       TitleName: {
+       
         fontSize: 18,
         fontFamily: fonts.MontserratBold,
         color: TEXTCOLOR,
-        lineHeight: 17.07,
-        alignSelf:"center"
+        lineHeight: 21.94,
+        alignSelf:"center",
         
       },
 

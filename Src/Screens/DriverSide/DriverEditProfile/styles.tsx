@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'center',
     marginTop: 26,
+    marginBottom:20,
   },
 
   userName: {
@@ -127,6 +128,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: 6,
     borderRadius:10,
     paddingVertical:10,
+  },
+  container: {
+    flexDirection: 'row',
+    width: '100%',
+    alignItems: 'center',
+    borderRadius: 10,
+    backgroundColor: WHITE,
+    marginTop: '2%',
+    height: 55,
+    borderColor: BORDERCOLOR,
+    // justifyContent: 'space-between',
+    paddingHorizontal: 10,
   },
 });
 

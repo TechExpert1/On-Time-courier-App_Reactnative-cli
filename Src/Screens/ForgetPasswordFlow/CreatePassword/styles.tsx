@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
     fontFamily:fonts.MontserratRegular,
     lineHeight:17.05,
     color:TEXTCOLOR,
+    paddingHorizontal:10,
   }
 });
 

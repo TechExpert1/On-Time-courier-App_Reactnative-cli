@@ -17,7 +17,9 @@ import {fonts} from '../../Theme/AppFonts';
 const MyOrderScreeen = () => {
   const navigation = useNavigation<any>();
   const [selectedIndex, setSelectedIndex] = useState(0);
-
+  const handleNotifictionNavigation = () => {
+    navigation.navigate('NotificationScreen');
+  };
   return (
     <View style={styles.body}>
       <View style={styles.appBarStyle}>
@@ -26,7 +28,7 @@ const MyOrderScreeen = () => {
             <Text style={styles.name}>My Orders</Text>
           </View>
         </View>
-        <NotificationIcon></NotificationIcon>
+       <TouchableOpacity onPress={handleNotifictionNavigation}><NotificationIcon></NotificationIcon></TouchableOpacity>
       </View>
 
       <View style={{marginLeft: 20, marginTop: 33, marginBottom: 20}}>
