@@ -18,12 +18,15 @@ import CheckBox from 'react-native-check-box';
 import LoadingModal from '../../../Components/LoadingModal';
 import {logInUserApi} from '../../../Services/apis/authAPIs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useDispatch } from 'react-redux';
+import { updateUser } from '../../../Store/UserSlice';
 
 const CustomerLogin = () => {
   const navigation = useNavigation<any>();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [visible, setVisible] = useState(false);
+  const dispatch = useDispatch();
 
   const [isPasswordHidden, setIsPasswordHidden] = useState(true);
   const [isRememberMe, setIsRememberMe] = useState(true);
@@ -44,12 +47,11 @@ const CustomerLogin = () => {
       Alert.alert('Login error', 'Please enter your password');
       return;
     } else {
-      // const body = {
-      //   email: email,
-      //   password: password,
-      // };
-      // handleContinueButton(body);
-      navigation.navigate('BottomTab');
+      const body = {
+        email: email,
+        password: password,
+      };
+      handleContinueButton(body);
     }
   };
   const handleEmail = txt => {
@@ -64,24 +66,25 @@ const CustomerLogin = () => {
   const handleContinueButton = async payload => {
     setVisible(true);
     // API call to login API
-    // try {
-    //   const result = await logInUserApi(payload);
-    //   console.log(
-    //     '🚀 ~ handleContinueButton ~ result:',
-    //     result?.response,
-    //     result?.data,
-    //   );
-    //   setVisible(false);
+    try {
+      const result = await logInUserApi(payload);
+      console.log('🚀 ~ handleContinueButton ~ result:', result?.data);
+      await AsyncStorage.setItem(
+        'userToken',
+        JSON.stringify(result?.data?.token),
+      );
       
-    // } catch (error) {
-    //   setVisible(false);
-    //   Alert.alert('Login error', `${error?.response?.data?.message}`);
-    //   console.log(
-    //     '🚀 ~ handleContinueButton ~ error:',
-    //     error?.response?.data?.message,
-    //   );
-    // }
-    navigation.navigate('BottomTab');
+      dispatch(updateUser(result?.data?.userInfo));
+      setVisible(false);
+      navigation.navigate('BottomTab');
+    } catch (error) {
+      setVisible(false);
+      Alert.alert('Login error', `${error?.data?.message}`);
+      console.log(
+        '🚀 ~ handleContinueButton ~ error:',
+        error?.data?.message,
+      );
+    }
   };
 
   return (
@@ -134,8 +137,8 @@ const CustomerLogin = () => {
             }}
           />
           <TouchableOpacity
-          style={styles.forgetPassword}
-            onPress={() => navigation.navigate('ForgetPassword',{role:'Customer'})}>
+            style={styles.forgetPassword}
+            onPress={() => navigation.navigate('ForgetPassword')}>
             <Text style={styles.forgetPassword}>Forgot Password?</Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -163,3 +166,7 @@ const CustomerLogin = () => {
 };
 
 export default CustomerLogin;
+
+function dispatch(arg0: any) {
+  throw new Error('Function not implemented.');
+}

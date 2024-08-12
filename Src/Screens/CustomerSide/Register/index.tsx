@@ -60,20 +60,19 @@ const CustomerRegister = props => {
       Alert.alert('Register error', 'Passwords do not match');
       return;
     } else {
-      // const body = {
-      //   userName: fullName,
-      //   email: email,
-      //   phoneNumber: phoneNumber,
-      //   password: password,
-      //   confirmPass: confirmPassword,
-      //   location: {
-      //     type: 'Point',
-      //     coordinates: [40.7128, -74.006],
-      //   },
-      //   userType: selectedRole,
-      // };
-      // handleSignUp(body);
-      navigation.navigate('CustomerOTP');
+      const body = {
+        userName: fullName,
+        email: email,
+        phoneNumber: phoneNumber,
+        password: password,
+        confirmPass: confirmPassword,
+        location: {
+          type: 'Point',
+          coordinates: [40.7128, -74.006],
+        },
+        userType: selectedRole,
+      };
+      handleSignUp(body);
     }
   };
 

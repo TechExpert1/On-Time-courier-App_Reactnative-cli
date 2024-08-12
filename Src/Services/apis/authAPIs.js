@@ -22,3 +22,5 @@ export const getUserAPI = userId => getRequest(`user/getUserById/${userId}`);
 
 export const deleteUserAPI = () => patchRequest(`user/deleteUser`);
 // export const googleLogIn = payload => postRequest(`users/google-login`, payload);
+
+export const CustomerUploadPicture = payload => putRequest(`user/editProfile`, payload);

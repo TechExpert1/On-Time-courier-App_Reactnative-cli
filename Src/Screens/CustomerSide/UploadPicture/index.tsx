@@ -1,60 +1,126 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
-import {Text, TouchableOpacity, View} from 'react-native';
+import {Alert, Image, Text, TouchableOpacity, View} from 'react-native';
 import styles from './styles';
 import AppBar from '../../../Components/AppBar';
 import CustomButton from '../../../Components/CustomButton';
 import {PRIMARY, WHITE} from '../../../Theme/Colors';
-import { UploadPictureSVG } from '../../../Assets/Svgs';
-import { requestGalleryPermission, requestPermissionsForCamera } from '../../../utils/permission';
-import { ImageLibraryOptions, ImagePickerResponse, launchCamera } from 'react-native-image-picker';
+import {UploadPictureSVG} from '../../../Assets/Svgs';
+import {
+  requestGalleryPermission,
+  requestPermissionsForCamera,
+} from '../../../utils/permission';
+import {
+  ImageLibraryOptions,
+  ImagePickerResponse,
+  launchCamera,
+} from 'react-native-image-picker';
+import LoadingModal from '../../../Components/LoadingModal';
 
 const UploadPicture = () => {
   const navigation = useNavigation<any>();
-  const [otp, setOTP] = useState<string>('');
+  const [selectImage, setSelectedImage] = useState();
+  const [visible, setVisible] = useState(false);
 
-  const handleContinueButton = () => {
-    navigation.navigate('UnableLocation');
+  const handleContinueButton = async () => {
+    if (!selectImage?.uri) {
+      Alert.alert('Error', `Please Select Image`);
+    } else {
+      const formData = new FormData();
+      setVisible(true);
+      formData.append(
+        'images',
+        selectImage?.uri
+          ? {
+              uri: selectImage?.uri,
+              type: selectImage?.type, // Modify the type based on the image type
+              name: selectImage?.fileName,
+            }
+          : null,
+      );
+      setVisible(false);
+      await fetch(
+        'https://ontimecourier-production.up.railway.app/api/v1/user/editProfile',
+        {
+          method: 'PUT',
+          headers: {
+            Accept: 'multipart/form-data',
+          },
+          body: formData,
+        },
+      )
+        .then(data => {
+          setVisible(false);
+          console.log(data, "Here is");
+          // Alert.alert('Profile Picture uploaded', `${data?.data?.message}`);
+          setSelectedImage(null);
+          navigation.navigate('UnableLocation');
+        })
+        .catch(error => {
+          if (error.response.status === 401) {
+            Alert.alert('Profile Picture uploaded', `${error}`);
+          }
+          setVisible(false);
+          console.log('🚀 ~ Profile Update ~ error:', error);
+        });
+      
+    }
   };
   useEffect(() => {
     requestGalleryPermission();
     requestPermissionsForCamera();
-}, []);
+  }, []);
 
-const openCamera = () => {
-  const options: ImageLibraryOptions = {
+  const openCamera = () => {
+    const options: ImageLibraryOptions = {
       mediaType: 'photo',
       includeBase64: false,
       maxHeight: 2000,
       maxWidth: 2000,
-  };
+    };
 
-  launchCamera(options, (response: ImagePickerResponse) => {
+    launchCamera(options, (response: ImagePickerResponse) => {
       if (response.didCancel) {
-          console.log('User cancelled camera');
+        console.log('User cancelled camera');
       } else if (response.errorMessage) {
-          console.log('Camera error');
+        console.log('Camera error');
       } else {
-          let imageUri = response.assets?.[0]?.uri;
-          if (imageUri) {
-              // setSelectedImage(imageUri);
-              // setModalVisible(!modalVisible)
-          } else {
-              console.log('image uri is undefined');
-          }
+        let imageUri = response.assets?.[0];
+        if (imageUri) {
+          setSelectedImage(imageUri);
+          console.log(imageUri);
+          // setModalVisible(!modalVisible)
+        } else {
+          console.log('image uri is undefined');
+        }
       }
-  });
-};
+    });
+  };
 
   return (
     <View style={styles.body}>
       <AppBar text="Profile Picture"></AppBar>
       <View style={styles.content}>
-       <View style={styles.uploadSvgStyle}>
-       <UploadPictureSVG></UploadPictureSVG>
-       
-       </View>
-       <TouchableOpacity onPress={openCamera}><Text style={styles.uploadPicture}>Upload picture</Text></TouchableOpacity>
+        {selectImage?.uri ? (
+          <Image
+            style={{
+              width: 195,
+              height: 195,
+              alignSelf: 'center',
+              borderRadius: 30,
+            }}
+            source={{uri: selectImage?.uri}}
+            // source={require('../../Assets/Images/user.png')}
+          ></Image>
+        ) : (
+          <View style={styles.uploadSvgStyle}>
+            <UploadPictureSVG></UploadPictureSVG>
+          </View>
+        )}
+
+        <TouchableOpacity onPress={openCamera}>
+          <Text style={styles.uploadPicture}>Upload picture</Text>
+        </TouchableOpacity>
         <CustomButton
           text="Continue"
           onPress={handleContinueButton}
@@ -65,6 +131,7 @@ const openCamera = () => {
           }}
         />
       </View>
+      <LoadingModal visible={visible} message={'Please wait...'} />
     </View>
   );
 };
