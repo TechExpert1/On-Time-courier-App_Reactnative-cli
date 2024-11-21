@@ -32,7 +32,7 @@ const NotificationScreen = () => {
           renderItem={({item, index}) => {
             return (
               <TouchableOpacity
-                onPress={()=> setSelected(index)}
+                onPress={() => setSelected(index)}
                 style={
                   selectedIndex === index
                     ? styles.NotifictionSelected

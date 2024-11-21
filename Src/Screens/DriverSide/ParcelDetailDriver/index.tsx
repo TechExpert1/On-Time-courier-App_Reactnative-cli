@@ -29,6 +29,7 @@ import {
   PRIMARY,
   TEXTCOLOR,
   WHITE,
+  YELLOW,
 } from '../../../Theme/Colors';
 import CustomButton from '../../../Components/CustomButton';
 import {fonts} from '../../../Theme/AppFonts';
@@ -37,10 +38,12 @@ import RBSheet from 'react-native-raw-bottom-sheet';
 import {StarRatingDisplay} from 'react-native-star-rating-widget';
 import InputText from '../../../Components/InputText';
 import InputLabel from '../../../Components/InputLabel';
+import {COLORS} from '../../../Theme/Index';
+import {widthPercentageToDP} from 'react-native-responsive-screen';
 
 const ParcelDetailDriver = props => {
   const {status} = props.route.params;
-  console.log(status)
+  console.log(status);
   const RateBottomRef = useRef<any>();
 
   const navigation = useNavigation<any>();
@@ -63,14 +66,27 @@ const ParcelDetailDriver = props => {
             flexDirection: 'row',
             justifyContent: 'space-between',
             paddingHorizontal: 20,
-
           }}>
-          <View style={{flexDirection: 'row', alignItems: 'center', justifyContent:'space-between'}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}>
             <Text style={styles.trackingId}>#4589632579</Text>
             {/* <ClipIcon></ClipIcon> */}
           </View>
-          {status === 'Pending' || status === 'Delivered' || status === 'Picked Up' ? (
-            <TouchableOpacity style={[status === 'Pending' ? styles.PickUpBox : status === 'Picked Up' ? styles.PickedUpBox  : styles.DeliverBox]}>
+          {status === 'Pending' ||
+          status === 'Delivered' ||
+          status === 'Picked Up' ? (
+            <TouchableOpacity
+              style={[
+                status === 'Pending'
+                  ? styles.PickUpBox
+                  : status === 'Picked Up'
+                  ? styles.PickedUpBox
+                  : styles.DeliverBox,
+              ]}>
               <Text style={styles.PickupStatusColor}>{status}</Text>
             </TouchableOpacity>
           ) : (
@@ -176,10 +192,38 @@ const ParcelDetailDriver = props => {
             value="2ft x 2ft"
             isDivider={true}></InfoLine>
           <InfoLine title="EST. Delivery" value="June 5, 2024"></InfoLine>
+          <View
+            style={[
+              styles.InfoBox,
+              {
+                backgroundColor:
+                  status === 'New'
+                    ? 'rgba(247, 240, 223, 1)'
+                    : 'rgba(216, 234, 220, 1)',
+                marginBottom:
+                  status === 'Delivered' ? widthPercentageToDP(15) : 0,
+              },
+            ]}>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}>
+              {/* <InfoIcon></InfoIcon> */}
+              <Text style={styles.totalCharges}>Total Charges</Text>
+            </View>
+
+            <View>
+              <Text style={styles.paymentPrice}>CAD 72.2/-</Text>
+              <Text style={[styles.statusText, {color: COLORS.PRIMARY}]}>
+                {status === 'New' ? 'Pending' : 'Paid'}
+              </Text>
+            </View>
+          </View>
 
           {status === 'New' ? (
             <CustomButton
-              text="Go For Pickup"
+              text="Accept"
               // onPress={() => RateBottomRef.current.open()}
               TextStyle={{
                 color: WHITE,
@@ -192,7 +236,7 @@ const ParcelDetailDriver = props => {
                 backgroundColor: PRIMARY,
               }}
             />
-          ) : status === 'Pending' ? (
+          ) : status === 'Accepted' ? (
             <CustomButton
               text="Confirm Pickup"
               // onPress={() => RateBottomRef.current.open()}
@@ -207,20 +251,22 @@ const ParcelDetailDriver = props => {
                 backgroundColor: PRIMARY,
               }}
             />
-          ) : status === 'Picked Up' ? <CustomButton
-          text="Deliver"
-          // onPress={() => RateBottomRef.current.open()}
-          TextStyle={{
-            color: WHITE,
-            fontSize: 16,
-            fontFamily: fonts.MontserratBold,
-          }}
-          extraStyle={{
-            marginTop: 30,
-            marginBottom: 65,
-            backgroundColor: PRIMARY,
-          }}
-        /> : (
+          ) : status === 'Picked Up' ? (
+            <CustomButton
+              text="Deliver"
+              // onPress={() => RateBottomRef.current.open()}
+              TextStyle={{
+                color: WHITE,
+                fontSize: 16,
+                fontFamily: fonts.MontserratBold,
+              }}
+              extraStyle={{
+                marginTop: 30,
+                marginBottom: 65,
+                backgroundColor: PRIMARY,
+              }}
+            />
+          ) : (
             <View></View>
           )}
         </View>

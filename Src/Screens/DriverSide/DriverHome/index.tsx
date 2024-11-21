@@ -1,17 +1,21 @@
-import React, { useState } from 'react'
-import { FlatList, Image, Text, TouchableOpacity, View } from 'react-native'
-import styles from './styles'
-import { Flag, NotificationIcon } from '../../../Assets/Svgs'
-import { DriverTabStatus,  listOfDriverDeliverDeliveries, listOfDriverDeliveries } from '../../../utils/constant'
-import DriverDeliveryBox from '../../../Components/DriverDeliveryBox'
-import { useNavigation } from '@react-navigation/native'
+import React, {useState} from 'react';
+import {FlatList, Image, Text, TouchableOpacity, View} from 'react-native';
+import styles from './styles';
+import {Flag, NotificationIcon} from '../../../Assets/Svgs';
+import {
+  DriverTabStatus,
+  listOfDriverDeliverDeliveries,
+  listOfDriverDeliveries,
+} from '../../../utils/constant';
+import DriverDeliveryBox from '../../../Components/DriverDeliveryBox';
+import {useNavigation} from '@react-navigation/native';
 
 const DriverHome = () => {
-    const [selectedIndex, setSelectedIndex] = useState(0);
-    const navigation = useNavigation<any>();
-    const handleNotifictionNavigation = () => {
-      navigation.navigate('NotificationScreen');
-    };
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const navigation = useNavigation<any>();
+  const handleNotifictionNavigation = () => {
+    navigation.navigate('NotificationScreen');
+  };
   return (
     <View style={styles.body}>
       <View style={styles.appBarStyle}>
@@ -28,9 +32,7 @@ const DriverHome = () => {
             <Text style={styles.name}>Robert Smith</Text>
           </View>
         </View>
-        <TouchableOpacity
-           onPress={handleNotifictionNavigation}
-        >
+        <TouchableOpacity onPress={handleNotifictionNavigation}>
           <NotificationIcon></NotificationIcon>
         </TouchableOpacity>
       </View>
@@ -66,7 +68,9 @@ const DriverHome = () => {
       <View style={{marginHorizontal: 20}}>
         <FlatList
           data={
-            selectedIndex === 2 ? listOfDriverDeliverDeliveries : listOfDriverDeliveries
+            selectedIndex === 2
+              ? listOfDriverDeliverDeliveries
+              : listOfDriverDeliveries
           }
           style={{marginBottom: 200}}
           renderItem={({item, index}) => {
@@ -78,23 +82,37 @@ const DriverHome = () => {
                 delivery_date={item.delivery_date}
                 driver_name={item.driver_name}
                 status={item.status}
-                isNew={selectedIndex ===0 ? 'New' : ''}
+                isNew={selectedIndex === 0 ? 'New' : ''}
                 onTap={() =>
-                  navigation.navigate('ParcelDetailDriver', {status: selectedIndex === 0 ? 'New' : selectedIndex === 1 && item.status === 'Pending' ? 'Pending' : item.status})
+                  navigation.navigate('ParcelDetailDriver', {
+                    status:
+                      selectedIndex === 0
+                        ? 'New'
+                        : selectedIndex === 1 && item.status === 'Pending'
+                        ? 'Pending'
+                        : item.status,
+                  })
                 }
-                onGoForPickupPress={()=> setSelectedIndex(1)}
+                onGoForPickupPress={() =>
+                  navigation.navigate('ParcelDetailDriver', {
+                    status:
+                      selectedIndex === 0
+                        ? 'New'
+                        : selectedIndex === 1 && item.status === 'Pending'
+                        ? 'Pending'
+                        : item.status,
+                  })
+                }
                 // OnTapDriver={() =>
                 //   navigation.navigate('DriverProfileCustomerSide')
                 // }
-                ></DriverDeliveryBox>
+              ></DriverDeliveryBox>
             );
           }}
         />
       </View>
-      
-     
     </View>
-  )
-}
+  );
+};
 
-export default DriverHome
+export default DriverHome;

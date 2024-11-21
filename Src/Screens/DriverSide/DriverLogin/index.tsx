@@ -57,34 +57,34 @@ const DriverLogin = () => {
         password: password,
       };
       handleContinueButton(body);
-      console.log('Boday', body)
+      console.log('Boday', body);
     }
   };
-  const handleContinueButton = async payload => {
-    setVisible(true);
-    // API call to login API
-    try {
-      const result = await logInUserApi(payload);
-      console.log(
-        '🚀 ~ handleContinueButton ~ result:',
-        result?.response,
-        result?.data,
-      );
-      setVisible(false);
-      navigation.navigate('DriverBottomTab');
-    } catch (error) {
-      setVisible(false);
-      Alert.alert('Login error', `${error?.response?.data?.message}`);
-      console.log(
-        '🚀 ~ handleContinueButton ~ error:',
-        error?.response?.data?.message,
-      );
-      navigation.navigate('DriverBottomTab');
-    }
-  };
-  // const handleContinueButton = () => {
-  //   navigation.navigate('DriverBottomTab');
+  // const handleContinueButton = async payload => {
+  //   setVisible(true);
+  //   // API call to login API
+  //   try {
+  //     const result = await logInUserApi(payload);
+  //     console.log(
+  //       '🚀 ~ handleContinueButton ~ result:',
+  //       result?.response,
+  //       result?.data,
+  //     );
+  //     setVisible(false);
+  //     navigation.navigate('DriverBottomTab');
+  //   } catch (error) {
+  //     setVisible(false);
+  //     Alert.alert('Login error', `${error?.response?.data?.message}`);
+  //     console.log(
+  //       '🚀 ~ handleContinueButton ~ error:',
+  //       error?.response?.data?.message,
+  //     );
+  //     navigation.navigate('DriverBottomTab');
+  //   }
   // };
+  const handleContinueButton = () => {
+    navigation.navigate('DriverBottomTab');
+  };
 
   return (
     <View style={styles.body}>
@@ -138,8 +138,10 @@ const DriverLogin = () => {
             }}
           />
           <TouchableOpacity
-          style={styles.forgetPassword}
-            onPress={() => navigation.navigate('ForgetPassword',{role:'driver'})}>
+            style={styles.forgetPassword}
+            onPress={() =>
+              navigation.navigate('ForgetPassword', {role: 'driver'})
+            }>
             <Text style={styles.forgetPassword}>Forgot Password?</Text>
           </TouchableOpacity>
           <TouchableOpacity

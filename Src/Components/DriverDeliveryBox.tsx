@@ -13,6 +13,7 @@ import {
 import {
   BLACK,
   BLACK_GREY,
+  BLUE,
   BORDERCOLOR,
   GREYCOLOR_II,
   LIGHT_GREEN,
@@ -39,12 +40,12 @@ type MyComponentProps = {
   onTap?: () => void;
   OnTapDriver?: () => void;
   onMapPress?: () => void;
-  onGoForPickupPress?:()=>void;
+  onGoForPickupPress?: () => void;
 };
 
 const DriverDeliveryBox: React.FC<MyComponentProps> = props => {
   return (
-    <TouchableOpacity >
+    <TouchableOpacity>
       <View style={styles.BoxStyle}>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <Text style={styles.trackingId}>#4589632579</Text>
@@ -54,8 +55,8 @@ const DriverDeliveryBox: React.FC<MyComponentProps> = props => {
                 styles.PickUpBox,
                 {
                   backgroundColor:
-                    props.status === 'Pending'
-                      ? BLACK_GREY
+                    props.status === 'Accepted'
+                      ? BLUE
                       : props.status === 'Delivered'
                       ? PRIMARY
                       : YELLOW,
@@ -68,9 +69,11 @@ const DriverDeliveryBox: React.FC<MyComponentProps> = props => {
           )}
         </View>
         <View style={styles.divider}></View>
-        <TouchableOpacity onPress={props.onMapPress}><Image
-          style={{height: 128, width: '100%', paddingBottom: 10}}
-          source={require('../Assets/Images/MapImage.png')}></Image></TouchableOpacity>
+        <TouchableOpacity onPress={props.onMapPress}>
+          <Image
+            style={{height: 128, width: '100%', paddingBottom: 10}}
+            source={require('../Assets/Images/MapImage.png')}></Image>
+        </TouchableOpacity>
         <View
           style={{
             flexDirection: 'row',
@@ -102,7 +105,9 @@ const DriverDeliveryBox: React.FC<MyComponentProps> = props => {
               <Text style={styles.cityTextStyle}>{props.driver_name}</Text>
             </View>
           </View>
-          <TouchableOpacity onPress={props.onTap}><ArrowRightBox></ArrowRightBox></TouchableOpacity>
+          <TouchableOpacity onPress={props.onTap}>
+            <ArrowRightBox></ArrowRightBox>
+          </TouchableOpacity>
         </TouchableOpacity>
         {props.isNew === 'New' ? (
           <View style={{flexDirection: 'row', marginTop: 20}}>
@@ -121,9 +126,8 @@ const DriverDeliveryBox: React.FC<MyComponentProps> = props => {
               }}
             />
             <CustomButton
-              text="Go For Pickup"
+              text="Accept"
               onPress={props.onGoForPickupPress}
-
               extraStyle={{
                 //   marginTop: 100,
                 marginLeft: 10,

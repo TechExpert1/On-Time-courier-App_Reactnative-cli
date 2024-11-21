@@ -265,73 +265,79 @@ export const ParcelType = [
 export const NotifcationData = [
   {
     key: 0,
-    Title: 'Courier Booked!',
-    message: 'Your Courier has been booked successfully.',
+    Title: 'Payment Confirmed!',
+    message: 'Payment confirmed from user, you can...',
   },
   {
     key: 1,
-    Title: `Parcel Delivered!`,
-    message: 'Your parcel has been delivered successfully.',
+    Title: `New Order!`,
+    message: 'A new order is added on your que.',
   },
   {
     key: 2,
+    Title: `Order Cancelled!`,
+    message: 'Order #14234234 has been cancelled.',
+  },
+  {
+    key: 3,
+    Title: `Parcel Delivered!`,
+    message: 'You successfully delivered a parcel.',
+  },
+  {
+    key: 4,
     Title: `New Message!`,
     message: 'You have received a new message.',
   },
-
-
-  
 ];
-
 
 export const AllVehiclesList = [
   {
     key: 0,
     title: 'Car',
     image: require('../Assets/Images/car_seq.png'),
-    imagePath:'../Assets/Images/car_seq.png',
+    imagePath: '../Assets/Images/car_seq.png',
     available: '10 available',
   },
   {
     key: 1,
     title: `SUV`,
     image: require('../Assets/Images/suv_seq.png'),
-    imagePath:'../Assets/Images/suv_seq.png',
+    imagePath: '../Assets/Images/suv_seq.png',
     available: '12 available',
   },
   {
     key: 2,
     title: 'Van',
     image: require('../Assets/Images/ven_seq.png'),
-    imagePath:'../Assets/Images/ven_seq.png',
+    imagePath: '../Assets/Images/ven_seq.png',
     available: '7 available',
   },
   {
     key: 3,
     title: 'Pickup Truck',
     image: require('../Assets/Images/pickup_truck_seq.png'),
-    imagePath:'../Assets/Images/pickup_truck_seq.png',
+    imagePath: '../Assets/Images/pickup_truck_seq.png',
     available: '5 available',
   },
   {
     key: 4,
     title: 'Cube Truck',
     image: require('../Assets/Images/cube_truck.png'),
-    imagePath:'../Assets/Images/cube_truck.png',
+    imagePath: '../Assets/Images/cube_truck.png',
     available: '5 available',
   },
   {
     key: 5,
     title: 'Reefer Cube Truck',
     image: require('../Assets/Images/reefree_truck.png'),
-    imagePath:'../Assets/Images/reefree_truck.png',
+    imagePath: '../Assets/Images/reefree_truck.png',
     available: '5 available',
   },
   {
     key: 5,
     title: 'Freight Truck',
     image: require('../Assets/Images/fighter_truck.png'),
-    imagePath:'../Assets/Images/fighter_truck.png',
+    imagePath: '../Assets/Images/fighter_truck.png',
     available: '5 available',
   },
 ];
@@ -344,7 +350,7 @@ export const DriverProfileTab = [
   {
     key: 1,
     title: `Reviews`,
-  }
+  },
 ];
 
 export const DriverTabStatus = [
@@ -362,48 +368,50 @@ export const DriverTabStatus = [
   },
 ];
 
-
 export const DriverReivews = [
   {
     key: 0,
     title: 'Robert Smith',
-    description: 'Lorem ipsum dolor sit amet consectetur. Ultrices rhoncus id commodo porta. Arcu sed sit sodales diam magna eget.',
-    time: '3 Weeks ago'
+    description:
+      'Lorem ipsum dolor sit amet consectetur. Ultrices rhoncus id commodo porta. Arcu sed sit sodales diam magna eget.',
+    time: '3 Weeks ago',
   },
   {
     key: 1,
     title: 'Robert Smith',
-    description: 'Lorem ipsum dolor sit amet consectetur. Ultrices rhoncus id commodo porta. Arcu sed sit sodales diam magna eget.',
-    time: '3 Weeks ago'
+    description:
+      'Lorem ipsum dolor sit amet consectetur. Ultrices rhoncus id commodo porta. Arcu sed sit sodales diam magna eget.',
+    time: '3 Weeks ago',
   },
   {
     key: 2,
     title: 'Robert Smith',
-    description: 'Lorem ipsum dolor sit amet consectetur. Ultrices rhoncus id commodo porta. Arcu sed sit sodales diam magna eget.',
-    time: '3 Weeks ago'
-  }
-  ,
+    description:
+      'Lorem ipsum dolor sit amet consectetur. Ultrices rhoncus id commodo porta. Arcu sed sit sodales diam magna eget.',
+    time: '3 Weeks ago',
+  },
   {
     key: 3,
     title: 'Robert Smith',
-    description: 'Lorem ipsum dolor sit amet consectetur. Ultrices rhoncus id commodo porta. Arcu sed sit sodales diam magna eget.',
-    time: '3 Weeks ago'
+    description:
+      'Lorem ipsum dolor sit amet consectetur. Ultrices rhoncus id commodo porta. Arcu sed sit sodales diam magna eget.',
+    time: '3 Weeks ago',
   },
   {
     key: 4,
     title: 'Robert Smith',
-    description: 'Lorem ipsum dolor sit amet consectetur. Ultrices rhoncus id commodo porta. Arcu sed sit sodales diam magna eget.',
-    time: '3 Weeks ago'
+    description:
+      'Lorem ipsum dolor sit amet consectetur. Ultrices rhoncus id commodo porta. Arcu sed sit sodales diam magna eget.',
+    time: '3 Weeks ago',
   },
   {
     key: 5,
     title: 'Robert Smith',
-    description: 'Lorem ipsum dolor sit amet consectetur. Ultrices rhoncus id commodo porta. Arcu sed sit sodales diam magna eget.',
-    time: '3 Weeks ago'
-  }
+    description:
+      'Lorem ipsum dolor sit amet consectetur. Ultrices rhoncus id commodo porta. Arcu sed sit sodales diam magna eget.',
+    time: '3 Weeks ago',
+  },
 ];
-
-
 
 export const listOfDriverDeliveries = [
   {
@@ -413,8 +421,8 @@ export const listOfDriverDeliveries = [
     delivery_date: 'June 5, 2024',
     delivery_city: 'New York City',
     driver_name: 'Ronald Richard',
-    status: 'Picked Up',
-    isNew:'New'
+    status: 'Accepted',
+    isNew: 'New',
   },
   {
     id: '2',
@@ -423,8 +431,8 @@ export const listOfDriverDeliveries = [
     delivery_date: 'June 5, 2024',
     delivery_city: 'New York City',
     driver_name: 'Albert Flores',
-    status: 'Pending',
-    isNew:'New'
+    status: 'Picked Up',
+    isNew: 'New',
   },
   {
     id: '3',
@@ -433,7 +441,7 @@ export const listOfDriverDeliveries = [
     delivery_date: 'June 5, 2024',
     delivery_city: 'New York City',
     driver_name: 'Albert Flores',
-    status: 'Pending',
+    status: 'Accepted',
   },
   {
     id: '4',
