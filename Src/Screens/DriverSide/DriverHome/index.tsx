@@ -13,6 +13,16 @@ import {useNavigation} from '@react-navigation/native';
 const DriverHome = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const navigation = useNavigation<any>();
+  const [listOfDelivers, setListOfDeliver] = useState(
+    selectedIndex === 2
+      ? listOfDriverDeliverDeliveries
+      : listOfDriverDeliveries,
+  );
+  const handleDeclineButton = id => {
+    // Filter the list to remove the declined item
+    setListOfDeliver(prevList => prevList.filter(item => item.id !== id));
+  };
+
   const handleNotifictionNavigation = () => {
     navigation.navigate('NotificationScreen');
   };
@@ -67,11 +77,7 @@ const DriverHome = () => {
 
       <View style={{marginHorizontal: 20}}>
         <FlatList
-          data={
-            selectedIndex === 2
-              ? listOfDriverDeliverDeliveries
-              : listOfDriverDeliveries
-          }
+          data={listOfDelivers}
           style={{marginBottom: 200}}
           renderItem={({item, index}) => {
             return (
@@ -81,6 +87,7 @@ const DriverHome = () => {
                 delivery_city={item.delivery_city}
                 delivery_date={item.delivery_date}
                 driver_name={item.driver_name}
+                onDeclineButtonPress={() => handleDeclineButton(item.id)}
                 status={item.status}
                 isNew={selectedIndex === 0 ? 'New' : ''}
                 onTap={() =>
@@ -93,6 +100,16 @@ const DriverHome = () => {
                         : item.status,
                   })
                 }
+                onMapPress={() => {
+                  navigation.navigate('LocationScreen', {
+                    status:
+                      selectedIndex === 0
+                        ? 'New'
+                        : selectedIndex === 1 && item.status === 'Pending'
+                        ? 'Pending'
+                        : item.status,
+                  });
+                }}
                 onGoForPickupPress={() =>
                   navigation.navigate('ParcelDetailDriver', {
                     status:

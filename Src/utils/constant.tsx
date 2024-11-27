@@ -1,20 +1,20 @@
 export const slides = [
   {
     key: 1,
-    title: 'Best Package Delivery Just For You!',
+    title: 'Best Package Delivery\n Just For You!',
     description:
       'Lorem ipsum dolor sit amet consectetur. Et auctor quis viverra amet enim semper lectus sem at. Id quam mauris consequat velit ultricies ac.',
     image: require('../Assets/Images/Wizard1.png'),
   },
   {
     key: 2,
-    title: `Track Your Parcel From Anywhere`,
+    title: `Track Your Parcel\n From Anywhere`,
     description: `Lorem ipsum dolor sit amet consectetur. Et auctor quis viverra amet enim semper lectus sem at. Id quam mauris consequat velit ultricies ac.`,
     image: require('../Assets/Images/Wizard2.png'),
   },
   {
     key: 3,
-    title: 'Get Your Parcel Safely On Time',
+    title: 'Get Your Parcel\n Safely On Time',
     description: `Lorem ipsum dolor sit amet consectetur. Et auctor quis viverra amet enim semper lectus sem at. Id quam mauris consequat velit ultricies ac.`,
     image: require('../Assets/Images/Wizard3.png'),
   },

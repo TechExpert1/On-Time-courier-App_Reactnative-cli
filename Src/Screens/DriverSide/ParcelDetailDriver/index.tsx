@@ -40,9 +40,11 @@ import InputText from '../../../Components/InputText';
 import InputLabel from '../../../Components/InputLabel';
 import {COLORS} from '../../../Theme/Index';
 import {widthPercentageToDP} from 'react-native-responsive-screen';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
 
 const ParcelDetailDriver = props => {
   const {status} = props.route.params;
+  const [pickupStatus, setPickupStatus] = useState(status);
   console.log(status);
   const RateBottomRef = useRef<any>();
 
@@ -76,22 +78,23 @@ const ParcelDetailDriver = props => {
             <Text style={styles.trackingId}>#4589632579</Text>
             {/* <ClipIcon></ClipIcon> */}
           </View>
-          {status === 'Pending' ||
-          status === 'Delivered' ||
-          status === 'Picked Up' ? (
+          {pickupStatus === 'Pending' ||
+          pickupStatus === 'Delivered' ||
+          pickupStatus === 'Picked Up' ? (
             <TouchableOpacity
               style={[
-                status === 'Pending'
+                pickupStatus === 'Pending'
                   ? styles.PickUpBox
-                  : status === 'Picked Up'
+                  : pickupStatus === 'Picked Up'
                   ? styles.PickedUpBox
                   : styles.DeliverBox,
               ]}>
-              <Text style={styles.PickupStatusColor}>{status}</Text>
+              <Text style={styles.PickupStatusColor}>{pickupStatus}</Text>
             </TouchableOpacity>
           ) : (
             <View></View>
           )}
+
           {/* {status === 'Delivered' ? (
             <TouchableOpacity style={styles.DeliverBox}>
               <Text style={styles.PickupStatusColor}>Delivered</Text>
@@ -100,6 +103,22 @@ const ParcelDetailDriver = props => {
             <View style={{ paddingHorizontal:10,}}></View>
           )} */}
         </View>
+        {pickupStatus === 'Cancel' ? (
+          <View style={styles.CancelBox}>
+            <Text
+              style={{
+                fontSize: 12,
+                fontFamily: fonts.MontserratMedium,
+                color: COLORS.REDCOLOR,
+                lineHeight: 20,
+              }}>
+              This order has been cancelled by the customer. Now you have to
+              drip this parcel on its pickup location.
+            </Text>
+          </View>
+        ) : (
+          <View></View>
+        )}
 
         <View style={styles.content1}>
           <Text style={styles.titleText}>Driver</Text>
@@ -122,7 +141,7 @@ const ParcelDetailDriver = props => {
                 </View>
               </View>
             </View>
-            {status === 'Delivered' ? (
+            {pickupStatus === 'Delivered' ? (
               <View></View>
             ) : (
               <View
@@ -192,39 +211,52 @@ const ParcelDetailDriver = props => {
             value="2ft x 2ft"
             isDivider={true}></InfoLine>
           <InfoLine title="EST. Delivery" value="June 5, 2024"></InfoLine>
-          <View
-            style={[
-              styles.InfoBox,
-              {
-                backgroundColor:
-                  status === 'New'
-                    ? 'rgba(247, 240, 223, 1)'
-                    : 'rgba(216, 234, 220, 1)',
-                marginBottom:
-                  status === 'Delivered' ? widthPercentageToDP(15) : 0,
-              },
-            ]}>
+          {pickupStatus === 'Cancel' ? (
+            <View></View>
+          ) : (
             <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-              }}>
-              {/* <InfoIcon></InfoIcon> */}
-              <Text style={styles.totalCharges}>Total Charges</Text>
-            </View>
+              style={[
+                styles.InfoBox,
+                {
+                  backgroundColor:
+                    pickupStatus === 'New'
+                      ? 'rgba(247, 240, 223, 1)'
+                      : 'rgba(216, 234, 220, 1)',
+                  marginBottom:
+                    pickupStatus === 'Delivered' ? widthPercentageToDP(15) : 0,
+                },
+              ]}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                }}>
+                {/* <InfoIcon></InfoIcon> */}
+                <Text style={styles.totalCharges}>Total Charges</Text>
+              </View>
 
-            <View>
-              <Text style={styles.paymentPrice}>CAD 72.2/-</Text>
-              <Text style={[styles.statusText, {color: COLORS.PRIMARY}]}>
-                {status === 'New' ? 'Pending' : 'Paid'}
-              </Text>
+              <View>
+                <Text style={styles.paymentPrice}>CAD 72.2/-</Text>
+                <Text
+                  style={[
+                    styles.statusText,
+                    {
+                      color:
+                        pickupStatus === 'New'
+                          ? COLORS.YELLOWDARK
+                          : COLORS.PRIMARY,
+                    },
+                  ]}>
+                  {pickupStatus === 'New' ? 'Pending' : 'Paid'}
+                </Text>
+              </View>
             </View>
-          </View>
+          )}
 
-          {status === 'New' ? (
+          {pickupStatus === 'New' ? (
             <CustomButton
               text="Accept"
-              // onPress={() => RateBottomRef.current.open()}
+              onPress={() => navigation.navigate('DriverHome')}
               TextStyle={{
                 color: WHITE,
                 fontSize: 16,
@@ -236,10 +268,10 @@ const ParcelDetailDriver = props => {
                 backgroundColor: PRIMARY,
               }}
             />
-          ) : status === 'Accepted' ? (
+          ) : pickupStatus === 'Accepted' ? (
             <CustomButton
               text="Confirm Pickup"
-              // onPress={() => RateBottomRef.current.open()}
+              onPress={() => setPickupStatus('Picked Up')}
               TextStyle={{
                 color: WHITE,
                 fontSize: 16,
@@ -251,10 +283,29 @@ const ParcelDetailDriver = props => {
                 backgroundColor: PRIMARY,
               }}
             />
-          ) : status === 'Picked Up' ? (
+          ) : pickupStatus === 'Picked Up' ? (
             <CustomButton
               text="Deliver"
-              // onPress={() => RateBottomRef.current.open()}
+              onPress={() => navigation.navigate('DriverHome')}
+              TextStyle={{
+                color: WHITE,
+                fontSize: 16,
+                fontFamily: fonts.MontserratBold,
+              }}
+              extraStyle={{
+                marginTop: 30,
+                marginBottom: 65,
+                backgroundColor: PRIMARY,
+              }}
+            />
+          ) : status === 'Cancel' ? (
+            <CustomButton
+              text="Back to Pickup"
+              onPress={() => {
+                navigation.navigate('LocationScreen', {
+                  status: 'Cancel',
+                });
+              }}
               TextStyle={{
                 color: WHITE,
                 fontSize: 16,

@@ -30,34 +30,38 @@ import MasterCard from './icons/MasterCard.svg';
 import PayPal from './icons/Paypal.svg';
 import Visa from './icons/Visa.svg';
 import PickupAddress from './icons/PickupAddress.svg';
-import Download from './icons/Downlaod.svg'
-import AMPM from './icons/AMPM.svg'
-import Attach from './icons/Attach.svg'
-import Emoji from './icons/Emojie.svg'
-import SendMessageButton from './icons/SendMessage.svg'
-import DoubleTick from './icons/DoubleTick.svg'
-import NotificationSelected from './icons/SelectedNotification.svg'
-import NotificationUnSelected from './icons/UnSelectedNotification.svg'
-import EditProfile from './icons/EditProfile.svg'
-import EditProfileTab from './icons/EditProfileTab.svg'
-import ChangePassword from './icons/ChangePassword.svg'
-import PrivacyPolicy from './icons/PrivacyPolicy.svg'
-import TermsAndCondition from './icons/TermsAndCondition.svg'
-import DeleteAccount from './icons/DeleteAccount.svg'
-import Logout from './icons/Logout.svg'
-import ArrowForward from './icons/ArrowForward.svg'
-import StarIcon from './icons/StarIcon.svg'
-import RedCrossIcon from './icons/RedCrossIcon.svg'
-import AddIcon from './icons/AddIcon.svg'
-import Flag from './icons/flag.svg'
-import CrossIcon from './icons/CrossIcon.svg'
-import VerifyTick from './icons/verify_tick.svg'
-import HalfStar from './icons/HalfStar.svg'
-import StarRating from './icons/Rating.svg'
-import PayrollTab from './icons/PayrollDetailTab.svg'
-import Reviews from './icons/ReviewsTab.svg'
-import CIINFO from './icons/CI_INFO.svg'
+import Download from './icons/Downlaod.svg';
+import AMPM from './icons/AMPM.svg';
+import Attach from './icons/Attach.svg';
+import Emoji from './icons/Emojie.svg';
+import SendMessageButton from './icons/SendMessage.svg';
+import DoubleTick from './icons/DoubleTick.svg';
+import NotificationSelected from './icons/SelectedNotification.svg';
+import NotificationUnSelected from './icons/UnSelectedNotification.svg';
+import EditProfile from './icons/EditProfile.svg';
+import EditProfileTab from './icons/EditProfileTab.svg';
+import ChangePassword from './icons/ChangePassword.svg';
+import PrivacyPolicy from './icons/PrivacyPolicy.svg';
+import TermsAndCondition from './icons/TermsAndCondition.svg';
+import DeleteAccount from './icons/DeleteAccount.svg';
+import Logout from './icons/Logout.svg';
+import ArrowForward from './icons/ArrowForward.svg';
+import StarIcon from './icons/StarIcon.svg';
+import RedCrossIcon from './icons/RedCrossIcon.svg';
+import AddIcon from './icons/AddIcon.svg';
+import Flag from './icons/flag.svg';
+import CrossIcon from './icons/CrossIcon.svg';
+import VerifyTick from './icons/verify_tick.svg';
+import HalfStar from './icons/HalfStar.svg';
+import StarRating from './icons/Rating.svg';
+import PayrollTab from './icons/PayrollDetailTab.svg';
+import Reviews from './icons/ReviewsTab.svg';
+import CIINFO from './icons/CI_INFO.svg';
+import CheckBoxChecked from './icons/CheckboxChecked.svg';
+import CheckBoxUnChecked from './icons/CheckboxUnChecked.svg';
 export {
+  CheckBoxChecked,
+  CheckBoxUnChecked,
   CIINFO,
   PayrollTab,
   Reviews,
@@ -115,5 +119,5 @@ export {
   PayPal,
   Visa,
   PickupAddress,
-  Download
+  Download,
 };

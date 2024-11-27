@@ -25,3 +25,4 @@ export const BLACK_GREY = 'rgba(143, 143, 143, 1)';
 export const LIGHTGREY = 'rgba(226, 226, 226, 1)';
 export const BLACK_DARK_I = 'rgba(75, 75, 75, 1)';
 export const BLACK_LIGHT_I = 'rgba(159, 159, 159, 1)';
+export const REDCOLOR = 'rgba(201, 15, 15, 1)';

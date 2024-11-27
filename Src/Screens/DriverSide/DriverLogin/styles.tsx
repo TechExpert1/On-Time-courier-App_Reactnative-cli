@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     lineHeight: 17.26,
   },
   alreadyHaveAnAccount: {
-    width:240,
+    width: 240,
     fontSize: 14,
     fontFamily: fonts.MontserratRegular,
     lineHeight: 17.07,
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     lineHeight: 17.07,
     paddingTop: 30,
     alignSelf: 'center',
-    textDecorationLine:'underline',
+    textDecorationLine: 'underline',
     paddingBottom: 40,
   },
   rememberMe: {
@@ -67,22 +67,22 @@ const styles = StyleSheet.create({
     fontFamily: fonts.MontserratRegular,
     lineHeight: 17.07,
     color: TEXTCOLOR,
-    textAlign:'center',
-    marginLeft:6,
+    textAlign: 'center',
+    marginLeft: 6,
   },
   forgetPassword: {
-    width:160,
+    width: 160,
     fontSize: 16,
     fontFamily: fonts.MontserratBold,
     lineHeight: 19.07,
     color: PRIMARY,
-   
+
     // marginTop: 50,
     alignSelf: 'center',
   },
   rowStyle: {
     flexDirection: 'row',
-    alignItems:'center',
+    alignItems: 'center',
     paddingTop: 20,
   },
 });

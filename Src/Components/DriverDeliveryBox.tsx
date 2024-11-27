@@ -41,6 +41,7 @@ type MyComponentProps = {
   OnTapDriver?: () => void;
   onMapPress?: () => void;
   onGoForPickupPress?: () => void;
+  onDeclineButtonPress?: () => void;
 };
 
 const DriverDeliveryBox: React.FC<MyComponentProps> = props => {
@@ -113,7 +114,7 @@ const DriverDeliveryBox: React.FC<MyComponentProps> = props => {
           <View style={{flexDirection: 'row', marginTop: 20}}>
             <CustomButton
               text="Decline"
-              // onPress={handleContinueButton}
+              onPress={props.onDeclineButtonPress}
               TextStyle={{
                 color: TEXTCOLOR,
                 fontSize: 16,

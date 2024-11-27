@@ -33,10 +33,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: fonts.MontserratBold,
     color: TEXTCOLOR,
-    lineHeight: 17.07,
+    lineHeight: 21.94,
     alignSelf: 'center',
   },
-  
+
   contentText: {
     fontSize: 14,
     fontFamily: fonts.MontserratRegular,
@@ -44,12 +44,12 @@ const styles = StyleSheet.create({
     lineHeight: 17.07,
     marginTop: 20,
   },
-  ImageStyle:{
-    width:118,
-    height:100,
-    alignSelf:'center',
-    marginTop:35
-  }
+  ImageStyle: {
+    width: 118,
+    height: 100,
+    alignSelf: 'center',
+    marginTop: 35,
+  },
 });
 
 export default styles;

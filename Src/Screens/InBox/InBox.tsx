@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Image,
   ScrollView,
@@ -8,10 +8,24 @@ import {
   View,
 } from 'react-native';
 import styles from './styles';
-import {Attach, BackIcon, DoubleTick, Emoji, SendMessageButton} from '../../Assets/Svgs';
-import { useNavigation } from '@react-navigation/native';
-import { PLACEHOLDERCOLOR } from '../../Theme/Colors';
-
+import {
+  Attach,
+  BackIcon,
+  DoubleTick,
+  Emoji,
+  SendMessageButton,
+} from '../../Assets/Svgs';
+import {useNavigation} from '@react-navigation/native';
+import {PLACEHOLDERCOLOR} from '../../Theme/Colors';
+import {
+  requestGalleryPermission,
+  requestPermissionsForCamera,
+} from '../../utils/permission';
+import {
+  ImageLibraryOptions,
+  ImagePickerResponse,
+  launchCamera,
+} from 'react-native-image-picker';
 
 const InBoxScreen = () => {
   const navigation = useNavigation<any>();
@@ -41,11 +55,44 @@ const InBoxScreen = () => {
     setNewMessage(txt);
   };
 
+  useEffect(() => {
+    requestGalleryPermission();
+    requestPermissionsForCamera();
+  }, []);
+
+  const openCamera = () => {
+    const options: ImageLibraryOptions = {
+      mediaType: 'photo',
+      includeBase64: false,
+      maxHeight: 2000,
+      maxWidth: 2000,
+    };
+
+    launchCamera(options, (response: ImagePickerResponse) => {
+      if (response.didCancel) {
+        console.log('User cancelled camera');
+      } else if (response.errorMessage) {
+        console.log('Camera error');
+      } else {
+        let imageUri = response.assets?.[0];
+        if (imageUri) {
+          // setSelectedImage(imageUri);
+          console.log(imageUri);
+          // setModalVisible(!modalVisible)
+        } else {
+          console.log('image uri is undefined');
+        }
+      }
+    });
+  };
+
   return (
     <View style={styles.body}>
       <View style={styles.appBarStyle}>
         <View style={styles.UserInfoContainer}>
-          <TouchableOpacity onPress={()=> navigation.goBack()}><BackIcon></BackIcon></TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <BackIcon></BackIcon>
+          </TouchableOpacity>
           <Image
             style={styles.ImageStyle}
             source={require('../../Assets/Images/user4.png')}></Image>
@@ -62,30 +109,37 @@ const InBoxScreen = () => {
                 <Text style={styles.messageText}>{messages.text}</Text>
                 <Text style={styles.messageTime}>{messages.time}</Text>
               </View>
-             <View style={{alignSelf:'flex-end', marginRight:20}}><DoubleTick></DoubleTick></View>
+              <View style={{alignSelf: 'flex-end', marginRight: 20}}>
+                <DoubleTick></DoubleTick>
+              </View>
             </View>
           ))}
         </ScrollView>
       </View>
 
-      <View style={{flexDirection:'row', justifyContent:'space-between', marginHorizontal:20,}}>
-        
-      <View style={styles.InputTextBox}>
-        <TextInput
-          placeholder="Your message"
-          onChange={handleMessage}
-          style={styles.text}
-          placeholderTextColor={PLACEHOLDERCOLOR}
-          value={newMessage}
-        />
-        <View style={{flexDirection:'row',}}>
-          <Attach></Attach>
-          <View style={{width:10}}></View>
-          <Emoji></Emoji>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          marginHorizontal: 20,
+        }}>
+        <View style={styles.InputTextBox}>
+          <TextInput
+            placeholder="Your message"
+            onChange={handleMessage}
+            style={styles.text}
+            placeholderTextColor={PLACEHOLDERCOLOR}
+            value={newMessage}
+          />
+          <View style={{flexDirection: 'row'}}>
+            <TouchableOpacity onPress={openCamera}>
+              <Attach></Attach>
+            </TouchableOpacity>
+            <View style={{width: 10}}></View>
+            <Emoji></Emoji>
+          </View>
         </View>
-       
-      </View>
-      <SendMessageButton></SendMessageButton>
+        <SendMessageButton></SendMessageButton>
       </View>
     </View>
   );

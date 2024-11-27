@@ -8,6 +8,7 @@ import CustomButton from '../../../Components/CustomButton';
 import {PRIMARY, WHITE} from '../../../Theme/Colors';
 import {verifyForgotPasswordOTPAPI} from '../../../Services/apis/authAPIs';
 import LoadingModal from '../../../Components/LoadingModal';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const DriverOTP = props => {
   const {data} = props?.route?.params;
@@ -35,63 +36,71 @@ const DriverOTP = props => {
       clearInterval(interval);
     };
   }, [seconds]);
-  const handleContinueButton = async () => {
-    if (otp === '') {
-      Alert.alert('OTP error', 'Please enter OTP');
-      return;
-    } else if (otp?.length !== 4) {
-      Alert.alert('OTP error', 'Please enter 4 digits of OTP');
-      return;
-    } else {
-      setVisible(true);
-      const payload = {
-        otp: otp,
-      };
-      try {
-        const results = await verifyForgotPasswordOTPAPI(
-          payload,
-          data?.userWithoutPassword?._id,
-        );
-        setVisible(false);
-        if (results?.status == 200) {
-          Alert.alert('OTP success', `${results?.data?.message}`);
-          // navigation.navigate('CreatePassword', {data: data, from: 'DriverOTP'});
-          navigation.navigate('DriverProfilePicture');
-        }
-      } catch (error) {
-        setVisible(false);
-        Alert.alert('OTP error', `${error?.response?.data?.message}`);
-        console.log('Error:', error?.response?.data);
-      }
-    }
-  };
-  // const handleContinueButton = () => {
-  //   navigation.navigate('DriverProfilePicture');
+  // const handleContinueButton = async () => {
+  //   if (otp === '') {
+  //     Alert.alert('OTP error', 'Please enter OTP');
+  //     return;
+  //   } else if (otp?.length !== 4) {
+  //     Alert.alert('OTP error', 'Please enter 4 digits of OTP');
+  //     return;
+  //   } else {
+  //     setVisible(true);
+  //     const payload = {
+  //       otp: otp,
+  //     };
+  //     try {
+  //       const results = await verifyForgotPasswordOTPAPI(
+  //         payload,
+  //         data?.userWithoutPassword?._id,
+  //       );
+  //       setVisible(false);
+  //       if (results?.status == 200) {
+  //         Alert.alert('OTP success', `${results?.data?.message}`);
+  //         // navigation.navigate('CreatePassword', {data: data, from: 'DriverOTP'});
+  //         navigation.navigate('DriverProfilePicture');
+  //       }
+  //     } catch (error) {
+  //       setVisible(false);
+  //       Alert.alert('OTP error', `${error?.response?.data?.message}`);
+  //       console.log('Error:', error?.response?.data);
+  //     }
+  //   }
   // };
+  const handleContinueButton = () => {
+    navigation.navigate('DriverProfilePicture');
+  };
   return (
-    <View style={styles.body}>
-    <AppBar
-      text="Verification Code"
-      ></AppBar>
-    <View style={styles.content}>
-      <Text style={styles.enterEmail}>
-        Enter verification code sent on your entered email address.
-      </Text>
+    <KeyboardAwareScrollView
+      contentContainerStyle={{flexGrow: 1}} // Ensures the content expands to the full height
+      style={styles.body}
+      enableOnAndroid={true}
+      extraHeight={100} // Adjust to push content when keyboard appears
+    >
+      <AppBar text="Verification Code"></AppBar>
+      <View style={styles.content}>
+        <Text style={styles.enterEmail}>
+          Enter verification code sent on your entered email address.
+        </Text>
 
-      <EnterOTP otp={otp} setOTP={setOTP}></EnterOTP>
-      <Text style={styles.resendButton}>Resend in <Text style={styles.resendButtonSpan}>{"0:"+seconds+"s"}</Text></Text>
-      <CustomButton
-        text="Continue"
-        onPress={handleContinueButton}
-        TextStyle={{color: WHITE}}
-        extraStyle={{
-          marginTop: 200,
-          backgroundColor: PRIMARY,
-        }}
-      />
-    </View>
-  </View>
-  )
+        <EnterOTP otp={otp} setOTP={setOTP}></EnterOTP>
+        <Text style={styles.resendButton}>
+          Resend in{' '}
+          <Text style={styles.resendButtonSpan}>{'0:' + seconds + 's'}</Text>
+        </Text>
+      </View>
+      <View style={styles.footer}>
+        <CustomButton
+          text="Continue"
+          onPress={handleContinueButton}
+          TextStyle={{color: WHITE}}
+          extraStyle={{
+            // marginTop: 200,
+            backgroundColor: PRIMARY,
+          }}
+        />
+      </View>
+    </KeyboardAwareScrollView>
+  );
 };
 
 export default DriverOTP;

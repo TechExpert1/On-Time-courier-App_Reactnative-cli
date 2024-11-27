@@ -13,6 +13,7 @@ import {
   YELLOWDARK,
 } from '../../../Theme/Colors';
 import {fonts} from '../../../Theme/AppFonts';
+import {COLORS} from '../../../Theme/Index';
 
 const styles = StyleSheet.create({
   body: {
@@ -223,6 +224,18 @@ const styles = StyleSheet.create({
     lineHeight: 12,
     color: YELLOWDARK,
     alignSelf: 'flex-end',
+  },
+  CancelBox: {
+    // height: 56,
+    paddingVertical: 7,
+    borderRadius: 5,
+    borderColor: COLORS.REDCOLOR,
+    borderWidth: 1,
+    marginHorizontal: 20,
+    backgroundColor: 'rgba(245, 233, 234, 1)',
+    alignItems: 'center',
+    paddingHorizontal: 1.5,
+    marginTop: 12,
   },
 });
 export default styles;

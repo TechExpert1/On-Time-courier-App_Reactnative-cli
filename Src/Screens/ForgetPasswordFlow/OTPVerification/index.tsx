@@ -9,6 +9,7 @@ import EnterOTP from '../../../Components/OTP';
 import {useNavigation} from '@react-navigation/native';
 import {verifyForgotPasswordOTPAPI} from '../../../Services/apis/authAPIs';
 import LoadingModal from '../../../Components/LoadingModal';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const OTPVerification = props => {
   const navigation = useNavigation<any>();
@@ -18,27 +19,27 @@ const OTPVerification = props => {
   const [visible, setVisible] = useState<boolean>(false);
 
   const [seconds, setSeconds] = useState(30);
-    const [isActive, setIsActive] = useState(false);
-  
-    useEffect(() => {
-      const interval = setInterval(() => {
-        if (seconds > 0) {
-          setSeconds(seconds - 1);
-        }
-    
+  const [isActive, setIsActive] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (seconds > 0) {
+        setSeconds(seconds - 1);
+      }
+
+      if (seconds === 0) {
         if (seconds === 0) {
-          if (seconds === 0) {
-            clearInterval(interval);
-          } else {
-            setSeconds(30);
-          }
+          clearInterval(interval);
+        } else {
+          setSeconds(30);
         }
-      }, 1000);
-    
-      return () => {
-        clearInterval(interval);
-      };
-    }, [seconds]);
+      }
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [seconds]);
 
   const handleContinueButton = async () => {
     if (otp === '') {
@@ -68,7 +69,12 @@ const OTPVerification = props => {
     }
   };
   return (
-    <View style={styles.body}>
+    <KeyboardAwareScrollView
+      contentContainerStyle={{flexGrow: 1}} // Ensures the content expands to the full height
+      style={styles.body}
+      enableOnAndroid={true}
+      extraHeight={100} // Adjust to push content when keyboard appears
+    >
       <AppBar text="Verification Code"></AppBar>
       <View style={styles.content}>
         <Text style={styles.enterEmail}>
@@ -76,8 +82,12 @@ const OTPVerification = props => {
         </Text>
 
         <EnterOTP otp={otp} setOTP={setOTP}></EnterOTP>
-        <Text style={styles.resendButton}>Resend in <Text style={styles.resendButtonSpan}>{"0:"+seconds+"s"}</Text></Text>
-
+        <Text style={styles.resendButton}>
+          Resend in{' '}
+          <Text style={styles.resendButtonSpan}>{'0:' + seconds + 's'}</Text>
+        </Text>
+      </View>
+      <View style={styles.footer}>
         <CustomButton
           text="Continue"
           onPress={handleContinueButton}
@@ -89,7 +99,7 @@ const OTPVerification = props => {
         />
       </View>
       <LoadingModal message={'Please wait...'} visible={visible} />
-    </View>
+    </KeyboardAwareScrollView>
   );
 };
 

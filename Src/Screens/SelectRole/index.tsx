@@ -18,22 +18,31 @@ import {
 } from '../../Theme/Colors';
 import CustomButton from '../../Components/CustomButton';
 import {useNavigation} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {widthPercentageToDP} from 'react-native-responsive-screen';
 
 const SelectRole = () => {
   const navigation = useNavigation<any>();
   const [selectedRole, setSelectedRole] = useState();
+  const UserRole = 'UserRole';
 
   const handleSelectRole = (index: any) => {
     setSelectedRole(index);
   };
 
-  const handleContinueButton = () => {
+  const handleContinueButton = async () => {
     if (selectedRole != null) {
       if (selectedRole === 0) {
+        const userrole = await AsyncStorage.getItem(UserRole);
+        console.log(userrole);
+        await AsyncStorage.setItem(UserRole, 'customer');
         navigation.navigate('CustomerRegister', {
           selectedRole: selectedRole === 0 ? 'customer' : 'driver',
         });
       } else {
+        await AsyncStorage.setItem(UserRole, 'driver');
+        const userrole = await AsyncStorage.getItem(UserRole);
+        console.log(userrole);
         navigation.navigate('DriverRegister', {
           selectedRole: selectedRole === 0 ? 'customer' : 'driver',
         });
@@ -56,9 +65,12 @@ const SelectRole = () => {
         </Text>
         <FlatList
           data={roleList}
+          contentContainerStyle={{alignItems: 'center'}}
           scrollEnabled={false}
           horizontal={true}
-          ItemSeparatorComponent={() => <View style={{width: 12}}></View>}
+          ItemSeparatorComponent={() => (
+            <View style={{width: widthPercentageToDP(10)}}></View>
+          )}
           renderItem={({item, index}) => {
             return (
               <TouchableOpacity

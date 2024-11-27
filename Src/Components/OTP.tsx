@@ -9,7 +9,8 @@ import {
 } from 'react-native-confirmation-code-field';
 import {BG_COLOR, PRIMARY, TEXTCOLOR, WHITE} from '../Theme/Colors';
 import {fonts} from '../Theme/AppFonts';
-
+import OTPTextInput from 'react-native-otp-textinput';
+import {widthPercentageToDP} from 'react-native-responsive-screen';
 type NavType = {
   NewPassword: undefined;
 };
@@ -25,83 +26,38 @@ const EnterOTP = ({otp, setOTP}) => {
   const ref = useBlurOnFulfill({value, cellCount: CELL_COUNT});
 
   return (
-    <View>
-      {/* <Headers Onpres={() => navigation.goBack()} />
-      <ForgotPasswordTitle title="Enter the OTP sent to you" /> */}
-      <View style={styles.BoxContainer}>
-        <CodeField
-          ref={ref}
-          {...props}
-          value={value}
-          onChangeText={text => {
-            setValue(text);
-            setOTP(text);
-            if (text.length === CELL_COUNT) {
-              Keyboard.dismiss();
-            }
-          }}
-          // textInputStyle={styles.textStyle}
-          onSubmitEditing={() => {
-            Keyboard.dismiss();
-          }}
-          cellCount={CELL_COUNT}
-          rootStyle={styles.codeFieldRoot}
-          keyboardType="number-pad"
-          textContentType="oneTimeCode"
-          renderCell={({index, symbol, isFocused}) => (
-            <Text
-              key={index}
-              style={[styles.cell, isFocused && styles.focusCell]}
-              onLayout={getCellOnLayoutHandler(index)}>
-              {symbol || (isFocused ? <Cursor /> : null)}
-            </Text>
-          )}
-        />
-      </View>
+    <View style={{alignSelf: 'center'}}>
+      <OTPTextInput
+        {...props}
+        handleTextChange={setOTP}
+        inputCount={CELL_COUNT}
+        textInputStyle={styles.cell}
+        tintColor={PRIMARY}
+        offTintColor={'rgba(234, 234, 234, 0.5)'}
+        autoFocus={true}
+        keyboardType="number-pad"
+      />
     </View>
   );
 };
 export default EnterOTP;
 
 const styles = StyleSheet.create({
-  MainCOntainer: {
-    backgroundColor: WHITE,
-    height: 50,
-  },
-  codeFieldRoot: {
-    // marginTop: "5%",
-  },
   cell: {
-    width: 50,
+    width: 64,
     height: 50,
-    fontSize: 20,
-    // fontWeight: 'bold',
-    borderWidth: 1,
-    fontFamily: fonts.MontserratMedium,
-    borderColor: 'rgba(234, 234, 234, 1)',
+    alignSelf: 'center',
+    borderWidth: 0.5,
     backgroundColor: WHITE,
     borderRadius: 8,
-    textAlignVertical: 'center',
-    textAlign: 'center',
-    color: TEXTCOLOR,
-    paddingHorizontal: 12,
+    borderBottomWidth: widthPercentageToDP(0.3),
     marginHorizontal: 12,
     marginTop: 40,
-    lineHeight: 50,
   },
-  focusCell: {
-    borderColor: PRIMARY,
-  },
-  BoxContainer: {
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    alignSelf: 'center',
-    marginBottom: 10,
-  },
+
   textStyle: {
     fontSize: 20,
-    fontFamily: fonts.MontserratSemiBold,
+    fontFamily: fonts.MontserratMedium,
     lineHeight: 22.8,
     color: TEXTCOLOR,
   },

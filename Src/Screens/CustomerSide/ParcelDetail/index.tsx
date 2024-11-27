@@ -21,15 +21,7 @@ import {
   StarIcon,
 } from '../../../Assets/Svgs';
 import InfoLine from '../../../Components/InfoLineBar';
-import {
-  LIGHT_GREEN,
-  LIGHT_GREEN_I,
-  LIGHTGREY,
-  PLACEHOLDERCOLOR,
-  PRIMARY,
-  TEXTCOLOR,
-  WHITE,
-} from '../../../Theme/Colors';
+import {LIGHTGREY, PRIMARY, TEXTCOLOR, WHITE} from '../../../Theme/Colors';
 import CustomButton from '../../../Components/CustomButton';
 import {fonts} from '../../../Theme/AppFonts';
 import {useNavigation} from '@react-navigation/native';
@@ -40,6 +32,7 @@ import InputLabel from '../../../Components/InputLabel';
 
 const ParcelDetail = props => {
   const {status} = props.route.params;
+  console.log(status);
   const RateBottomRef = useRef<any>();
 
   const navigation = useNavigation<any>();
@@ -65,8 +58,10 @@ const ParcelDetail = props => {
           }}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Text style={styles.trackingId}>#4589632579</Text>
+
             <ClipIcon></ClipIcon>
           </View>
+
           <TouchableOpacity
             onPress={() => navigation.navigate('TrackingParcelDetail')}
             style={styles.PickUpBox}>
@@ -91,6 +86,7 @@ const ParcelDetail = props => {
             style={{width: '93%', alignSelf: 'center', paddingHorizontal: 30}}
             source={require('../../../Assets/Images/status1.png')}></Image>
         )}
+
         <View style={styles.content1}>
           <Text style={styles.titleText}>Driver</Text>
 
@@ -309,15 +305,19 @@ const ParcelDetail = props => {
           }}>
           <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.filterBottomSheetContainer}>
-              <TouchableOpacity onPress={()=>RateBottomRef.current.close()} style={styles.StarIcon}><CrossIcon></CrossIcon></TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => RateBottomRef.current.close()}
+                style={styles.StarIcon}>
+                <CrossIcon></CrossIcon>
+              </TouchableOpacity>
               <Text style={styles.AddReview}>Add Review</Text>
               <StarRatingDisplay
-              style={styles.StarStyle}
+                style={styles.StarStyle}
                 starSize={40}
                 rating={4}
                 emptyColor={LIGHTGREY}
               />
-              <InputLabel label="Add Reviews"  />
+              <InputLabel label="Add Reviews" />
               <InputText
                 placeholder="Type here..."
                 extraStyle={{
@@ -327,20 +327,20 @@ const ParcelDetail = props => {
                 onChange={handleComment}
                 value={comment}
               />
-                <CustomButton
-              text="Submit"
-              onPress={() => RateBottomRef.current.close()}
-              TextStyle={{
-                color: WHITE,
-                fontSize: 16,
-                fontFamily: fonts.MontserratBold,
-              }}
-              extraStyle={{
-                marginTop: 24,
-                marginBottom: 40,
-                backgroundColor: PRIMARY,
-              }}
-            />
+              <CustomButton
+                text="Submit"
+                onPress={() => RateBottomRef.current.close()}
+                TextStyle={{
+                  color: WHITE,
+                  fontSize: 16,
+                  fontFamily: fonts.MontserratBold,
+                }}
+                extraStyle={{
+                  marginTop: 24,
+                  marginBottom: 40,
+                  backgroundColor: PRIMARY,
+                }}
+              />
             </View>
           </ScrollView>
         </RBSheet>

@@ -11,7 +11,12 @@ import {
 import styles from './styles';
 import InputLabel from '../../../Components/InputLabel';
 import InputText from '../../../Components/InputText';
-import {EyeHide, EyeShow} from '../../../Assets/Svgs';
+import {
+  CheckBoxChecked,
+  CheckBoxUnChecked,
+  EyeHide,
+  EyeShow,
+} from '../../../Assets/Svgs';
 import CheckBox from 'react-native-check-box';
 import {BG_COLOR, PRIMARY, WHITE} from '../../../Theme/Colors';
 import CustomButton from '../../../Components/CustomButton';
@@ -119,11 +124,14 @@ const DriverLogin = () => {
             }
           />
           <View style={styles.rowStyle}>
-            <CheckBox
+            {/* <CheckBox
               isChecked={isRememberMe}
               checkedCheckBoxColor={PRIMARY}
               onClick={() => setIsRememberMe(!isRememberMe)}
-            />
+            /> */}
+            <TouchableOpacity onPress={() => setIsRememberMe(!isRememberMe)}>
+              {isRememberMe ? <CheckBoxChecked /> : <CheckBoxUnChecked />}
+            </TouchableOpacity>
 
             <Text style={styles.rememberMe}>Remember me</Text>
           </View>

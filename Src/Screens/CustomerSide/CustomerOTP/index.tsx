@@ -9,6 +9,7 @@ import CustomButton from '../../../Components/CustomButton';
 import {PRIMARY, WHITE} from '../../../Theme/Colors';
 import LoadingModal from '../../../Components/LoadingModal';
 import {verifyOTPAPI} from '../../../Services/apis/authAPIs';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const CustomerOTP = props => {
   const navigation = useNavigation<any>();
@@ -43,30 +44,33 @@ const CustomerOTP = props => {
     }
   };
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (seconds > 0) {
+        setSeconds(seconds - 1);
+      }
 
-  
-    useEffect(() => {
-      const interval = setInterval(() => {
-        if (seconds > 0) {
-          setSeconds(seconds - 1);
-        }
-    
+      if (seconds === 0) {
         if (seconds === 0) {
-          if (seconds === 0) {
-            clearInterval(interval);
-          } else {
-            setSeconds(30);
-          }
+          clearInterval(interval);
+        } else {
+          setSeconds(30);
         }
-      }, 1000);
-    
-      return () => {
-        clearInterval(interval);
-      };
-    }, [seconds]);
+      }
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [seconds]);
 
   return (
-    <View style={styles.body}>
+    <KeyboardAwareScrollView
+      contentContainerStyle={{flexGrow: 1}} // Ensures the content expands to the full height
+      style={styles.body}
+      enableOnAndroid={true}
+      extraHeight={100} // Adjust to push content when keyboard appears
+    >
       <AppBar text="Verification Code"></AppBar>
       <View style={styles.content}>
         <Text style={styles.enterEmail}>
@@ -75,20 +79,23 @@ const CustomerOTP = props => {
 
         <EnterOTP otp={otp} setOTP={setOTP}></EnterOTP>
         <Text style={styles.resendButton}>
-          Resend in <Text style={styles.resendButtonSpan}>{"0:"+seconds+"s"}</Text>
+          Resend in{' '}
+          <Text style={styles.resendButtonSpan}>{'0:' + seconds + 's'}</Text>
         </Text>
+      </View>
+      <View style={styles.footer}>
         <CustomButton
           text="Continue"
           onPress={handleContinueButton}
           TextStyle={{color: WHITE}}
           extraStyle={{
-            marginTop: 200,
+            // marginTop: 200,
             backgroundColor: PRIMARY,
           }}
         />
       </View>
       <LoadingModal message={'Please wait...'} visible={visible} />
-    </View>
+    </KeyboardAwareScrollView>
   );
 };
 

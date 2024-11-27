@@ -51,9 +51,7 @@ import GoForPickUp from '../Screens/DriverSide/Parcel';
 import DriverEditProfile from '../Screens/DriverSide/DriverEditProfile';
 import DriverReviews from '../Screens/DriverSide/DriverReviews';
 import DriverProfileUnderReview from '../Screens/DriverSide/DriverProfileUnderReivew';
-
-
-
+import LocationScreen from '../Screens/DriverSide/LocationScreen';
 
 const stack = createNativeStackNavigator();
 
@@ -82,29 +80,54 @@ const Stack = () => {
       <stack.Screen name="My Orders" component={MyOrderScreeen} />
       <stack.Screen name="Profile" component={ProfileScreen} />
       <stack.Screen name="PasswordRecover" component={PasswordRecover} />
-      <stack.Screen name="TrackingParcelDetail" component={TrackingParcelDetail} />
-      <stack.Screen name="RegularDeliverySenderDetail" component={RegularDeliverySenderDetail} />
-      <stack.Screen name="RegularDeliveryParcelDetail" component={RegularDeliveryParcelDetail} />
+      <stack.Screen
+        name="TrackingParcelDetail"
+        component={TrackingParcelDetail}
+      />
+      <stack.Screen
+        name="RegularDeliverySenderDetail"
+        component={RegularDeliverySenderDetail}
+      />
+      <stack.Screen
+        name="RegularDeliveryParcelDetail"
+        component={RegularDeliveryParcelDetail}
+      />
       <stack.Screen name="Checkout" component={Checkout} />
       <stack.Screen name="DeliverySuccess" component={DeliverySuccess} />
       <stack.Screen name="InBoxScreen" component={InBoxScreen} />
       <stack.Screen name="NotificationScreen" component={NotificationScreen} />
       <stack.Screen name="EditProfileScreen" component={EditProfileScreen} />
-      <stack.Screen name="DeleteAccountScreen" component={DeleteAccountScreen} />
-      <stack.Screen name="ChangePasswordScreen" component={ChangePasswordScreen} />
-      <stack.Screen name="PasswordChangedSuccess" component={PasswordChangedSuccess} />
+      <stack.Screen
+        name="DeleteAccountScreen"
+        component={DeleteAccountScreen}
+      />
+      <stack.Screen
+        name="ChangePasswordScreen"
+        component={ChangePasswordScreen}
+      />
+      <stack.Screen
+        name="PasswordChangedSuccess"
+        component={PasswordChangedSuccess}
+      />
       <stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
       <stack.Screen name="TermsAndCondition" component={TermsAndCondition} />
-      <stack.Screen name="DriverProfileCustomerSide" component={DriverProfileCustomerSide} />
-
-
+      <stack.Screen
+        name="DriverProfileCustomerSide"
+        component={DriverProfileCustomerSide}
+      />
 
       {/* Driver Side Navigation */}
       <stack.Screen name="DriverRegister" component={DriverRegister} />
       <stack.Screen name="DriverLogin" component={DriverLogin} />
       <stack.Screen name="DriverOTP" component={DriverOTP} />
-      <stack.Screen name="DriverProfilePicture" component={DriverProfilePicture} />
-      <stack.Screen name="DriverEnableLocation" component={DriverEnableLocation} />
+      <stack.Screen
+        name="DriverProfilePicture"
+        component={DriverProfilePicture}
+      />
+      <stack.Screen
+        name="DriverEnableLocation"
+        component={DriverEnableLocation}
+      />
       <stack.Screen name="DriverProfileSetup" component={DriverProfileSetup} />
       <stack.Screen name="RequestSubmit" component={RequestSubmit} />
       <stack.Screen name="ProfileUnderReview" component={ProfileUnderReview} />
@@ -115,8 +138,12 @@ const Stack = () => {
       <stack.Screen name="GoForPickUp" component={GoForPickUp} />
       <stack.Screen name="DriverEditProfile" component={DriverEditProfile} />
       <stack.Screen name="DriverReviews" component={DriverReviews} />
-      <stack.Screen name="DriverProfileUnderReview" component={DriverProfileUnderReview} />
+      <stack.Screen
+        name="DriverProfileUnderReview"
+        component={DriverProfileUnderReview}
+      />
       <stack.Screen name="BottomTab" component={BottomTab} />
+      <stack.Screen name="LocationScreen" component={LocationScreen} />
 
       <stack.Screen name="DriverBottomTab" component={DriverBottomTab} />
     </stack.Navigator>

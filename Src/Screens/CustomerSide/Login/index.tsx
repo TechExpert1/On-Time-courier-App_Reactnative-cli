@@ -13,13 +13,19 @@ import InputText from '../../../Components/InputText';
 import CustomButton from '../../../Components/CustomButton';
 import {PRIMARY, WHITE} from '../../../Theme/Colors';
 import {useNavigation} from '@react-navigation/native';
-import {EyeHide, EyeShow} from '../../../Assets/Svgs';
+import {
+  CheckBoxChecked,
+  CheckBoxUnChecked,
+  EyeHide,
+  EyeShow,
+} from '../../../Assets/Svgs';
 import CheckBox from 'react-native-check-box';
 import LoadingModal from '../../../Components/LoadingModal';
 import {logInUserApi} from '../../../Services/apis/authAPIs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useDispatch } from 'react-redux';
-import { updateUser } from '../../../Store/UserSlice';
+import {useDispatch} from 'react-redux';
+import {updateUser} from '../../../Store/UserSlice';
+import {heightPercentageToDP} from 'react-native-responsive-screen';
 
 const CustomerLogin = () => {
   const navigation = useNavigation<any>();
@@ -73,17 +79,14 @@ const CustomerLogin = () => {
         'userToken',
         JSON.stringify(result?.data?.token),
       );
-      
+
       dispatch(updateUser(result?.data?.userInfo));
       setVisible(false);
       navigation.navigate('BottomTab');
     } catch (error) {
       setVisible(false);
       Alert.alert('Login error', `${error?.data?.message}`);
-      console.log(
-        '🚀 ~ handleContinueButton ~ error:',
-        error?.data?.message,
-      );
+      console.log('🚀 ~ handleContinueButton ~ error:', error?.data?.message);
     }
   };
 
@@ -118,11 +121,9 @@ const CustomerLogin = () => {
             }
           />
           <View style={styles.rowStyle}>
-            <CheckBox
-              isChecked={isRememberMe}
-              checkedCheckBoxColor={PRIMARY}
-              onClick={() => setIsRememberMe(!isRememberMe)}
-            />
+            <TouchableOpacity onPress={() => setIsRememberMe(!isRememberMe)}>
+              {isRememberMe ? <CheckBoxChecked /> : <CheckBoxUnChecked />}
+            </TouchableOpacity>
 
             <Text style={styles.rememberMe}>Remember me</Text>
           </View>
@@ -132,7 +133,7 @@ const CustomerLogin = () => {
             TextStyle={{color: WHITE}}
             extraStyle={{
               marginTop: 50,
-              marginBottom: 50,
+              marginBottom: heightPercentageToDP(10),
               backgroundColor: PRIMARY,
             }}
           />

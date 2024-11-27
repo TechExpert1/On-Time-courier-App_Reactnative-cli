@@ -1,6 +1,13 @@
 import {StyleSheet} from 'react-native';
-import {BG_COLOR, DARKGREYCOLOR, PRIMARY, TEXTCOLOR, WHITE} from '../../../Theme/Colors';
+import {
+  BG_COLOR,
+  DARKGREYCOLOR,
+  PRIMARY,
+  TEXTCOLOR,
+  WHITE,
+} from '../../../Theme/Colors';
 import {fonts} from '../../../Theme/AppFonts';
+import {widthPercentageToDP} from 'react-native-responsive-screen';
 
 const styles = StyleSheet.create({
   body: {
@@ -34,29 +41,29 @@ const styles = StyleSheet.create({
     marginTop: 50,
   },
   locationText: {
+    width: widthPercentageToDP(70),
+    alignSelf: 'center',
     fontSize: 14,
     fontFamily: fonts.MontserratRegular,
     color: TEXTCOLOR,
     lineHeight: 17.26,
-      marginTop:'5%',
-      textAlign:'center'
-    
+    marginTop: '5%',
+    textAlign: 'center',
   },
   SpanText: {
     fontSize: 14,
     fontFamily: fonts.MontserratBold,
     color: PRIMARY,
     lineHeight: 17.26,
-  
   },
-  notNowText:{
+  notNowText: {
     fontSize: 15,
     fontFamily: fonts.MontserratRegular,
     color: DARKGREYCOLOR,
     lineHeight: 17.26,
-    alignSelf:'center',
-    marginTop:24,
-  }
+    alignSelf: 'center',
+    marginTop: 24,
+  },
 });
 
 export default styles;

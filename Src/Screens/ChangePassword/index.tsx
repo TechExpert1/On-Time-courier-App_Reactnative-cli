@@ -165,7 +165,7 @@ const ChangePasswordScreen = props => {
           onPress={handleContinueButton}
           TextStyle={{color: WHITE}}
           extraStyle={{
-            marginTop: 200,
+            marginTop: 250,
             backgroundColor: PRIMARY,
           }}
         />

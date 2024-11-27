@@ -73,7 +73,8 @@ const DriverRegister = props => {
         },
         userType: selectedRole,
       };
-      handleSignUp(body);
+      // handleSignUp(body);
+      navigation.navigate('DriverOTP', {data: '1234'});
     }
   };
   const [visible, setVisible] = useState(false);
@@ -93,6 +94,7 @@ const DriverRegister = props => {
         console.log('Error:', error?.response?.data);
       });
   };
+
   const handleAlreadyHavAccount = () => {
     navigation.navigate('DriverLogin');
   };

@@ -7,12 +7,12 @@ import {
   WHITE,
 } from '../../../Theme/Colors';
 import {fonts} from '../../../Theme/AppFonts';
+import {heightPercentageToDP} from 'react-native-responsive-screen';
 
 const styles = StyleSheet.create({
   body: {
     flex: 1,
     backgroundColor: BG_COLOR,
-     
   },
   content: {
     width: '100%',
@@ -38,6 +38,13 @@ const styles = StyleSheet.create({
     fontFamily: fonts.MontserratBold,
     color: PRIMARY,
     lineHeight: 17.05,
+  },
+  footer: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    marginTop: heightPercentageToDP(40),
+    paddingBottom: 50,
+    paddingHorizontal: 20,
   },
 });
 
