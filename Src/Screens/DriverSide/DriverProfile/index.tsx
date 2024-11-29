@@ -1,14 +1,39 @@
-import React, { useEffect, useState } from 'react'
-import { Image, Modal, ScrollView, Text, TouchableOpacity, View } from 'react-native'
+import React, {useEffect, useState} from 'react';
+import {
+  Image,
+  Modal,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import styles from './styles';
-import { useNavigation } from '@react-navigation/native';
-import { ChangePassword, DeleteAccount, EditProfile, EditProfileTab, Logout, NotificationIcon, PayrollTab, PrivacyPolicy, Reviews, TermsAndCondition } from '../../../Assets/Svgs';
+import {useNavigation} from '@react-navigation/native';
+import {
+  ChangePassword,
+  DeleteAccount,
+  EditProfile,
+  EditProfileTab,
+  Logout,
+  NotificationIcon,
+  PayrollTab,
+  PrivacyPolicy,
+  Reviews,
+  TermsAndCondition,
+} from '../../../Assets/Svgs';
 import ProfileTab from '../../../Components/ProfileTab';
 import CustomButton from '../../../Components/CustomButton';
-import { PRIMARY, WHITE } from '../../../Theme/Colors';
-import { fonts } from '../../../Theme/AppFonts';
-import { requestGalleryPermission, requestPermissionsForCamera } from '../../../utils/permission';
-import { ImageLibraryOptions, ImagePickerResponse, launchImageLibrary } from 'react-native-image-picker';
+import {PRIMARY, WHITE} from '../../../Theme/Colors';
+import {fonts} from '../../../Theme/AppFonts';
+import {
+  requestGalleryPermission,
+  requestPermissionsForCamera,
+} from '../../../utils/permission';
+import {
+  ImageLibraryOptions,
+  ImagePickerResponse,
+  launchImageLibrary,
+} from 'react-native-image-picker';
 
 const DriverProfile = () => {
   const navigation = useNavigation<any>();
@@ -20,41 +45,42 @@ const DriverProfile = () => {
   useEffect(() => {
     requestGalleryPermission();
     requestPermissionsForCamera();
-}, []);
-
-
+  }, []);
 
   const openImagePicker = () => {
     const options: ImageLibraryOptions = {
-        mediaType: 'photo',
-        includeBase64: false,
-        maxHeight: 2000,
-        maxWidth: 2000,
+      mediaType: 'photo',
+      includeBase64: false,
+      maxHeight: 2000,
+      maxWidth: 2000,
     };
 
     launchImageLibrary(options, (response: ImagePickerResponse) => {
-        if (response.didCancel) {
-            console.log('User cancelled image picker');
-        } else if (response.errorMessage) {
-            console.log('Image picker error');
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.errorMessage) {
+        console.log('Image picker error');
+      } else {
+        let imageUri = response.assets?.[0]?.uri;
+        if (imageUri) {
+          // setSelectedImage(imageUri);
+          // setModalVisible(!modalVisible)
         } else {
-            let imageUri = response.assets?.[0]?.uri;
-            if(imageUri){
-            // setSelectedImage(imageUri);
-            // setModalVisible(!modalVisible)
-            }else{
-                console.log('image uri is undefined');
-            }
+          console.log('image uri is undefined');
         }
+      }
     });
-};
+  };
 
   return (
     <ScrollView style={styles.body}>
       <View style={styles.appBarStyle}>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <Text style={styles.TitleName}>Me</Text>
-          <TouchableOpacity onPress={()=> navigation.navigate('NotificationScreen')}><NotificationIcon></NotificationIcon></TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('NotificationScreen')}>
+            <NotificationIcon></NotificationIcon>
+          </TouchableOpacity>
         </View>
       </View>
 
@@ -68,7 +94,9 @@ const DriverProfile = () => {
             bottom: -10,
             right: -10,
           }}>
-         <TouchableOpacity onPress={openImagePicker}><EditProfile></EditProfile></TouchableOpacity>
+          <TouchableOpacity onPress={openImagePicker}>
+            <EditProfile></EditProfile>
+          </TouchableOpacity>
         </View>
       </View>
       <Text style={styles.userName}>Robert Smith</Text>
@@ -78,16 +106,18 @@ const DriverProfile = () => {
           OnTap={() => navigation.navigate('DriverEditProfile')}
           Title="Edit Profile"
           leftIcon={<EditProfileTab></EditProfileTab>}></ProfileTab>
-           <ProfileTab
+        <ProfileTab
           OnTap={() => navigation.navigate('DriverReviews')}
           Title="Reviews"
           leftIcon={<Reviews></Reviews>}></ProfileTab>
-          <ProfileTab
-          // OnTap={() => navigation.navigate('')}
+        <ProfileTab
+          OnTap={() => navigation.navigate('PayRollDetail')}
           Title="Payroll details"
           leftIcon={<PayrollTab></PayrollTab>}></ProfileTab>
         <ProfileTab
-          OnTap={() => navigation.navigate('ChangePasswordScreen',{isRole:'driver'})}
+          OnTap={() =>
+            navigation.navigate('ChangePasswordScreen', {isRole: 'driver'})
+          }
           Title="Change Password"
           leftIcon={<ChangePassword></ChangePassword>}></ProfileTab>
         <ProfileTab
@@ -102,8 +132,11 @@ const DriverProfile = () => {
           OnTap={() => navigation.navigate('DeleteAccountScreen')}
           Title="Delete Account"
           leftIcon={<DeleteAccount></DeleteAccount>}></ProfileTab>
-        <ProfileTab OnTap={()=> setLogoutPopup(true)} Title="Log Out" leftIcon={<Logout></Logout>}></ProfileTab>
-        <View style={{marginBottom:30}}></View>
+        <ProfileTab
+          OnTap={() => setLogoutPopup(true)}
+          Title="Log Out"
+          leftIcon={<Logout></Logout>}></ProfileTab>
+        <View style={{marginBottom: 30}}></View>
       </View>
 
       <Modal
@@ -149,7 +182,7 @@ const DriverProfile = () => {
         </View>
       </Modal>
     </ScrollView>
-  )
-}
+  );
+};
 
-export default DriverProfile
+export default DriverProfile;

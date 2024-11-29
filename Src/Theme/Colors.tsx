@@ -1,4 +1,5 @@
 export const PRIMARY = 'rgba(36, 149, 49, 1)';
+export const PRIMARYHALF = 'rgba(221, 239, 223, 1)';
 export const BG_COLOR = 'rgba(248, 249, 250, 1)';
 export const WHITE = 'rgba(255, 255, 255, 1)';
 export const WHITE_I = 'rgba(255, 255, 255, 0.5)';
@@ -26,3 +27,4 @@ export const LIGHTGREY = 'rgba(226, 226, 226, 1)';
 export const BLACK_DARK_I = 'rgba(75, 75, 75, 1)';
 export const BLACK_LIGHT_I = 'rgba(159, 159, 159, 1)';
 export const REDCOLOR = 'rgba(201, 15, 15, 1)';
+export const REDCOLORI = 'rgba(237, 48, 48, 1)';

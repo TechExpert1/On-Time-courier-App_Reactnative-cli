@@ -52,6 +52,8 @@ import DriverEditProfile from '../Screens/DriverSide/DriverEditProfile';
 import DriverReviews from '../Screens/DriverSide/DriverReviews';
 import DriverProfileUnderReview from '../Screens/DriverSide/DriverProfileUnderReivew';
 import LocationScreen from '../Screens/DriverSide/LocationScreen';
+import PayRollDetail from '../Screens/DriverSide/PayRollDetail';
+import RequestSuccess from '../Screens/DriverSide/RequestSuccess';
 
 const stack = createNativeStackNavigator();
 
@@ -144,6 +146,8 @@ const Stack = () => {
       />
       <stack.Screen name="BottomTab" component={BottomTab} />
       <stack.Screen name="LocationScreen" component={LocationScreen} />
+      <stack.Screen name="PayRollDetail" component={PayRollDetail} />
+      <stack.Screen name="RequestSuccess" component={RequestSuccess} />
 
       <stack.Screen name="DriverBottomTab" component={DriverBottomTab} />
     </stack.Navigator>
