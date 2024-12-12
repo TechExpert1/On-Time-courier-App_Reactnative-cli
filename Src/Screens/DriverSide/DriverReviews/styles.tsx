@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: fonts.MontserratBold,
     color: TEXTCOLOR,
-    lineHeight: 17.07,
+    lineHeight: 22,
     alignSelf: 'center',
   },
   RatingView: {

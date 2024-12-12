@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     lineHeight: 21.94,
   },
   RightTextStyle: {
-    width: 120,
+    width: 100,
     fontSize: 14,
     fontFamily: fonts.MontserratBold,
     color: TEXTCOLOR,

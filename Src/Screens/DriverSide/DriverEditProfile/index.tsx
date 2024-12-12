@@ -1,5 +1,5 @@
 import {useNavigation} from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   FlatList,
   Image,
@@ -13,8 +13,10 @@ import {
   AddIcon,
   ArrowDown,
   BackIcon,
+  CameraIcon,
   CIINFO,
   EditProfile,
+  GalleryIcon,
   RedCrossIcon,
 } from '../../../Assets/Svgs';
 import InputLabel from '../../../Components/InputLabel';
@@ -31,8 +33,11 @@ import {
 import {
   ImageLibraryOptions,
   ImagePickerResponse,
+  launchCamera,
   launchImageLibrary,
 } from 'react-native-image-picker';
+import RBSheet from 'react-native-raw-bottom-sheet';
+import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 
 const DriverEditProfile = () => {
   const navigation = useNavigation<any>();
@@ -44,6 +49,8 @@ const DriverEditProfile = () => {
   const [selectVehicle, setSelectVehicle] = useState('');
   const [selectedVehicleType, setSelectedVehicleType] = useState(null);
   const [selectedVehicleName, setSelectedVehiceName] = useState('');
+  const [selectImage, setSelectedImage] = useState();
+  const picker = useRef<any>(null);
 
   const handleFullName = txt => {
     setFullName(txt);
@@ -72,6 +79,7 @@ const DriverEditProfile = () => {
     requestPermissionsForCamera();
   }, []);
 
+
   const openImagePicker = () => {
     const options: ImageLibraryOptions = {
       mediaType: 'photo',
@@ -86,10 +94,36 @@ const DriverEditProfile = () => {
       } else if (response.errorMessage) {
         console.log('Image picker error');
       } else {
+        let imageUri = response.assets?.[0];
+        if (imageUri) {
+          setSelectedImage(imageUri);
+          picker.current.close()
+          // setModalVisible(!modalVisible)
+        } else {
+          console.log('image uri is undefined');
+        }
+      }
+    });
+  };
+
+  const openCamera = () => {
+    const options: ImageLibraryOptions = {
+      mediaType: 'photo',
+      includeBase64: false,
+      maxHeight: 2000,
+      maxWidth: 2000,
+    };
+
+    launchCamera(options, (response: ImagePickerResponse) => {
+      if (response.didCancel) {
+        console.log('User cancelled camera');
+      } else if (response.errorMessage) {
+        console.log('Camera error');
+      } else {
         let imageUri = response.assets?.[0]?.uri;
         if (imageUri) {
-          // setSelectedImage(imageUri);
-          // setModalVisible(!modalVisible)
+          setSelectedImage(imageUri);
+          picker.current.close()
         } else {
           console.log('image uri is undefined');
         }
@@ -122,7 +156,7 @@ const DriverEditProfile = () => {
             bottom: -10,
             right: -10,
           }}>
-          <TouchableOpacity onPress={openImagePicker}>
+          <TouchableOpacity onPress={()=> picker.current.open()}>
             <EditProfile></EditProfile>
           </TouchableOpacity>
         </View>
@@ -274,6 +308,36 @@ const DriverEditProfile = () => {
           </View>
         </View>
       </Modal>
+      <RBSheet
+        ref={picker}
+        customStyles={{
+          wrapper: {
+            backgroundColor: 'rgba(0,0,0,0.5)',
+          },
+          draggableIcon: {
+            marginTop: 50,
+            width: 83,
+          },
+          container: {
+            height: '20%',
+            // maxHeight: '100%',
+            borderTopRightRadius: 20,
+            borderTopLeftRadius: 20,
+            paddingHorizontal: 20,
+          },
+        }}>
+          <View style={{flexDirection:'row', padding:30, paddingTop:heightPercentageToDP(5)}}>
+            <TouchableOpacity onPress={openCamera} style={{alignItems:'center'}}>
+              <CameraIcon />
+              <Text style={styles.PickerText}>Camera</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={openImagePicker} style={{alignItems:'center', marginLeft:widthPercentageToDP(20)}}>
+              <GalleryIcon />
+              <Text style={styles.PickerText}>Gallery</Text>
+            </TouchableOpacity>
+          </View>
+      </RBSheet>
+      
     </View>
   );
 };

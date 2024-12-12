@@ -36,7 +36,7 @@ export const listOfDeliveries = [
     delivery_date: 'June 5, 2024',
     delivery_city: 'New York City',
     driver_name: 'Albert Flores',
-    status: 'Pending',
+    status: 'Accepted',
   },
   {
     id: '3',
@@ -281,7 +281,35 @@ export const NotifcationData = [
   {
     key: 3,
     Title: `Parcel Delivered!`,
-    message: 'You successfully delivered a parcel.',
+    message: 'your parcel has been delivered successfully',
+  },
+  {
+    key: 4,
+    Title: `New Message!`,
+    message: 'You have received a new message.',
+  },
+];
+
+export const NotifcationDataCustomerSide = [
+  {
+    key: 0,
+    Title: 'Order Accepted!',
+    message: 'Your Order has been accepted by the rider...',
+  },
+  {
+    key: 1,
+    Title: `Courier Booked!`,
+    message: 'Your Courier has been booked successfully.',
+  },
+  {
+    key: 2,
+    Title: `Parcel Cancelled!`,
+    message: 'Please confirm that you’ve received your p...',
+  },
+  {
+    key: 3,
+    Title: `Parcel Delivered!`,
+    message: 'your parcel has been delivered successfully',
   },
   {
     key: 4,

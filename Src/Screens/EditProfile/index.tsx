@@ -1,8 +1,8 @@
 import {useNavigation} from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Alert, Image, Text, TouchableOpacity, View} from 'react-native';
 import styles from './styles';
-import {BackIcon, EditProfile} from '../../Assets/Svgs';
+import {BackIcon, CameraIcon, EditProfile, GalleryIcon} from '../../Assets/Svgs';
 import InputLabel from '../../Components/InputLabel';
 import InputText from '../../Components/InputText';
 import CustomButton from '../../Components/CustomButton';
@@ -15,10 +15,13 @@ import {
 import {
   ImageLibraryOptions,
   ImagePickerResponse,
+  launchCamera,
   launchImageLibrary,
 } from 'react-native-image-picker';
 import LoadingModal from '../../Components/LoadingModal';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import RBSheet from 'react-native-raw-bottom-sheet';
+import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 
 const EditProfileScreen = () => {
   const {userDetails} = useSelector(state => state.user);
@@ -29,6 +32,7 @@ const EditProfileScreen = () => {
   const [picture, setPicture] = useState(userDetails?.profilepic);
   const [selectImage, setSelectedImage] = useState();
   const [visible, setVisible] = useState(false);
+  const picker = useRef<any>(null);
 
   const handleFullName = txt => {
     setFullName(txt);
@@ -48,52 +52,53 @@ const EditProfileScreen = () => {
 
 
   const handleContinueButton = async () => {
-    if (!selectImage?.uri) {
-      Alert.alert('Error', `Please Select Image`);
-    } else {
-      const formData = new FormData();
-      setVisible(true);
-      formData.append('userName', fullName);
-      formData.append('phoneNumber', phoneNumber);
-      formData.append('address', addrss);
-      formData.append(
-        'images',
-        selectImage?.uri
-          ? {
-              uri: selectImage?.uri,
-              type: selectImage?.type, // Modify the type based on the image type
-              name: selectImage?.fileName,
-            }
-          : null,
-      );
-      setVisible(false);
-      let authToken = getUserToken();
-      await fetch(
-        'https://ontimecourier-production.up.railway.app/api/v1/user/editProfile',
-        {
-          method: 'PUT',
-          headers: {
-            Accept: 'multipart/form-data',
-            Authorization: authToken
-          },
-          body: formData,
-        },
-      )
-        .then(data => {
-          setVisible(false);
-          console.log(data, 'Here is');
-          Alert.alert('Profile Update', `${data?.message}`);
-          setSelectedImage(null);
-          navigation.navigate('BottomTab');
-        })
-        .catch(error => {
-          if (error.response.status === 401) {
-            Alert.alert('Profile Error uploaded', `${error}`);
-          }
-          setVisible(false);
-          console.log('🚀 ~ Profile Update ~ error:', error);
-        });
-    }
+    // if (!selectImage?.uri) {
+    //   Alert.alert('Error', `Please Select Image`);
+    // } else {
+    //   const formData = new FormData();
+    //   setVisible(true);
+    //   formData.append('userName', fullName);
+    //   formData.append('phoneNumber', phoneNumber);
+    //   formData.append('address', addrss);
+    //   formData.append(
+    //     'images',
+    //     selectImage?.uri
+    //       ? {
+    //           uri: selectImage?.uri,
+    //           type: selectImage?.type, // Modify the type based on the image type
+    //           name: selectImage?.fileName,
+    //         }
+    //       : null,
+    //   );
+    //   setVisible(false);
+    //   let authToken = getUserToken();
+    //   await fetch(
+    //     'https://ontimecourier-production.up.railway.app/api/v1/user/editProfile',
+    //     {
+    //       method: 'PUT',
+    //       headers: {
+    //         Accept: 'multipart/form-data',
+    //         Authorization: authToken
+    //       },
+    //       body: formData,
+    //     },
+    //   )
+    //     .then(data => {
+    //       setVisible(false);
+    //       console.log(data, 'Here is');
+    //       Alert.alert('Profile Update', `${data?.message}`);
+    //       setSelectedImage(null);
+         
+    //     })
+    //     .catch(error => {
+    //       if (error.response.status === 401) {
+    //         Alert.alert('Profile Error uploaded', `${error}`);
+    //       }
+    //       setVisible(false);
+    //       console.log('🚀 ~ Profile Update ~ error:', error);
+    //     });
+    // }
+    navigation.navigate('BottomTab');
   };
 
   useEffect(() => {
@@ -118,7 +123,33 @@ const EditProfileScreen = () => {
         let imageUri = response.assets?.[0];
         if (imageUri) {
           setSelectedImage(imageUri);
+          picker.current.close()
           // setModalVisible(!modalVisible)
+        } else {
+          console.log('image uri is undefined');
+        }
+      }
+    });
+  };
+
+  const openCamera = () => {
+    const options: ImageLibraryOptions = {
+      mediaType: 'photo',
+      includeBase64: false,
+      maxHeight: 2000,
+      maxWidth: 2000,
+    };
+
+    launchCamera(options, (response: ImagePickerResponse) => {
+      if (response.didCancel) {
+        console.log('User cancelled camera');
+      } else if (response.errorMessage) {
+        console.log('Camera error');
+      } else {
+        let imageUri = response.assets?.[0]?.uri;
+        if (imageUri) {
+          setSelectedImage(imageUri);
+          picker.current.close()
         } else {
           console.log('image uri is undefined');
         }
@@ -151,7 +182,7 @@ const EditProfileScreen = () => {
           }
         />
         <TouchableOpacity
-        onPress={openImagePicker}
+        onPress={()=> picker.current.open()}
           activeOpacity={0.5}
           style={{
             alignSelf: 'flex-end',
@@ -194,6 +225,36 @@ const EditProfileScreen = () => {
           }}
         />
       </View>
+      <RBSheet
+        ref={picker}
+        customStyles={{
+          wrapper: {
+            backgroundColor: 'rgba(0,0,0,0.5)',
+          },
+          draggableIcon: {
+            marginTop: 50,
+            width: 83,
+          },
+          container: {
+            height: '20%',
+            // maxHeight: '100%',
+            borderTopRightRadius: 20,
+            borderTopLeftRadius: 20,
+            paddingHorizontal: 20,
+          },
+        }}>
+          <View style={{flexDirection:'row', padding:30, paddingTop:heightPercentageToDP(5)}}>
+            <TouchableOpacity onPress={openCamera} style={{alignItems:'center'}}>
+              <CameraIcon />
+              <Text style={styles.PickerText}>Camera</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={openImagePicker} style={{alignItems:'center', marginLeft:widthPercentageToDP(20)}}>
+              <GalleryIcon />
+              <Text style={styles.PickerText}>Gallery</Text>
+            </TouchableOpacity>
+          </View>
+      </RBSheet>
+
       <LoadingModal visible={visible} message={'Please wait...'} />
     </View>
   );

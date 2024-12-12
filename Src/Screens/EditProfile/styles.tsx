@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: fonts.MontserratBold,
     color: TEXTCOLOR,
-    lineHeight: 17.07,
+    lineHeight: 22,
     alignSelf: 'center',
   },
   ProfilePic: {
@@ -55,6 +55,14 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: fonts.MontserratSemiBold,
     color: DARKGREYCOLOR,
+    lineHeight: 17.07,
+    alignSelf: 'center',
+    marginTop: 8,
+  },
+  PickerText: {
+    fontSize: 14,
+    fontFamily: fonts.MontserratSemiBold,
+    color: TEXTCOLOR,
     lineHeight: 17.07,
     alignSelf: 'center',
     marginTop: 8,

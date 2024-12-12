@@ -1,11 +1,12 @@
 import React from 'react'
 import { Image, ImageBackground, SafeAreaView, Text, View } from 'react-native'
-import styles from './styles'
+
 import CustomButton from '../../../../Components/CustomButton'
 import { PRIMARY, WHITE } from '../../../../Theme/Colors'
 import { useNavigation } from '@react-navigation/native'
+import styles from './styles'
 
-const DeliverySuccess = () => {
+const BookedSuccess = () => {
     const navigation = useNavigation<any>();
     const handleContinueButton = () => {
         navigation.navigate('BottomTab', {screen: 'My Orders'});
@@ -21,7 +22,7 @@ const DeliverySuccess = () => {
         source={require('../../../../Assets/Images/PasswordRecoverTick.png')}></Image>
       <Text style={styles.PasswordRecover}>{'Your Courier has been \nbooked successfully'}</Text>
       <Text style={styles.NormalTextStyle}>
-      {'We’’ll inform you once the rider will accepted your order and then you can pay for your order.'}
+      {'You can track you parcel with \ntracking ID: #4589632579'}
       </Text>
 
       <View style={styles.content}>
@@ -41,4 +42,4 @@ const DeliverySuccess = () => {
   )
 }
 
-export default DeliverySuccess
+export default BookedSuccess

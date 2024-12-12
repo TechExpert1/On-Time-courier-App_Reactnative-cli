@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Text, TouchableOpacity, View} from 'react-native';
+import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import styles from './styles';
 import {useNavigation} from '@react-navigation/native';
 import {BackIcon, EyeHide, EyeShow} from '../../Assets/Svgs';
@@ -10,6 +10,7 @@ import {PRIMARY, WHITE} from '../../Theme/Colors';
 import Toast from 'react-native-toast-message';
 import LoadingModal from '../../Components/LoadingModal';
 import {ChangePasswordAPI} from '../../Services/apis/authAPIs';
+import { heightPercentageToDP } from 'react-native-responsive-screen';
 
 const ChangePasswordScreen = props => {
   const {isRole} = props.route.params;
@@ -76,35 +77,36 @@ const ChangePasswordScreen = props => {
       confirmPassword: confirmPassword,
     };
     setVisible(true);
-    try {
-      const result = await ChangePasswordAPI(body);
-      setVisible(false);
-      console.log('🚀 ~ handleChangePassword ~ result:', result);
-      if (result) {
-        navigation.navigate('PasswordChangedSuccess', {isRole: isRole});
-      }
-    } catch (error) {
-      setVisible(false);
-      if (error?.response?.data?.JWTErr) {
-        Toast.show({
-          type: 'error',
-          text1: 'Change password failed',
-          text2: `${error?.response?.data?.JWTErr?.message}`,
-          visibilityTime: 3000,
-        });
-        console.log(
-          '🚀 ~ handleChangePassword ~ error:',
-          error?.response?.data?.JWTErr?.message,
-        );
-      } else {
-        Toast.show({
-          type: 'error',
-          text1: 'Change password failed',
-          text2: `${error?.response?.data?.message}`,
-          visibilityTime: 3000,
-        });
-      }
-    }
+    // try {
+    //   const result = await ChangePasswordAPI(body);
+    //   setVisible(false);
+    //   console.log('🚀 ~ handleChangePassword ~ result:', result);
+    //   if (result) {
+    //     navigation.navigate('PasswordChangedSuccess', {isRole: isRole});
+    //   }
+    // } catch (error) {
+    //   setVisible(false);
+    //   if (error?.response?.data?.JWTErr) {
+    //     Toast.show({
+    //       type: 'error',
+    //       text1: 'Change password failed',
+    //       text2: `${error?.response?.data?.JWTErr?.message}`,
+    //       visibilityTime: 3000,
+    //     });
+    //     console.log(
+    //       '🚀 ~ handleChangePassword ~ error:',
+    //       error?.response?.data?.JWTErr?.message,
+    //     );
+    //   } else {
+    //     Toast.show({
+    //       type: 'error',
+    //       text1: 'Change password failed',
+    //       text2: `${error?.response?.data?.message}`,
+    //       visibilityTime: 3000,
+    //     });
+    //   }
+    // }
+    navigation.navigate('PasswordChangedSuccess', {isRole: isRole});
   };
   return (
     <View style={styles.body}>
@@ -118,7 +120,7 @@ const ChangePasswordScreen = props => {
         </View>
       </View>
 
-      <View style={styles.content}>
+      <ScrollView style={styles.content}>
         <Text style={styles.contentText}>Enter your previous password.</Text>
         <InputLabel label="Password" />
         <InputText
@@ -166,10 +168,11 @@ const ChangePasswordScreen = props => {
           TextStyle={{color: WHITE}}
           extraStyle={{
             marginTop: 250,
+            marginBottom:heightPercentageToDP(5),
             backgroundColor: PRIMARY,
           }}
         />
-      </View>
+      </ScrollView>
       <LoadingModal visible={visible} message={'Please wait...'} />
     </View>
   );

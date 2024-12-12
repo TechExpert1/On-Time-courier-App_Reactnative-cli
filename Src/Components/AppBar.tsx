@@ -53,8 +53,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     alignSelf: 'flex-start',
-    paddingTop: '5%',
-    // paddingBottom: '5%',
+    paddingTop: '7%',
     backgroundColor: 'transparent',
   },
   leftIconStyle: {

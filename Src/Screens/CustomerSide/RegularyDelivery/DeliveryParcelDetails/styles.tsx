@@ -13,6 +13,24 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 24,
   },
+  containerInputLabel: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+
+    marginTop: '5%',
+  },
+  textStyle: {
+    fontSize: 16,
+    fontWeight: '600',
+    fontFamily: fonts.MontserratBold,
+    color: TEXTCOLOR,
+  },
+  textStyleSpan:{
+    fontSize: 16,
+    fontWeight: '600',
+    fontFamily: fonts.MontserratRegular,
+    color: DARKGREYCOLOR,
+  },
   rowCenter: {flexDirection: 'row', alignItems: 'center'},
   InfoBox: {
     marginTop: 24,

@@ -57,7 +57,9 @@ const PayRollDetail = () => {
           }}>
           <View>
             <Text style={styles.normalText}>Last Payout Date</Text>
-            <Text style={styles.normalText}>-</Text>
+            <Text style={isConnected ? styles.heading : styles.normalText}>
+              {isConnected ? 'June 1, 2024' : '-'}{' '}
+            </Text>
           </View>
           <View>
             <Text style={styles.normalText}>Next Payout Date</Text>

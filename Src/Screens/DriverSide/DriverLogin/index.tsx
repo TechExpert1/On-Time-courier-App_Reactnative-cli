@@ -159,7 +159,7 @@ const DriverLogin = () => {
               justifyContent: 'center',
               alignSelf: 'center',
             }}
-            onPress={() => navigation.navigate('DriverRegister')}>
+            onPress={() => navigation.navigate('DriverRegister',{ selectedRole: 'driver',})}>
             <Text style={styles.alreadyHaveAnAccount}>
               Don’t have an account?{' '}
               <Text style={styles.alreadyHaveAnAccountSpan}>Register</Text>

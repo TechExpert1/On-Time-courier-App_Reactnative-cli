@@ -19,29 +19,30 @@ const CustomerOTP = props => {
   console.log('🚀 ~ CustomerOTP ~ data:', data);
   const [seconds, setSeconds] = useState(30);
   const handleContinueButton = async () => {
-    if (otp === '') {
-      Alert.alert('OTP error', 'Please enter OTP');
-      return;
-    } else {
-      setVisible(true);
-      const payload = {
-        userId: data?.userWithoutPassword?._id,
-        otp: otp,
-      };
-      try {
-        const results = await verifyOTPAPI(payload);
-        setVisible(false);
-        if (results?.status == 200) {
-          Alert.alert('OTP success', `${results?.data?.message}`);
-          navigation.navigate('UploadPicture');
-        }
-      } catch (error) {
-        setVisible(false);
-        Alert.alert('OTP error', `${error?.response?.data?.message}`);
-        console.log('Error:', error?.response?.data);
-      }
-      navigation.navigate('UploadPicture');
-    }
+    // if (otp === '') {
+    //   Alert.alert('OTP error', 'Please enter OTP');
+    //   return;
+    // } else {
+    //   setVisible(true);
+    //   const payload = {
+    //     userId: data?.userWithoutPassword?._id,
+    //     otp: otp,
+    //   };
+    //   try {
+    //     const results = await verifyOTPAPI(payload);
+    //     setVisible(false);
+    //     if (results?.status == 200) {
+    //       Alert.alert('OTP success', `${results?.data?.message}`);
+    //       navigation.navigate('UploadPicture');
+    //     }
+    //   } catch (error) {
+    //     setVisible(false);
+    //     Alert.alert('OTP error', `${error?.response?.data?.message}`);
+    //     console.log('Error:', error?.response?.data);
+    //   }
+     
+    // }
+    navigation.navigate('UploadPicture');
   };
 
   useEffect(() => {

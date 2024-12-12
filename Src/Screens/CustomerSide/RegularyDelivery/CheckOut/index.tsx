@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Image, ScrollView, Text, View} from 'react-native';
+import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import styles from './styles';
 import AppBar from '../../../../Components/AppBar';
 import {BackIcon, MasterCard, PayPal, Visa} from '../../../../Assets/Svgs';
@@ -17,7 +17,7 @@ const Checkout = () => {
   const [expiry, setExpiry] = useState('');
 
   const handleNextButton = () => {
-    navigation.navigate('DeliverySuccess');
+    navigation.navigate('BookedSuccess');
   };
 
   const handleCardNubmber = txt => {
@@ -32,10 +32,16 @@ const Checkout = () => {
   };
   return (
     <View style={styles.body}>
-      <AppBar
-        text="Check Out"
-        leftIcon={<BackIcon></BackIcon>}
-        OnLeftPress={() => navigation.goBack()}></AppBar>
+         <View style={styles.appBarStyle}>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <BackIcon></BackIcon>
+          </TouchableOpacity>
+          <Text style={styles.TitleName}>Check Out</Text>
+          <View></View>
+        </View>
+      </View>
+      
 
       <ScrollView style={styles.content}>
         <Text style={styles.headingStyle}>Your Parcel</Text>
@@ -63,7 +69,7 @@ const Checkout = () => {
            </View>
         </View>
         <Text style={styles.heading1Style}>Select Payment Method</Text>
-        <View style={{flexDirection:'row', justifyContent:'space-between', marginTop:15}}>
+        <View style={{flexDirection:'row', justifyContent:'space-between', marginTop:15, marginHorizontal:14}}>
           <Visa></Visa>
           <MasterCard></MasterCard>
           <PayPal></PayPal>
@@ -73,16 +79,16 @@ const Checkout = () => {
         <InputText
           placeholder="Card Number"
           type={'numeric'}
-          onChange={handleCardNubmber}
+          onChangeText={handleCardNubmber}
           value={cardNumber}
         />
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between', }}>
           <View style={{width: '45%'}}>
             <InputLabel label="CVV" />
             <InputText
               placeholder="CVV"
               type={'numeric'}
-              onChange={handleCVV}
+              onChangeText={handleCVV}
               value={cvv}
             />
           </View>
@@ -91,7 +97,7 @@ const Checkout = () => {
             <InputText
               placeholder="Expiry"
               type={'numeric'}
-              onChange={handleExpiry}
+              onChangeText={handleExpiry}
               value={expiry}
             />
           </View>

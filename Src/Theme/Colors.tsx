@@ -11,6 +11,7 @@ export const BLUE = 'rgba(43, 131, 204, 1)';
 export const NORMAL_YELLOW = 'rgba(204, 172, 0, 1)';
 export const YELLOW = 'rgba(238, 194, 37, 1)';
 export const YELLOWDARK = 'rgba(194, 137, 7, 1)';
+export const YELLOWLight = 'rgba(247, 240, 223, 1)';
 export const LIGHT_GREEN = 'rgba(168, 230, 207, 1)';
 export const LIGHT_GREEN_I = 'rgba(205, 229, 210, 1)';
 export const GREYCOLOR = 'rgba(143, 148, 153, 1)';

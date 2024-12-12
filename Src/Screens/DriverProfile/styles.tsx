@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   appBarStyle: {
     // flexDirection: 'row',
     // justifyContent: 'space-between',
-    marginTop: 20,
+    marginTop: 24,
     marginHorizontal: 10,
   },
   content: {
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: fonts.MontserratBold,
     color: TEXTCOLOR,
-    lineHeight: 17.07,
+    lineHeight: 22,
     alignSelf: 'center',
   },
 
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     borderColor:BORDERCOLOR,
     borderWidth:1,
     paddingHorizontal:8,
-    // paddingVertical:8,
+    paddingVertical:8,
     // marginTop:16,
 
   },

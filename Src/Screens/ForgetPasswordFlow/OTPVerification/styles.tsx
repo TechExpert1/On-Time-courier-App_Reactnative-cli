@@ -42,8 +42,9 @@ const styles = StyleSheet.create({
   footer: {
     flex: 1,
     justifyContent: 'flex-end',
-    marginTop: heightPercentageToDP(40),
-    paddingBottom: 50,
+
+    marginTop: heightPercentageToDP(20),
+    paddingBottom: 20,
     paddingHorizontal: 20,
   },
 });

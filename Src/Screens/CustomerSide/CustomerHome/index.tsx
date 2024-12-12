@@ -4,6 +4,7 @@ import styles from './styles';
 import {
   ArrowNext,
   ArrowRightBox,
+  Flag,
   LocationIcon,
   NotificationIcon,
   PriorityDelivery,
@@ -36,10 +37,17 @@ const CustomerHome = () => {
         <View style={{flexDirection: 'row'}}>
           <Image
             source={require('../../../Assets/Images/UserProfile.png')}></Image>
-          <View style={{marginLeft: 10}}>
-            <Text style={styles.helloText}>Hello!👋</Text>
+         <View style={{flexDirection:'row'}}>
+         <View style={{marginLeft: 10,}}>
+            <View style={{flexDirection:'row', alignItems:'center'}}>
+            <Text style={styles.helloText}>Hello!👋 </Text>
+            <Flag />
+            </View>
             <Text style={styles.name}>Robert Smith</Text>
           </View>
+      
+         </View>
+         
         </View>
         <TouchableOpacity onPress={handleNotifictionNavigation}>
           <NotificationIcon></NotificationIcon>

@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import styles from './styles';
-import {BackIcon, HalfStar, StarRating, VerifyTick} from '../../Assets/Svgs';
+import {BackIcon, HalfStar, StarRating, TickIcon,} from '../../Assets/Svgs';
 import {useNavigation} from '@react-navigation/native';
 import {DriverProfileTab, DriverReivews} from '../../utils/constant';
 import {
@@ -48,7 +48,7 @@ const DriverProfileCustomerSide = () => {
           marginTop: 14,
         }}>
         <Text style={styles.userName}>Robert Smith</Text>
-        <VerifyTick></VerifyTick>
+       <Image source={require('../../Assets/Images/TickIcon.png')}  style={{height:17, width:17}}/>
       </View>
       <Text style={styles.email}>useremail@email.com</Text>
       <View style={styles.content}>

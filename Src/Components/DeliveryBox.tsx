@@ -13,6 +13,7 @@ import {
 import {
   BLACK,
   BLACK_GREY,
+  BLUE,
   BORDERCOLOR,
   GREYCOLOR_II,
   PRIMARY,
@@ -48,6 +49,8 @@ const DeliveryBox: React.FC<MyComponentProps> = props => {
               styles.PickUpBox,
               {
                 backgroundColor:
+                props.status === 'Accepted'
+                ? BLUE :
                   props.status === 'Pending'
                     ? BLACK_GREY
                     : props.status === 'Delivered'
@@ -63,7 +66,7 @@ const DeliveryBox: React.FC<MyComponentProps> = props => {
           style={{
             flexDirection: 'row',
             justifyContent: 'space-between',
-            marginHorizontal: 20,
+            marginHorizontal: 5,
             alignItems: 'center',
             marginTop: 15,
           }}>

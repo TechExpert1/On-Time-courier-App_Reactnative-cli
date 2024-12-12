@@ -72,6 +72,7 @@ const OTPVerification = props => {
     <KeyboardAwareScrollView
       contentContainerStyle={{flexGrow: 1}} // Ensures the content expands to the full height
       style={styles.body}
+      extraScrollHeight={50}
       enableOnAndroid={true}
       extraHeight={100} // Adjust to push content when keyboard appears
     >
@@ -93,7 +94,7 @@ const OTPVerification = props => {
           onPress={handleContinueButton}
           TextStyle={{color: WHITE}}
           extraStyle={{
-            marginTop: 200,
+            // marginTop: 200,
             backgroundColor: PRIMARY,
           }}
         />

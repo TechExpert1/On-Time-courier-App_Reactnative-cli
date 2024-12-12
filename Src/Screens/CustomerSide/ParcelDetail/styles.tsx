@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
   content: {
     width: '100%',
    
-    paddingTop: 24,
+    paddingTop: 30,
   },
   content1:{
     paddingHorizontal: 20,
@@ -157,7 +157,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     // justifyContent: 'center',
     paddingHorizontal: 12,
-    paddingVertical: 22,
   },
   StatusStyle:{
     fontSize:12,

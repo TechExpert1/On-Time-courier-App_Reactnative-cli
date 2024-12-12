@@ -47,8 +47,8 @@ const styles = StyleSheet.create({
     lineHeight: 17.26,
   },
   roleBox: {
-    height: heightPercentageToDP(23),
-    width: widthPercentageToDP(43),
+    height: heightPercentageToDP(20),
+    width: widthPercentageToDP(41),
     backgroundColor: GREYCOLOR_I,
     borderRadius: 10,
     alignItems: 'center',

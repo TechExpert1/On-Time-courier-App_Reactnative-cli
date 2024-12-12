@@ -8,6 +8,19 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: BG_COLOR,
       },
+      appBarStyle: {
+        // flexDirection: 'row',
+        // justifyContent: 'space-between',
+        marginTop: 20,
+        marginHorizontal: 10,
+      },
+      TitleName: {
+        fontSize: 18,
+        fontFamily: fonts.MontserratBold,
+        color: TEXTCOLOR,
+        lineHeight: 22,
+        alignSelf: 'center',
+      },
       content: {
         width: '100%',
         paddingHorizontal: 20,

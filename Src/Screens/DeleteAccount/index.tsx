@@ -27,38 +27,39 @@ const DeleteAccountScreen = () => {
   };
 
   const handleContinueButton = () => {
-    setDeleteAccount(false);
-    setTimeout(async () => {
-      setVisible(true);
-      try {
-        const result = await deleteUserAPI();
-        console.log('🚀 ~ handleContinueButton ~ result:', result?.data);
-        setVisible(false);
-        if (result) {
-          Toast.show({
-            type: 'success',
-            text1: 'Delete Account',
-            text2: 'Account deleted successfully',
-            visibilityTime: 3000,
-          });
-          navigation.navigate('CustomerLogin');
-        }
-      } catch (error) {
-        setVisible(false);
-        if (error?.response?.data?.JWTErr?.message) {
-          Toast.show({
-            type: 'error',
-            text1: 'Token Error',
-            text2: error?.response?.data?.JWTErr?.message,
-            visibilityTime: 3000,
-          });
-        }
-        console.log(
-          '🚀 ~ handleContinueButton ~ error:',
-          error?.response?.data,
-        );
-      }
-    }, 300);
+    setDeleteAccount(true);
+    // setTimeout(async () => {
+    //   setVisible(true);
+    //   try {
+    //     const result = await deleteUserAPI();
+    //     console.log('🚀 ~ handleContinueButton ~ result:', result?.data);
+    //     setVisible(false);
+    //     if (result) {
+    //       Toast.show({
+    //         type: 'success',
+    //         text1: 'Delete Account',
+    //         text2: 'Account deleted successfully',
+    //         visibilityTime: 3000,
+    //       });
+    //       navigation.navigate('CustomerLogin');
+    //     }
+    //   } catch (error) {
+    //     setVisible(false);
+    //     if (error?.response?.data?.JWTErr?.message) {
+    //       Toast.show({
+    //         type: 'error',
+    //         text1: 'Token Error',
+    //         text2: error?.response?.data?.JWTErr?.message,
+    //         visibilityTime: 3000,
+    //       });
+    //     }
+    //     console.log(
+    //       '🚀 ~ handleContinueButton ~ error:',
+    //       error?.response?.data,
+    //     );
+    //   }
+    // }, 300);
+   
   };
 
   return (
@@ -95,27 +96,30 @@ const DeleteAccountScreen = () => {
 
         <CustomButton
           text="Continue"
-          onPress={() => {
-            if (password?.length === 0) {
-              Toast.show({
-                type: 'error',
-                text1: 'Delete Account Error',
-                text2: 'Password field is required.',
-                visibilityTime: 3000,
-              });
-              return;
-            } else if (password !== 'qwerty123@') {
-              Toast.show({
-                type: 'error',
-                text1: 'Delete Account Error',
-                text2: 'Incorrect password, please try again',
-                visibilityTime: 3000,
-              });
-              return;
-            } else {
-              setDeleteAccount(true);
-            }
-          }}
+          onPress={
+            handleContinueButton
+          //   () => {
+          //   if (password?.length === 0) {
+          //     Toast.show({
+          //       type: 'error',
+          //       text1: 'Delete Account Error',
+          //       text2: 'Password field is required.',
+          //       visibilityTime: 3000,
+          //     });
+          //     return;
+          //   } else if (password !== 'qwerty123@') {
+          //     Toast.show({
+          //       type: 'error',
+          //       text1: 'Delete Account Error',
+          //       text2: 'Incorrect password, please try again',
+          //       visibilityTime: 3000,
+          //     });
+          //     return;
+          //   } else {
+          //     setDeleteAccount(true);
+          //   }
+          // }
+        }
           TextStyle={{color: WHITE}}
           extraStyle={{
             marginTop: 180,
@@ -150,7 +154,15 @@ const DeleteAccountScreen = () => {
               </TouchableOpacity>
               <CustomButton
                 text="Delete"
-                onPress={handleContinueButton}
+                onPress={()=>
+                {
+                  setDeleteAccount(false)
+                  setTimeout(() => {
+                    
+                  }, 500);
+                  navigation.navigate('CustomerLogin');
+                }
+                }
                 TextStyle={{
                   color: WHITE,
                   fontSize: 16,

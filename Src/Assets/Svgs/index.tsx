@@ -59,7 +59,13 @@ import Reviews from './icons/ReviewsTab.svg';
 import CIINFO from './icons/CI_INFO.svg';
 import CheckBoxChecked from './icons/CheckboxChecked.svg';
 import CheckBoxUnChecked from './icons/CheckboxUnChecked.svg';
+import TickIcon from './icons/TickIcon.svg';
+import CameraIcon from './icons/CameraIcon.svg';
+import GalleryIcon from './icons/GalleryIcon.svg';
 export {
+  CameraIcon,
+  GalleryIcon,
+  TickIcon,
   CheckBoxChecked,
   CheckBoxUnChecked,
   CIINFO,

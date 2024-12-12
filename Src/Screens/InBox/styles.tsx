@@ -99,6 +99,14 @@ const styles = StyleSheet.create({
     color: TEXTCOLOR,
     // borderWidth:1
   },
+  PickerText: {
+    fontSize: 14,
+    fontFamily: fonts.MontserratSemiBold,
+    color: TEXTCOLOR,
+    lineHeight: 17.07,
+    alignSelf: 'center',
+    marginTop: 8,
+  },
 });
 
 export default styles;

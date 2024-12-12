@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   Image,
   ScrollView,
@@ -11,8 +11,10 @@ import styles from './styles';
 import {
   Attach,
   BackIcon,
+  CameraIcon,
   DoubleTick,
   Emoji,
+  GalleryIcon,
   SendMessageButton,
 } from '../../Assets/Svgs';
 import {useNavigation} from '@react-navigation/native';
@@ -25,15 +27,24 @@ import {
   ImageLibraryOptions,
   ImagePickerResponse,
   launchCamera,
+  launchImageLibrary,
 } from 'react-native-image-picker';
+import EmojiSelector, {Categories} from 'react-native-emoji-selector';
+import RBSheet from 'react-native-raw-bottom-sheet';
+import {
+  heightPercentageToDP,
+  widthPercentageToDP,
+} from 'react-native-responsive-screen';
 
 const InBoxScreen = () => {
   const navigation = useNavigation<any>();
+  const [showPicker, setShowPicker] = useState(false);
   const [messages, setMessages] = useState([
     {id: 1, sender: 'John', text: 'Hello there!', time: '9:45 AM'},
     {id: 2, sender: 'Jane', text: 'Hi John!', time: '9:45 AM'},
     // Add more messages as needed
   ]);
+  const picker = useRef<any>(null);
   const [newMessage, setNewMessage] = useState('');
   const sendMessage = () => {
     console.log('Hello');
@@ -60,6 +71,32 @@ const InBoxScreen = () => {
     requestPermissionsForCamera();
   }, []);
 
+  const openImagePicker = () => {
+    const options: ImageLibraryOptions = {
+      mediaType: 'photo',
+      includeBase64: false,
+      maxHeight: 2000,
+      maxWidth: 2000,
+    };
+
+    launchImageLibrary(options, (response: ImagePickerResponse) => {
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.errorMessage) {
+        console.log('Image picker error');
+      } else {
+        let imageUri = response.assets?.[0];
+        if (imageUri) {
+          // setSelectedImage(imageUri);
+          picker.current.close();
+          // setModalVisible(!modalVisible)
+        } else {
+          console.log('image uri is undefined');
+        }
+      }
+    });
+  };
+
   const openCamera = () => {
     const options: ImageLibraryOptions = {
       mediaType: 'photo',
@@ -74,11 +111,10 @@ const InBoxScreen = () => {
       } else if (response.errorMessage) {
         console.log('Camera error');
       } else {
-        let imageUri = response.assets?.[0];
+        let imageUri = response.assets?.[0]?.uri;
         if (imageUri) {
           // setSelectedImage(imageUri);
-          console.log(imageUri);
-          // setModalVisible(!modalVisible)
+          picker.current.close();
         } else {
           console.log('image uri is undefined');
         }
@@ -132,15 +168,65 @@ const InBoxScreen = () => {
             value={newMessage}
           />
           <View style={{flexDirection: 'row'}}>
-            <TouchableOpacity onPress={openCamera}>
+            <TouchableOpacity onPress={()=> picker.current.open()}>
               <Attach></Attach>
             </TouchableOpacity>
             <View style={{width: 10}}></View>
-            <Emoji></Emoji>
+            <TouchableOpacity onPress={() => setShowPicker(true)}>
+              <Emoji></Emoji>
+            </TouchableOpacity>
           </View>
         </View>
         <SendMessageButton></SendMessageButton>
       </View>
+      {showPicker && (
+        <EmojiSelector
+          onEmojiSelected={() => {}}
+          category={Categories.all}
+          showTabs={true}
+          showSearchBar={true}
+          showHistory={true}
+          columns={10}
+          placeholder="Search emoji..."
+        />
+      )}
+
+      <RBSheet
+        ref={picker}
+        customStyles={{
+          wrapper: {
+            backgroundColor: 'rgba(0,0,0,0.5)',
+          },
+          draggableIcon: {
+            marginTop: 50,
+            width: 83,
+          },
+          container: {
+            height: '20%',
+            // maxHeight: '100%',
+            borderTopRightRadius: 20,
+            borderTopLeftRadius: 20,
+            paddingHorizontal: 20,
+          },
+        }}>
+        <View
+          style={{
+            flexDirection: 'row',
+            padding: 30,
+            paddingTop: heightPercentageToDP(5),
+          }}>
+          <TouchableOpacity onPress={openCamera} style={{alignItems: 'center'}}>
+            <CameraIcon />
+            <Text style={styles.PickerText}>Camera</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={openImagePicker}
+            style={{alignItems: 'center', marginLeft: widthPercentageToDP(20)}}>
+            <GalleryIcon />
+            <Text style={styles.PickerText}>Gallery</Text>
+          </TouchableOpacity>
+        </View>
+      </RBSheet>
     </View>
   );
 };

@@ -1,11 +1,11 @@
 import {useNavigation} from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Alert, Image, Text, TouchableOpacity, View} from 'react-native';
 import styles from './styles';
 import AppBar from '../../../Components/AppBar';
 import CustomButton from '../../../Components/CustomButton';
 import {PRIMARY, WHITE} from '../../../Theme/Colors';
-import {UploadPictureSVG} from '../../../Assets/Svgs';
+import {CameraIcon, GalleryIcon, UploadPictureSVG} from '../../../Assets/Svgs';
 import {
   requestGalleryPermission,
   requestPermissionsForCamera,
@@ -14,13 +14,17 @@ import {
   ImageLibraryOptions,
   ImagePickerResponse,
   launchCamera,
+  launchImageLibrary,
 } from 'react-native-image-picker';
 import LoadingModal from '../../../Components/LoadingModal';
+import RBSheet from 'react-native-raw-bottom-sheet';
+import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 
 const UploadPicture = () => {
   const navigation = useNavigation<any>();
   const [selectImage, setSelectedImage] = useState();
   const [visible, setVisible] = useState(false);
+  const picker = useRef<any>(null);
 
   const handleContinueButton = async () => {
     if (!selectImage?.uri) {
@@ -71,6 +75,32 @@ const UploadPicture = () => {
     requestPermissionsForCamera();
   }, []);
 
+  const openImagePicker = () => {
+    const options: ImageLibraryOptions = {
+      mediaType: 'photo',
+      includeBase64: false,
+      maxHeight: 2000,
+      maxWidth: 2000,
+    };
+
+    launchImageLibrary(options, (response: ImagePickerResponse) => {
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.errorMessage) {
+        console.log('Image picker error');
+      } else {
+        let imageUri = response.assets?.[0];
+        if (imageUri) {
+          setSelectedImage(imageUri);
+          picker.current.close()
+          // setModalVisible(!modalVisible)
+        } else {
+          console.log('image uri is undefined');
+        }
+      }
+    });
+  };
+
   const openCamera = () => {
     const options: ImageLibraryOptions = {
       mediaType: 'photo',
@@ -85,17 +115,17 @@ const UploadPicture = () => {
       } else if (response.errorMessage) {
         console.log('Camera error');
       } else {
-        let imageUri = response.assets?.[0];
+        let imageUri = response.assets?.[0]?.uri;
         if (imageUri) {
           setSelectedImage(imageUri);
-          console.log(imageUri);
-          // setModalVisible(!modalVisible)
+          picker.current.close()
         } else {
           console.log('image uri is undefined');
         }
       }
     });
   };
+  
 
   return (
     <View style={styles.body}>
@@ -118,7 +148,7 @@ const UploadPicture = () => {
           </View>
         )}
 
-        <TouchableOpacity onPress={openCamera}>
+        <TouchableOpacity onPress={()=> picker.current.open()}>
           <Text style={styles.uploadPicture}>Upload picture</Text>
         </TouchableOpacity>
         <CustomButton
@@ -131,6 +161,36 @@ const UploadPicture = () => {
           }}
         />
       </View>
+      <RBSheet
+        ref={picker}
+        customStyles={{
+          wrapper: {
+            backgroundColor: 'rgba(0,0,0,0.5)',
+          },
+          draggableIcon: {
+            marginTop: 50,
+            width: 83,
+          },
+          container: {
+            height: '20%',
+            // maxHeight: '100%',
+            borderTopRightRadius: 20,
+            borderTopLeftRadius: 20,
+            paddingHorizontal: 20,
+          },
+        }}>
+          <View style={{flexDirection:'row', padding:30, paddingTop:heightPercentageToDP(5)}}>
+            <TouchableOpacity onPress={openCamera} style={{alignItems:'center'}}>
+              <CameraIcon />
+              <Text style={styles.PickerText}>Camera</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={openImagePicker} style={{alignItems:'center', marginLeft:widthPercentageToDP(20)}}>
+              <GalleryIcon />
+              <Text style={styles.PickerText}>Gallery</Text>
+            </TouchableOpacity>
+          </View>
+      </RBSheet>
+      
       <LoadingModal visible={visible} message={'Please wait...'} />
     </View>
   );

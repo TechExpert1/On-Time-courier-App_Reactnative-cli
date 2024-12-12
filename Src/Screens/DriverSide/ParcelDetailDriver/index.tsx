@@ -409,6 +409,7 @@ const ParcelDetailDriver = props => {
               <InputLabel label="Add Reviews" />
               <InputText
                 placeholder="Type here..."
+                multiline={true}
                 extraStyle={{
                   height: 113,
                   alignItems: 'flex-start',

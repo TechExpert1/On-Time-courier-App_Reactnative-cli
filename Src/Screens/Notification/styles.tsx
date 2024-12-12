@@ -79,6 +79,60 @@ const styles = StyleSheet.create({
         lineHeight: 17.07,
         
       },
+      modalContainer: {
+        flex: 1,
+        width: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        paddingHorizontal:16,
+      },
+      modalContent: {
+        // height:257,
+        width: '100%',
+        backgroundColor: WHITE,
+        borderRadius: 8,
+        alignItems:'center',
+        paddingVertical:20,
+      //  paddingHorizontal:42,
+   
+        
+      },
+      CanclePopupTitle:{
+        fontSize:14,
+        fontFamily:fonts.MontserratBold,
+        lineHeight:25,
+        color: TEXTCOLOR,
+        textAlign:'center',
+        marginTop:15,
+      },
+      CanclePopupText:{
+        width:'80%',
+        fontSize:14,
+        fontFamily:fonts.MontserratMedium,
+        lineHeight:25,
+        color: TEXTCOLOR,
+        textAlign:'center',
+        marginTop:15,
+        marginBottom:10,
+      },
+      CanclePopupSpanText:{
+        fontSize:14,
+        fontFamily:fonts.MontserratBold,
+        lineHeight:25,
+        color: TEXTCOLOR,
+        textAlign:'center',
+        marginTop:15,
+      },
+      NoText:{
+        fontSize:16,
+        // width:'50%',
+        fontFamily:fonts.MontserratBold,
+        lineHeight:19.05,
+        color: TEXTCOLOR,
+        textAlign:'center',
+       
+      },
 
 
 })

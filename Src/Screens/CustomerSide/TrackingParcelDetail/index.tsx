@@ -26,7 +26,7 @@ const TrackingParcelDetail = () => {
           longitudeDelta: 0.0421,
         }}></MapView>
       <View style={styles.InfoBox}>
-        <Text style={styles.parcelInformationText}>Parcel Information</Text>
+        <Text style={styles.parcelInformationText}>Package Information</Text>
         <View style={styles.deliveryDetail}>
           <View>
             <Text style={styles.deliveryPartnerStyle}>Delivery Type</Text>

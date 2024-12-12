@@ -84,7 +84,7 @@ const RegularDeliverySenderDetail = props => {
         <InputLabel label="Name" />
         <InputText
           placeholder="Full Name"
-          onChange={handleFullName}
+          onChangeText={handleFullName}
           value={fullName}
         />
 
@@ -92,21 +92,21 @@ const RegularDeliverySenderDetail = props => {
         <InputText
           placeholder="Phone #"
           type={'numeric'}
-          onChange={handlePhonNumber}
+          onChangeText={handlePhonNumber}
           value={phoneNumber}
         />
 
         <InputLabel label="Pickup Address" />
         <InputText
           placeholder="Address"
-          onChange={handlePickUpAddress}
+          onChangeText={handlePickUpAddress}
           addRight={<PickupAddress></PickupAddress>}
           value={pickupAddress}
         />
         <InputLabel label="Pickup Date" />
         <InputText
           placeholder="Date"
-          onChange={handlePickUpDate}
+          onChangeText={handlePickUpDate}
           addRight={<CalendarSVG></CalendarSVG>}
           readonly={true}
           onRightPress={() => setShowCalendar(true)}
@@ -117,7 +117,7 @@ const RegularDeliverySenderDetail = props => {
           <TextInput
             placeholder="-- : --"
             placeholderTextColor={PLACEHOLDERCOLOR}
-            onChange={handlePickUpTime}
+            onChangeText={handlePickUpTime}
             value={pickupTime}
           />
           <FlatList
@@ -154,21 +154,21 @@ const RegularDeliverySenderDetail = props => {
         <InputLabel label="Name" />
         <InputText
           placeholder="Full Name"
-          onChange={handleReceiverFullName}
+          onChangeText={handleReceiverFullName}
           value={ReceiverFullName}
         />
         <InputLabel label="Phone #" />
         <InputText
           placeholder="Phone #"
           type={'numeric'}
-          onChange={handleReceiverPhoneNumber}
+          onChangeText={handleReceiverPhoneNumber}
           value={ReciverPhoneNumber}
         />
 
         <InputLabel label="Drop off Address" />
         <InputText
           placeholder="Address"
-          onChange={handleReceiverAddress}
+          onChangeText={handleReceiverAddress}
           addRight={<PickupAddress></PickupAddress>}
           value={ReciverAddress}
         />

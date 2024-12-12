@@ -63,7 +63,51 @@ const SelectRole = () => {
           Welcome to{' '}
           <Text style={styles.welcomeSpanText}>On Time Couriers</Text>
         </Text>
-        <FlatList
+
+       <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+       <TouchableOpacity
+                onPress={() => handleSelectRole(0)}
+                style={[
+                  styles.roleBox,
+                  {
+                    backgroundColor:
+                      selectedRole === 0 ? PRIMARY : GREYCOLOR_I,
+                  },
+                ]}>
+                <Image
+                  style={styles.roleImageStyle}
+                  source={ require('../../Assets/Images/customer.png')}></Image>
+                <Text
+                  style={[
+                    styles.roleText,
+                    {color: selectedRole === 0 ? WHITE : GREYCOLOR_II},
+                  ]}>
+                  {'Customer'}
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={() => handleSelectRole(1)}
+                style={[
+                  styles.roleBox,
+                  {
+                    backgroundColor:
+                      selectedRole === 1 ? PRIMARY : GREYCOLOR_I,
+                  },
+                ]}>
+                <Image
+                  style={styles.roleImageStyle}
+                  source={require('../../Assets/Images/driver.png')}></Image>
+                <Text
+                  style={[
+                    styles.roleText,
+                    {color: selectedRole === 1 ? WHITE : GREYCOLOR_II},
+                  ]}>
+                  {'Driver'}
+                </Text>
+              </TouchableOpacity>
+        </View> 
+        {/* <FlatList
           data={roleList}
           contentContainerStyle={{alignItems: 'center'}}
           scrollEnabled={false}
@@ -95,7 +139,7 @@ const SelectRole = () => {
               </TouchableOpacity>
             );
           }}
-        />
+        /> */}
         <CustomButton
           text="Continue"
           onPress={handleContinueButton}

@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   appBarStyle:{
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 10,
+    marginTop: 20,
     marginHorizontal: 20,
   },
   helloText: {
@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
     color: TEXTCOLOR,
     lineHeight: 12.09,
     marginTop:5,
+    alignItems:'center'
   },
   name: {
     fontSize: 14,
@@ -62,7 +63,7 @@ const styles = StyleSheet.create({
   },
   ourService: {
     fontSize: 16,
-    fontFamily: fonts.MontserratBold,
+    fontFamily: fonts.MontserratSemiBold,
     color: BLACK,
     marginTop: 24,
   },

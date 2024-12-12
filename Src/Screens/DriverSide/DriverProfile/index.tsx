@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   Image,
   Modal,
@@ -10,10 +10,12 @@ import {
 import styles from './styles';
 import {useNavigation} from '@react-navigation/native';
 import {
+  CameraIcon,
   ChangePassword,
   DeleteAccount,
   EditProfile,
   EditProfileTab,
+  GalleryIcon,
   Logout,
   NotificationIcon,
   PayrollTab,
@@ -32,12 +34,17 @@ import {
 import {
   ImageLibraryOptions,
   ImagePickerResponse,
+  launchCamera,
   launchImageLibrary,
 } from 'react-native-image-picker';
+import RBSheet from 'react-native-raw-bottom-sheet';
+import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 
 const DriverProfile = () => {
   const navigation = useNavigation<any>();
   const [logoutPopup, setLogoutPopup] = useState(false);
+  const [selectImage, setSelectedImage] = useState();
+  const picker = useRef<any>(null);
   const handleContinueButton = () => {
     navigation.navigate('DriverRegister');
   };
@@ -61,9 +68,10 @@ const DriverProfile = () => {
       } else if (response.errorMessage) {
         console.log('Image picker error');
       } else {
-        let imageUri = response.assets?.[0]?.uri;
+        let imageUri = response.assets?.[0];
         if (imageUri) {
-          // setSelectedImage(imageUri);
+          setSelectedImage(imageUri);
+          picker.current.close()
           // setModalVisible(!modalVisible)
         } else {
           console.log('image uri is undefined');
@@ -72,6 +80,31 @@ const DriverProfile = () => {
     });
   };
 
+  const openCamera = () => {
+    const options: ImageLibraryOptions = {
+      mediaType: 'photo',
+      includeBase64: false,
+      maxHeight: 2000,
+      maxWidth: 2000,
+    };
+
+    launchCamera(options, (response: ImagePickerResponse) => {
+      if (response.didCancel) {
+        console.log('User cancelled camera');
+      } else if (response.errorMessage) {
+        console.log('Camera error');
+      } else {
+        let imageUri = response.assets?.[0]?.uri;
+        if (imageUri) {
+          setSelectedImage(imageUri);
+          picker.current.close()
+        } else {
+          console.log('image uri is undefined');
+        }
+      }
+    });
+  };
+   
   return (
     <ScrollView style={styles.body}>
       <View style={styles.appBarStyle}>
@@ -94,7 +127,7 @@ const DriverProfile = () => {
             bottom: -10,
             right: -10,
           }}>
-          <TouchableOpacity onPress={openImagePicker}>
+          <TouchableOpacity onPress={()=> picker.current.open()}>
             <EditProfile></EditProfile>
           </TouchableOpacity>
         </View>
@@ -181,6 +214,35 @@ const DriverProfile = () => {
           </View>
         </View>
       </Modal>
+      <RBSheet
+        ref={picker}
+        customStyles={{
+          wrapper: {
+            backgroundColor: 'rgba(0,0,0,0.5)',
+          },
+          draggableIcon: {
+            marginTop: 50,
+            width: 83,
+          },
+          container: {
+            height: '20%',
+            // maxHeight: '100%',
+            borderTopRightRadius: 20,
+            borderTopLeftRadius: 20,
+            paddingHorizontal: 20,
+          },
+        }}>
+          <View style={{flexDirection:'row', padding:30, paddingTop:heightPercentageToDP(5)}}>
+            <TouchableOpacity onPress={openCamera} style={{alignItems:'center'}}>
+              <CameraIcon />
+              <Text style={styles.PickerText}>Camera</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={openImagePicker} style={{alignItems:'center', marginLeft:widthPercentageToDP(20)}}>
+              <GalleryIcon />
+              <Text style={styles.PickerText}>Gallery</Text>
+            </TouchableOpacity>
+          </View>
+      </RBSheet>
     </ScrollView>
   );
 };

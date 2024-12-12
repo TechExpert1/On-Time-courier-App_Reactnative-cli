@@ -26,7 +26,7 @@ import {
 } from '../../../../Theme/Colors';
 import {RadioButton} from 'react-native-paper';
 import {ParcelType, VehiclesList} from '../../../../utils/constant';
-
+import { heightPercentageToDP } from 'react-native-responsive-screen';
 
 const RegularDeliveryParcelDetail = props => {
   const {titleName} = props.route.params;
@@ -40,18 +40,17 @@ const RegularDeliveryParcelDetail = props => {
   const [isDriver, setIsDriver] = useState(true);
   const [ParcelModel, setParcelModel] = useState(false);
 
-
   useEffect(() => {
     console.log(isDriver);
     const timer = setTimeout(() => {
-      setIsDriver(false);
+      // setIsDriver(false);
     }, 7000);
     return () => clearTimeout(timer);
   }, []);
 
   const handleNextButton = () => {
     if (isDriver) {
-      navigation.navigate('Checkout');
+      navigation.navigate('DeliverySuccess');
     } else {
     }
   };
@@ -74,7 +73,9 @@ const RegularDeliveryParcelDetail = props => {
   return (
     <View style={styles.body}>
       <AppBar
-        text={titleName === 'regular' ? 'Regular Delivery' : 'On Priority Delivery'}
+        text={
+          titleName === 'regular' ? 'Regular Delivery' : 'On Priority Delivery'
+        }
         leftIcon={<BackIcon></BackIcon>}
         OnLeftPress={() => navigation.goBack()}></AppBar>
 
@@ -91,154 +92,237 @@ const RegularDeliveryParcelDetail = props => {
           value={parcelType}
         />
 
-        <InputLabel label="Parcel Weight" />
-        <InputText
-          placeholder="0"
-          type={'numeric'}
-          onChange={handleParcelWeight}
-          addRight={<Text>lbs</Text>}
-          value={parcelWeight}
-        />
+        {parcelType === 'Pallet(max. 10 pallets)' ? (
+          <View>
+            <View style={styles.containerInputLabel}>
+              <Text style={styles.textStyle}>
+                No. of Pallets{' '}
+                <Text style={styles.textStyleSpan}>(max. 10 Pallets)</Text>
+              </Text>
+            </View>
 
-        <InputLabel label="Box Size" />
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-          <View style={styles.InputTextBox}>
-            <TextInput
-              placeholder="Height"
-              placeholderTextColor={PLACEHOLDERCOLOR}
-              onChange={handleBoxHeight}
-              value={boxHeight}
+            <InputText
+              placeholder="0"
+              type={'numeric'}
+              onChange={handleParcelWeight}
+              value={parcelWeight}
             />
-
-            <Text style={styles.ft}>ft</Text>
           </View>
-          <View style={styles.InputTextBox}>
-            <TextInput
-              placeholder="Width"
-              placeholderTextColor={PLACEHOLDERCOLOR}
-              onChange={handleBoxWidth}
-              value={boxWidth}
+        ) : parcelType === 'Freight Trucks' ? (
+          <View>
+            <InputLabel label="No. of Trailers" />
+            <InputText
+              placeholder="0"
+              type={'numeric'}
+              onChange={handleParcelWeight}
+              value={parcelWeight}
             />
-            <Text style={styles.ft}>ft</Text>
           </View>
-        </View>
-        <Text style={[styles.headingStyle, {marginTop: 20, marginBottom: 10}]}>
-          Tip
-        </Text>
-        <View style={styles.rowCenter}>
-          <RadioButton
-            value="first"
-            color={PRIMARY}
-            uncheckedColor="rgba(227, 227, 227, 1)"
-            status={checked === 'first' ? 'checked' : 'unchecked'}
-            onPress={() => setChecked('first')}
-          />
-          <Text style={styles.TIPStyle}>$5</Text>
-        </View>
-        <View style={styles.rowCenter}>
-          <RadioButton
-            value="second"
-            color={PRIMARY}
-            uncheckedColor="rgba(227, 227, 227, 1)"
-            status={checked === 'second' ? 'checked' : 'unchecked'}
-            onPress={() => setChecked('second')}
-          />
-          <Text style={styles.TIPStyle}>$10</Text>
-        </View>
-        <View style={styles.rowCenter}>
-          <RadioButton
-            value="third"
-            color={PRIMARY}
-            uncheckedColor="rgba(227, 227, 227, 1)"
-            status={checked === 'third' ? 'checked' : 'unchecked'}
-            onPress={() => setChecked('third')}
-          />
-          <Text style={styles.TIPStyle}>$15</Text>
-        </View>
-        <View style={styles.rowCenter}>
-          <RadioButton
-            value="other"
-            color={PRIMARY}
-            uncheckedColor="rgba(227, 227, 227, 1)"
-            status={checked === 'other' ? 'checked' : 'unchecked'}
-            onPress={() => setChecked('other')}
-          />
-          <InputText
-            placeholder="Other"
-            onChange={handleOther}
-            // addRight={<Text>ft</Text>}
-            extraStyle={{width: '45%', marginTop: 0}}
-            //   addRight={<PickupAddress></PickupAddress>}
-            value={other}
-          />
-        </View>
-        <Text style={[styles.headingStyle, {marginTop: 20, marginBottom: 14}]}>
-          Available Vehicles
-        </Text>
-        {isDriver ? (
-          <FlatList
-            data={VehiclesList}
-            renderItem={({item, index}) => {
-              return (
-                <View style={{flexDirection: 'row', marginTop: 10}}>
-                  <Image source={item.image}></Image>
-                  <View style={{marginLeft: 16}}>
-                    <Text style={styles.TitleStyle}>{item.title}</Text>
-                    <Text style={styles.AvailabilityStyle}>
-                      {item.available}
-                    </Text>
-                  </View>
-                </View>
-              );
-            }}
-          />
         ) : (
           <View>
-            <Text style={styles.sorryText}>
-              Sorry! Vehicles are not available for this parcel
-            </Text>
+            <InputLabel label="Parcel Weight" />
+            <InputText
+              placeholder="0"
+              type={'numeric'}
+              onChange={handleParcelWeight}
+              addRight={<Text>lbs</Text>}
+              value={parcelWeight}
+            />
           </View>
         )}
-        <View
-          style={[
-            styles.InfoBox,
-            {
-              backgroundColor: isDriver
-                ? LIGHT_GREEN_I
-                : 'rgba(236, 236, 236, 1)',
-            },
-          ]}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <InfoIcon></InfoIcon>
-            <Text style={styles.totalCharges}>Out of city charges</Text>
-          </View>
 
+        {parcelType === 'Freight Trucks' ? (
           <View>
-            <Text style={styles.paymentPrice}>CAD 5/Km</Text>
-          </View>
-        </View>
-        {isDriver ? (
-          <View>
-            <View style={styles.container}>
-              <Text style={styles.leftTextStyle}>Shipment Charges</Text>
-              <Text style={[styles.RightTextStyle]}>CAD 40/-</Text>
+              <View
+              style={[
+                styles.InfoBox,
+                {
+                  backgroundColor: isDriver
+                    ? LIGHT_GREEN_I
+                    : 'rgba(236, 236, 236, 1)',
+                    marginTop:heightPercentageToDP(10)
+                },
+              ]}>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <InfoIcon></InfoIcon>
+                <Text style={styles.totalCharges}>Prices should be charge per trailer</Text>
+              </View>
+
+              
             </View>
 
-            <View style={styles.container}>
-              <Text style={styles.leftTextStyle}>Taxes (GST+PST)</Text>
-              <Text style={[styles.RightTextStyle]}>12%</Text>
-            </View>
-            <View style={styles.container}>
-              <Text style={styles.leftTextStyle}>Tip</Text>
-              <Text style={[styles.RightTextStyle]}>CAD 5/-</Text>
-            </View>
-            <View style={styles.container}>
-              <Text style={styles.leftTextStyle}>Total Charges</Text>
-              <Text style={[styles.RightTextStyle]}>CAD 52.2/-</Text>
-            </View>
+            <View>
+                <View style={styles.container}>
+                  <Text style={styles.leftTextStyle}>Charges Per Trailer</Text>
+                  <Text style={[styles.RightTextStyle]}>CAD 30000/-</Text>
+                </View>
+
+                <View style={styles.container}>
+                  <Text style={styles.leftTextStyle}>No. of Trailers</Text>
+                  <Text style={[styles.RightTextStyle]}>2</Text>
+                </View>
+                <View style={styles.container}>
+                  <Text style={styles.leftTextStyle}>Taxes (GST+PST)</Text>
+                  <Text style={[styles.RightTextStyle]}>12%</Text>
+                </View>
+                <View style={styles.container}>
+                  <Text style={styles.leftTextStyle}>Driver Charges</Text>
+                  <Text style={[styles.RightTextStyle]}>5%</Text>
+                </View>
+                <View style={styles.divider}></View>
+                <View style={styles.container}>
+                  <Text style={styles.leftTextStyle}>Total Charges</Text>
+                  <Text style={[styles.RightTextStyle]}>CAD 70200/-</Text>
+                </View>
+              </View>
+
           </View>
         ) : (
-          <View></View>
+          <View>
+            <InputLabel label="Box Size" />
+            <View
+              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              <View style={styles.InputTextBox}>
+                <TextInput
+                  placeholder="Height"
+                  placeholderTextColor={PLACEHOLDERCOLOR}
+                  onChange={handleBoxHeight}
+                  value={boxHeight}
+                />
+
+                <Text style={styles.ft}>ft</Text>
+              </View>
+              <View style={styles.InputTextBox}>
+                <TextInput
+                  placeholder="Width"
+                  placeholderTextColor={PLACEHOLDERCOLOR}
+                  onChange={handleBoxWidth}
+                  value={boxWidth}
+                />
+                <Text style={styles.ft}>ft</Text>
+              </View>
+            </View>
+            <Text
+              style={[styles.headingStyle, {marginTop: 20, marginBottom: 10}]}>
+              Tip
+            </Text>
+            <View style={styles.rowCenter}>
+              <RadioButton
+                value="first"
+                color={PRIMARY}
+                uncheckedColor="rgba(227, 227, 227, 1)"
+                status={checked === 'first' ? 'checked' : 'unchecked'}
+                onPress={() => setChecked('first')}
+              />
+              <Text style={styles.TIPStyle}>$5</Text>
+            </View>
+            <View style={styles.rowCenter}>
+              <RadioButton
+                value="second"
+                color={PRIMARY}
+                uncheckedColor="rgba(227, 227, 227, 1)"
+                status={checked === 'second' ? 'checked' : 'unchecked'}
+                onPress={() => setChecked('second')}
+              />
+              <Text style={styles.TIPStyle}>$10</Text>
+            </View>
+            <View style={styles.rowCenter}>
+              <RadioButton
+                value="third"
+                color={PRIMARY}
+                uncheckedColor="rgba(227, 227, 227, 1)"
+                status={checked === 'third' ? 'checked' : 'unchecked'}
+                onPress={() => setChecked('third')}
+              />
+              <Text style={styles.TIPStyle}>$15</Text>
+            </View>
+            <View style={styles.rowCenter}>
+              <RadioButton
+                value="other"
+                color={PRIMARY}
+                uncheckedColor="rgba(227, 227, 227, 1)"
+                status={checked === 'other' ? 'checked' : 'unchecked'}
+                onPress={() => setChecked('other')}
+              />
+              <InputText
+                placeholder="Other"
+                onChange={handleOther}
+                // addRight={<Text>ft</Text>}
+                extraStyle={{width: '45%', marginTop: 0}}
+                //   addRight={<PickupAddress></PickupAddress>}
+                value={other}
+              />
+            </View>
+            <Text
+              style={[styles.headingStyle, {marginTop: 20, marginBottom: 14}]}>
+              Available Vehicles
+            </Text>
+            {isDriver ? (
+              <FlatList
+                data={VehiclesList}
+                renderItem={({item, index}) => {
+                  return (
+                    <View style={{flexDirection: 'row', marginTop: 10}}>
+                      <Image source={item.image}></Image>
+                      <View style={{marginLeft: 16}}>
+                        <Text style={styles.TitleStyle}>{item.title}</Text>
+                        <Text style={styles.AvailabilityStyle}>
+                          {item.available}
+                        </Text>
+                      </View>
+                    </View>
+                  );
+                }}
+              />
+            ) : (
+              <View>
+                <Text style={styles.sorryText}>
+                  Sorry! Vehicles are not available for this parcel
+                </Text>
+              </View>
+            )}
+            <View
+              style={[
+                styles.InfoBox,
+                {
+                  backgroundColor: isDriver
+                    ? LIGHT_GREEN_I
+                    : 'rgba(236, 236, 236, 1)',
+                },
+              ]}>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <InfoIcon></InfoIcon>
+                <Text style={styles.totalCharges}>Out of city charges</Text>
+              </View>
+
+              <View>
+                <Text style={styles.paymentPrice}>CAD 5/Km</Text>
+              </View>
+            </View>
+            {isDriver ? (
+              <View>
+                <View style={styles.container}>
+                  <Text style={styles.leftTextStyle}>Shipment Charges</Text>
+                  <Text style={[styles.RightTextStyle]}>CAD 40/-</Text>
+                </View>
+
+                <View style={styles.container}>
+                  <Text style={styles.leftTextStyle}>Taxes (GST+PST)</Text>
+                  <Text style={[styles.RightTextStyle]}>12%</Text>
+                </View>
+                <View style={styles.container}>
+                  <Text style={styles.leftTextStyle}>Tip</Text>
+                  <Text style={[styles.RightTextStyle]}>CAD 5/-</Text>
+                </View>
+                <View style={styles.container}>
+                  <Text style={styles.leftTextStyle}>Total Charges</Text>
+                  <Text style={[styles.RightTextStyle]}>CAD 52.2/-</Text>
+                </View>
+              </View>
+            ) : (
+              <View></View>
+            )}
+          </View>
         )}
         <CustomButton
           text="Confirm"
@@ -267,6 +351,11 @@ const RegularDeliveryParcelDetail = props => {
                     onPress={() => {
                       setParcelModel(false);
                       setParcelType(item.title + item.spantitle);
+                      if (parcelType === 'Small Box(1-10 lbs)') {
+                        setIsDriver(false);
+                      } else {
+                        setIsDriver(true);
+                      }
                     }}>
                     <Text style={styles.parcelTypeText}>
                       {item.title}{' '}
@@ -274,7 +363,9 @@ const RegularDeliveryParcelDetail = props => {
                         {item.spantitle}
                       </Text>
                     </Text>
-                    {index < ParcelType.length - 1 && <View style={styles.divider}></View>}
+                    {index < ParcelType.length - 1 && (
+                      <View style={styles.divider}></View>
+                    )}
                   </TouchableOpacity>
                 );
               }}
@@ -282,8 +373,6 @@ const RegularDeliveryParcelDetail = props => {
           </View>
         </View>
       </Modal>
-
-     
     </View>
   );
 };

@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
   Image,
   Modal,
@@ -14,10 +14,12 @@ import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {
   ArrowForward,
   BackIcon,
+  CameraIcon,
   ChangePassword,
   DeleteAccount,
   EditProfile,
   EditProfileTab,
+  GalleryIcon,
   Logout,
   NotificationIcon,
   NotificationUnSelected,
@@ -33,6 +35,10 @@ import {useDispatch, useSelector} from 'react-redux';
 import {updateUser} from '../../Store/UserSlice';
 import {store} from '../../Store/Store';
 import LoadingModal from '../../Components/LoadingModal';
+import { requestGalleryPermission, requestPermissionsForCamera } from '../../utils/permission';
+import { ImageLibraryOptions, launchImageLibrary, ImagePickerResponse, launchCamera } from 'react-native-image-picker';
+import RBSheet from 'react-native-raw-bottom-sheet';
+import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 
 const ProfileScreen = () => {
   const navigation = useNavigation<any>();
@@ -40,6 +46,8 @@ const ProfileScreen = () => {
   const {userDetails} = useSelector(state => state.user);
   const [logoutPopup, setLogoutPopup] = useState(false);
   const [visible, setVisible] = useState(false);
+  const [selectImage, setSelectedImage] = useState();
+  const picker = useRef<any>(null);
   const handleContinueButton = () => {
     navigation.navigate('CustomerRegister', {selectedRole: 'customer'});
   };
@@ -57,6 +65,63 @@ const ProfileScreen = () => {
       getUserData();
     }, []),
   );
+
+  useEffect(() => {
+    requestGalleryPermission();
+    requestPermissionsForCamera();
+  }, []);
+
+  const openImagePicker = () => {
+    const options: ImageLibraryOptions = {
+      mediaType: 'photo',
+      includeBase64: false,
+      maxHeight: 2000,
+      maxWidth: 2000,
+    };
+
+    launchImageLibrary(options, (response: ImagePickerResponse) => {
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.errorMessage) {
+        console.log('Image picker error');
+      } else {
+        let imageUri = response.assets?.[0];
+        if (imageUri) {
+          setSelectedImage(imageUri);
+          picker.current.close()
+          // setModalVisible(!modalVisible)
+        } else {
+          console.log('image uri is undefined');
+        }
+      }
+    });
+  };
+
+  const openCamera = () => {
+    const options: ImageLibraryOptions = {
+      mediaType: 'photo',
+      includeBase64: false,
+      maxHeight: 2000,
+      maxWidth: 2000,
+    };
+
+    launchCamera(options, (response: ImagePickerResponse) => {
+      if (response.didCancel) {
+        console.log('User cancelled camera');
+      } else if (response.errorMessage) {
+        console.log('Camera error');
+      } else {
+        let imageUri = response.assets?.[0]?.uri;
+        if (imageUri) {
+          setSelectedImage(imageUri);
+          picker.current.close()
+        } else {
+          console.log('image uri is undefined');
+        }
+      }
+    });
+  };
+  
   return (
     <View style={styles.body}>
       <View style={styles.appBarStyle}>
@@ -71,7 +136,8 @@ const ProfileScreen = () => {
 
       <View style={styles.ProfilePic}>
         <Image source={require('../../Assets/Images/ProfilePic.png')} />
-        <View
+        <TouchableOpacity
+        onPress={()=> picker.current.open()}
           style={{
             alignSelf: 'flex-end',
             position: 'absolute',
@@ -80,10 +146,12 @@ const ProfileScreen = () => {
             right: -10,
           }}>
           <EditProfile></EditProfile>
-        </View>
+        </TouchableOpacity>
       </View>
-      <Text style={styles.userName}>{userDetails?.userName}</Text>
-      <Text style={styles.email}>{userDetails?.email}</Text>
+      {/* <Text style={styles.userName}>{userDetails?.userName}</Text>
+      <Text style={styles.email}>{userDetails?.email}</Text> */}
+       <Text style={styles.userName}>Robert Smith</Text>
+       <Text style={styles.email}>useremail@email.com</Text>
       <ScrollView style={styles.content}>
         <ProfileTab
           OnTap={() => navigation.navigate('EditProfileScreen')}
@@ -156,6 +224,36 @@ const ProfileScreen = () => {
           </View>
         </View>
       </Modal>
+      <RBSheet
+        ref={picker}
+        customStyles={{
+          wrapper: {
+            backgroundColor: 'rgba(0,0,0,0.5)',
+          },
+          draggableIcon: {
+            marginTop: 50,
+            width: 83,
+          },
+          container: {
+            height: '20%',
+            // maxHeight: '100%',
+            borderTopRightRadius: 20,
+            borderTopLeftRadius: 20,
+            paddingHorizontal: 20,
+          },
+        }}>
+          <View style={{flexDirection:'row', padding:30, paddingTop:heightPercentageToDP(5)}}>
+            <TouchableOpacity onPress={openCamera} style={{alignItems:'center'}}>
+              <CameraIcon />
+              <Text style={styles.PickerText}>Camera</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={openImagePicker} style={{alignItems:'center', marginLeft:widthPercentageToDP(20)}}>
+              <GalleryIcon />
+              <Text style={styles.PickerText}>Gallery</Text>
+            </TouchableOpacity>
+          </View>
+      </RBSheet>
+      
       <LoadingModal visible={visible} message={'Please wait...'} />
     </View>
   );

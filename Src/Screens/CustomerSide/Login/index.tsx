@@ -53,11 +53,12 @@ const CustomerLogin = () => {
       Alert.alert('Login error', 'Please enter your password');
       return;
     } else {
-      const body = {
-        email: email,
-        password: password,
-      };
-      handleContinueButton(body);
+      // const body = {
+      //   email: email,
+      //   password: password,
+      // };
+      // handleContinueButton(body);
+      navigation.navigate('BottomTab');
     }
   };
   const handleEmail = txt => {
@@ -139,7 +140,7 @@ const CustomerLogin = () => {
           />
           <TouchableOpacity
             style={styles.forgetPassword}
-            onPress={() => navigation.navigate('ForgetPassword')}>
+            onPress={() => navigation.navigate('ForgetPassword',{role: 'customer'})}>
             <Text style={styles.forgetPassword}>Forgot Password?</Text>
           </TouchableOpacity>
           <TouchableOpacity

@@ -21,7 +21,14 @@ import {
   StarIcon,
 } from '../../../Assets/Svgs';
 import InfoLine from '../../../Components/InfoLineBar';
-import {LIGHTGREY, PRIMARY, TEXTCOLOR, WHITE} from '../../../Theme/Colors';
+import {
+  LIGHT_GREEN_I,
+  LIGHTGREY,
+  PRIMARY,
+  TEXTCOLOR,
+  WHITE,
+  YELLOWLight,
+} from '../../../Theme/Colors';
 import CustomButton from '../../../Components/CustomButton';
 import {fonts} from '../../../Theme/AppFonts';
 import {useNavigation} from '@react-navigation/native';
@@ -29,6 +36,12 @@ import RBSheet from 'react-native-raw-bottom-sheet';
 import {StarRatingDisplay} from 'react-native-star-rating-widget';
 import InputText from '../../../Components/InputText';
 import InputLabel from '../../../Components/InputLabel';
+import {
+  heightPercentageToDP,
+  widthPercentageToDP,
+} from 'react-native-responsive-screen';
+import StepIndicator from 'react-native-step-indicator';
+import {COLORS} from '../../../Theme/Index';
 
 const ParcelDetail = props => {
   const {status} = props.route.params;
@@ -38,9 +51,77 @@ const ParcelDetail = props => {
   const navigation = useNavigation<any>();
   const [cancelPopup, setCancelPopup] = useState(false);
   const [comment, setComment] = useState('');
+  const pickedUp = ['Pending', 'Accepted', 'Picked Up', 'Delivered'];
+  const currentPosition =
+    status === 'Pending'
+      ? 0
+      : status === 'Accepted'
+      ? 1
+      : status === 'Picked Up'
+      ? 2
+      : status === 'Delivered'
+      ? 3
+      : 0;
 
   const handleComment = txt => {
     setComment(txt);
+  };
+  const customStyles = {
+    stepIndicatorSize: 25,
+    currentStepIndicatorSize: 30,
+    separatorStrokeWidth: 5,
+    currentStepStrokeWidth: 3,
+    stepStrokeCurrentColor: COLORS.PRIMARY,
+    stepStrokeWidth: 3,
+    stepStrokeFinishedColor: COLORS.PRIMARY,
+    stepStrokeUnFinishedColor: COLORS.PLACEHOLDERCOLOR,
+    separatorFinishedColor: COLORS.PRIMARY,
+    separatorUnFinishedColor: COLORS.PLACEHOLDERCOLOR,
+    stepIndicatorFinishedColor: COLORS.PRIMARY,
+    stepIndicatorUnFinishedColor: COLORS.PLACEHOLDERCOLOR,
+    stepIndicatorCurrentColor: COLORS.PRIMARY,
+    stepIndicatorLabelFontSize: 13,
+    currentStepIndicatorLabelFontSize: 13,
+    stepIndicatorLabelCurrentColor: COLORS.PRIMARY,
+    stepIndicatorLabelFinishedColor: COLORS.PRIMARY,
+    stepIndicatorLabelUnFinishedColor: COLORS.PLACEHOLDERCOLOR,
+    labelColor: COLORS.PRIMARY,
+    labelSize: 13,
+    currentStepLabelColor: COLORS.PRIMARY,
+  };
+
+  const renderStepIndicator = ({position, stepStatus}) => {
+    if (position === currentPosition) {
+      return (
+        <View
+          style={{
+            width: 18,
+            height: 18,
+            borderRadius: 15,
+            backgroundColor: COLORS.PRIMARY,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <Image
+            source={require('../../../Assets/Images/pickedUpCurrentIcon.png')} // Replace with your image path
+            style={{width: 18, height: 35}}
+          />
+        </View>
+      );
+    }
+    return (
+      <View
+        style={{
+          width: 25,
+          height: 25,
+          backgroundColor:
+            position > currentPosition
+              ? COLORS.PLACEHOLDERCOLOR
+              : COLORS.PRIMARY,
+          borderRadius: 12.5,
+        }}
+      />
+    );
   };
 
   return (
@@ -72,20 +153,20 @@ const ParcelDetail = props => {
           </TouchableOpacity>
         </View>
 
-        {status === 'Delivered' ? (
-          <Image
-            style={{
-              height: 60,
-              width: '95%',
-              alignSelf: 'center',
-              marginHorizontal: 40,
-            }}
-            source={require('../../../Assets/Images/deliver_status.png')}></Image>
-        ) : (
-          <Image
-            style={{width: '93%', alignSelf: 'center', paddingHorizontal: 30}}
-            source={require('../../../Assets/Images/status1.png')}></Image>
-        )}
+        <View
+          style={{
+            height: heightPercentageToDP(10),
+            marginHorizontal: widthPercentageToDP(2),
+            marginTop: heightPercentageToDP(2),
+          }}>
+          <StepIndicator
+            stepCount={4}
+            customStyles={customStyles}
+            currentPosition={currentPosition}
+            labels={pickedUp}
+            renderStepIndicator={renderStepIndicator}
+          />
+        </View>
 
         <View style={styles.content1}>
           <Text style={styles.titleText}>Driver</Text>
@@ -156,7 +237,7 @@ const ParcelDetail = props => {
             value="+1 234 567 8912"
             isDivider={true}></InfoLine>
           <InfoLine
-            title="Pickup Address"
+            title="Drop off Address"
             value="1234 Elm Street Springfield, IL 62701"></InfoLine>
 
           <Text style={styles.titleText}>Parcel Details</Text>
@@ -179,11 +260,33 @@ const ParcelDetail = props => {
             isDivider={true}></InfoLine>
           <InfoLine title="EST. Delivery" value="June 5, 2024"></InfoLine>
 
-          <View style={styles.InfoBox}>
+          <View
+            style={[
+              styles.InfoBox,
+              {
+                backgroundColor:
+                  status === 'Accepted' || status === 'Pending'
+                    ? YELLOWLight
+                    : LIGHT_GREEN_I,
+              },
+            ]}>
             <Text style={styles.totalCharges}>Total Charges</Text>
             <View>
               <Text style={styles.paymentPrice}>CAD 72.2/-</Text>
-              <Text style={styles.status}>Paid</Text>
+              <Text
+                style={[
+                  styles.status,
+                  {
+                    color:
+                      status === 'Accepted' || status === 'Pending'
+                        ? 'rgba(194, 137, 7, 1)'
+                        : PRIMARY,
+                  },
+                ]}>
+                {status === 'Accepted' || status === 'Pending'
+                  ? 'Pending'
+                  : 'Paid'}
+              </Text>
             </View>
           </View>
           {status === 'Delivered' ? (
@@ -202,6 +305,37 @@ const ParcelDetail = props => {
                 backgroundColor: 'rgba(168, 230, 207, 1)',
               }}
             />
+          ) : status === 'Accepted' ? (
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginBottom: 65,
+                marginTop: 24,
+              }}>
+              <TouchableOpacity onPress={() => setCancelPopup(true)}>
+                <Text style={styles.CancelOrder}>Cancel Order</Text>
+              </TouchableOpacity>
+              <CustomButton
+                text="Pay Now"
+                onPress={() => navigation.navigate('Checkout')}
+                extraStyle={{
+                  width: '65%',
+                }}
+              />
+            </View>
+          ) : status === 'Pending' ? (
+            <View
+              style={{
+                marginTop: heightPercentageToDP(5),
+                marginBottom: heightPercentageToDP(10),
+                alignItems: 'center',
+              }}>
+              <TouchableOpacity onPress={() => setCancelPopup(true)}>
+                <Text style={styles.CancelOrder}>Cancel Order</Text>
+              </TouchableOpacity>
+            </View>
           ) : (
             <View
               style={{
@@ -320,11 +454,12 @@ const ParcelDetail = props => {
               <InputLabel label="Add Reviews" />
               <InputText
                 placeholder="Type here..."
+                multiline={true}
                 extraStyle={{
                   height: 113,
                   alignItems: 'flex-start',
                 }}
-                onChange={handleComment}
+                onChangeText={handleComment}
                 value={comment}
               />
               <CustomButton
